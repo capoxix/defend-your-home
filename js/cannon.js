@@ -29,6 +29,15 @@ class Cannon{
     this.ctx.ellipse(this.pos[0], this.pos[1], 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
     this.ctx.stroke();
     this.ctx.fill();
+
+    ctx.fillStyle = 'brown';
+    ctx.beginPath();
+    ctx.arc(
+      this.pos[0], 585, 20, 0 , 2 * Math.PI, true
+    );
+
+    ctx.fill();
+
     this.drawAngle();
     // this.drawWind();
     // this.drawRotation();
@@ -50,8 +59,10 @@ class Cannon{
     ];
 
     // debugger;
+    let dupPos = Array.from(this.pos);
+
     const cannonBall = new CannonBall({
-      pos: this.pos,
+      pos: dupPos,
       vel: [1,0],
       color: this.color,
       game: this.game,

@@ -22,6 +22,10 @@ class CannonBall extends MovingObject {
     this.angle = options.angle;
     this.radian = Math.PI * (90- this.angle)/180;
     this.airTime = 0;
+    //
+    this.pos[0] = Math.cos(this.radian)*this.pos[0] + this.pos[0];
+    // this.pos[1] = Math.sin(this.radian)*this.pos[1] + this.pos[1];
+    //
     console.log(options.vel[0]);
     this.verticalVelocity = Math.sin(this.radian) * options.vel[0];
     this.horizontalVelocity = Math.cos(this.radian) * options.vel[0];
