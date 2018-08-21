@@ -26,22 +26,26 @@ class Game {
         const obj1 = allObjects[i];
         const obj2 = allObjects[j];
 
-        if (obj1.isCollidedWith(obj2)) {
-          const collision = obj1.collideWith(obj2);
-          if (collision) return;
+        if (!(obj1 instanceof Cannon)) {
+          if (obj1.isCollidedWith(obj2)) {
+            const collision = obj1.collideWith(obj2);
+            if (collision) return;
+          }
         }
       }
     }
   }
 
   remove(object){
-    // if (object instanceof Ram){
-    //
-    // }
+    if (object instanceof CannonBall){
+      // console.log("removing cannonball");
+      this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
+    }
+
   }
 
   add(object){
-    debugger;
+    // debugger;
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
@@ -54,7 +58,7 @@ class Game {
 
   step(delta){
     this.moveObjects(delta);
-    // this.checkCollisions();
+    this.checkCollisions();
   }
 
   draw(ctx){

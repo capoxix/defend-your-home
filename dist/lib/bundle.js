@@ -239,22 +239,26 @@ class Game {
         const obj1 = allObjects[i];
         const obj2 = allObjects[j];
 
-        if (obj1.isCollidedWith(obj2)) {
-          const collision = obj1.collideWith(obj2);
-          if (collision) return;
+        if (!(obj1 instanceof Cannon)) {
+          if (obj1.isCollidedWith(obj2)) {
+            const collision = obj1.collideWith(obj2);
+            if (collision) return;
+          }
         }
       }
     }
   }
 
   remove(object){
-    // if (object instanceof Ram){
-    //
-    // }
+    if (object instanceof CannonBall){
+      // console.log("removing cannonball");
+      this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
+    }
+
   }
 
   add(object){
-    debugger;
+    // debugger;
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
@@ -267,7 +271,7 @@ class Game {
 
   step(delta){
     this.moveObjects(delta);
-    // this.checkCollisions();
+    this.checkCollisions();
   }
 
   draw(ctx){
@@ -328,7 +332,7 @@ class GameView {
   }
 
   animate(time){
-    console.log("animating");
+    // console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
     // debugger;
@@ -421,10 +425,9 @@ class MovingObject {
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
 
   if (this.game.isOutOfBounds(this.pos)) {
-    // if (this.isWrappable) {
-    //   this.pos = this.game.wrap(this.pos);
-    // } else {
-      // this.remove();
+    console.log("removing cannonball");
+    // debugger
+    this.remove();
     // }
   }
 }
@@ -432,6 +435,10 @@ class MovingObject {
   isCollidedWith(otherObject){
     let centerDist = Util.dist(this.pos, otherObject.pos);
     return centerDist < (this.radius + otherObject.radius);
+  }
+
+  remove(){
+    this.game.remove(this);
   }
 }
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
