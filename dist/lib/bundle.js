@@ -118,6 +118,8 @@ class Cannon{
     );
 
     ctx.fill();
+    this.drawAngle();
+    this.drawRotation();
   }
 
   fireCannonBall(){
@@ -149,9 +151,7 @@ class Cannon{
 
   rotate(move){
     this.angle += move[1];
-    // this.ctx.fillStyle="blue";
-    // this.ctx.fillRect(150,30,100,100);
-    // this.ctx.rotate(Math.PI/180 * this.angle);
+
     console.log("angle:", this.angle);
     // this.pos[0] += move[0];
     // this.pos[1] += move[1];
@@ -160,6 +160,19 @@ class Cannon{
     /*
     rotation of cannon
     */
+  }
+
+  drawAngle(){
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "#0095DD";
+    this.ctx.fillText("Angle: "+this.angle, 8, 20);
+  }
+
+  drawRotation(){
+    this.ctx.save();
+    this.ctx.fillStyle="blue";
+    this.ctx.fillRect(150,30,100,100);
+    this.ctx.rotate(Math.PI/180 * this.angle);
   }
 
   move(){/*undefined since cannon is not a moving object */}
