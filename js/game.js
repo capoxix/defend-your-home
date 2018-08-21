@@ -29,8 +29,9 @@ class Game {
         const obj1 = allObjects[i];
         const obj2 = allObjects[j];
 
-        if (!(obj1 instanceof Cannon) && obj1 !== obj2) {
+        if (!(obj1 instanceof Cannon || obj2 instanceof Cannon)) {
           // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
+          if(obj1 !== obj2)
             if (obj1.isCollidedWith(obj2)) {
               const collision = obj1.collidedWith(obj2);
               if (collision) return;
