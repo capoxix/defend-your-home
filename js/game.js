@@ -15,6 +15,7 @@ class Game {
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
+
     // console.log("windVelocity", this.windVelocity);
     // console.log("windAngle", this.windAngle);
   }
@@ -59,12 +60,10 @@ class Game {
 
   remove(object){
     if (object instanceof CannonBall){
-      // console.log("removing cannonball");
+      if(this.cannonballs.indexOf(object)!== -1)
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
     }else if (object instanceof Enemy){
-      // console.log("delete enemy!");]
-      console.log("enemy:", object);
-      console.log(this.enemies.indexOf(object));
+      if (this.enemies.indexOf(object) !== -1)
       this.enemies.splice(this.enemies.indexOf(object), 1);
     }
   }
