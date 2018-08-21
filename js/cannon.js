@@ -30,6 +30,7 @@ class Cannon{
     this.ctx.stroke();
     this.ctx.fill();
     this.drawAngle();
+    // this.drawWind();
     // this.drawRotation();
   }
 
@@ -78,6 +79,9 @@ class Cannon{
     this.ctx.fillStyle = "#0095DD";
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
+
+
+
 
   // drawRotation(){
   //   this.ctx.save();

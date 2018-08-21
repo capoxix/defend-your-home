@@ -125,6 +125,7 @@ class Cannon{
     this.ctx.stroke();
     this.ctx.fill();
     this.drawAngle();
+    // this.drawWind();
     // this.drawRotation();
   }
 
@@ -173,6 +174,9 @@ class Cannon{
     this.ctx.fillStyle = "#0095DD";
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
+
+
+
 
   // drawRotation(){
   //   this.ctx.save();
@@ -355,10 +359,10 @@ class Game {
     this.enemies = [new Enemy({pos: [750,570], game: this})];
 
     this.level = 5;
-    this.windVelocity = (Math.random() * this.level);
+    this.windVelocity = (Math.random() * this.level).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
-    console.log("windVelocity", this.windVelocity);
-    console.log("windAngle", this.windAngle);
+    // console.log("windVelocity", this.windVelocity);
+    // console.log("windAngle", this.windAngle);
   }
 
   moveObjects(delta) {
@@ -392,10 +396,10 @@ class Game {
 
   remove(object){
     if (object instanceof CannonBall){
-      console.log("removing cannonball");
+      // console.log("removing cannonball");
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
     }else if (object instanceof Enemy){
-      console.log("delete enemy!");
+      // console.log("delete enemy!");
       this.enemies.splice(this.enemies.indexOf(object), 1);
     }
   }
@@ -405,6 +409,10 @@ class Game {
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
+  }
+
+  addEnemies(){
+
   }
 
   isOutOfBounds(pos) {
@@ -424,9 +432,30 @@ class Game {
     ctx.fillStyle = Game.BG_COLOR;
     ctx.fillRect(0,0, Game.DIM_X, Game.DIM_Y);
     // this.cannon.draw(ctx);
+    this.drawWind();
     this.allObjects().forEach(function(object) {
       object.draw(ctx);
     });
+  }
+
+  drawWind(){
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "white";
+    this.ctx.fillText("Wind Velocity:" + this.windVelocity, 8, 40);
+    this.ctx.fillText("Wind Angle:" + this.windAngle, 8, 60);
+
+    this.ctx.save();
+    /*translate to center of canvas?*/
+    // this.ctx.translate(150, 100);
+    // this.ctx.translate(400,300);
+    this.ctx.translate(75,125);
+    this.ctx.rotate((this.windAngle-90) * Math.PI/180);
+
+    let arrow = document.getElementById('arrow');
+    this.ctx.fillStyle = "yellow";
+    // this.ctx.fillRect(0,0,100,100);
+    this.ctx.drawImage(arrow, -50,-50, 100,100);
+    this.ctx.restore();
   }
 
   // nextLevel(){
