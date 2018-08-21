@@ -26,14 +26,14 @@ class Cannon{
 
     ctx.fillStyle = this.color;
     this.ctx.beginPath();
-    this.ctx.ellipse(this.pos[0], this.pos[1], 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+    this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
     this.ctx.stroke();
     this.ctx.fill();
 
     ctx.fillStyle = 'brown';
     ctx.beginPath();
     ctx.arc(
-      this.pos[0], 585, 20, 0 , 2 * Math.PI, true
+      this.pos[0], 595, 10, 0 , 2 * Math.PI, true
     );
 
     ctx.fill();

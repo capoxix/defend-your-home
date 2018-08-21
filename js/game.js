@@ -6,11 +6,11 @@ const Enemy = require('./enemy');
 class Game {
   constructor(ctx){
     this.ctx = ctx;
-    this.cannon = new Cannon({pos: [250, 550], game: this, ctx: this.ctx});
+    this.cannon = new Cannon({pos: [120, 575], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [new Enemy({pos: [750,570], game: this})];
+    this.enemies = [new Enemy({pos: [950,570], game: this})];
 
     this.level = 2;
     this.windVelocity = (Math.random() * this.level).toFixed(2);
@@ -96,13 +96,13 @@ class Game {
   drawWind(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.windVelocity, 365, 90);
+    this.ctx.fillText(this.windVelocity, 465, 90);
 
     this.ctx.save();
     /*translate to center of canvas?*/
     // this.ctx.translate(150, 100);
     // this.ctx.translate(400,300);
-    this.ctx.translate(375,125);
+    this.ctx.translate(475,125);
     this.ctx.rotate((this.windAngle-90) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
@@ -114,7 +114,7 @@ class Game {
 
   drawCastle(){
     let castle = document.getElementById("castle");
-    this.ctx.drawImage(castle, 0, 410, 200,200);
+    this.ctx.drawImage(castle, 0, 505, 100,100);
   }
 
   // nextLevel(){
@@ -123,7 +123,7 @@ class Game {
 
 
 
-Game.DIM_X = 800;
+Game.DIM_X = 1000;
 Game.DIM_Y = 600;
 Game.BG_COLOR = 'lightblue';
 
