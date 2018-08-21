@@ -11,7 +11,7 @@ class CannonBall extends MovingObject {
     options.color = DEFAULTS.COLOR;
     options.pos = options.pos;
     options.radius = DEFAULTS.RADIUS;
-    options.vel = options.vel
+    options.vel = options.vel;
     super(options);
   }
 
@@ -19,3 +19,5 @@ class CannonBall extends MovingObject {
 
   }
 }
+
+module.exports = CannonBall;

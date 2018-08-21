@@ -2,7 +2,7 @@ class GameView {
   constructor(game, ctx){
     this.ctx = ctx;
     this.game = game;
-    this.cannon = this.game.addCannon();
+    this.cannon = this.game.cannon;
   }
 
   bindKeyHandlers(){
@@ -10,10 +10,10 @@ class GameView {
 
     Object.keys(GameView.MOVES).forEach((k) => {
       const move = GameView.MOVES[k];
-      key(k, () => { cannon.power(move);});
+      key(k, () => { cannon.rotate(move);});
     });
 
-    key("space", () => {cannon.shoot();});
+    key("space", () => {cannon.fireCannonBall();});
   }
 
   start() {
@@ -23,9 +23,12 @@ class GameView {
   }
 
   animate(time){
+    console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
+    // debugger;
     this.game.draw(this.ctx);
+    // this.game.cannon.draw(this.ctx);
     this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this));
@@ -33,8 +36,8 @@ class GameView {
 }
 
 GameView.MOVES = {
-  w: ['up'],
-  s: ['down']
+  w: [0, -1],
+  s: [0, 1]
 };
 
 module.exports = GameView;

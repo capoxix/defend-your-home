@@ -86,60 +86,181 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./js/cannon.js":
+/*!**********************!*\
+  !*** ./js/cannon.js ***!
+  \**********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// const MovingObject = require('./moving_object');
+const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
+const Util = __webpack_require__(/*! ./util */ "./js/util.js");
+
+
+class Cannon{
+  constructor(options){
+    this.radius = Cannon.RADIUS;
+    this.vel = [0, 0];
+    this.color = '#D3D3D3';
+    this.game = options.game;
+    this.pos = options.pos;
+    // super(options);
+  }
+
+  draw(ctx){
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(
+      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    );
+
+    ctx.fill();
+  }
+
+  fireCannonBall(){
+    /*
+    */
+
+    const cannonBall = new CannonBall({
+      pos: this.pos,
+      vel: 15,
+      color: this.color,
+      game: this.game
+    });
+
+    this.game.add(cannonBall);
+  }
+
+  rotate(move){
+    this.pos[0] += move[0];
+    this.pos[1] += move[1];
+    this.vel[0] += move[0];
+    this.vel[1] += move[1];
+    /*
+    rotation of cannon
+    */
+  }
+
+  move(){/*undefined since cannon is not a moving object */}
+
+
+}
+
+Cannon.RADIUS = 15;
+module.exports = Cannon;
+
+
+/***/ }),
+
+/***/ "./js/cannon_ball.js":
+/*!***************************!*\
+  !*** ./js/cannon_ball.js ***!
+  \***************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const MovingObject = __webpack_require__(/*! ./moving_object */ "./js/moving_object.js");
+
+const DEFAULTS = {
+  COLOR: 'gray',
+  RADIUS: 10,
+  SPEED: 15
+};
+
+class CannonBall extends MovingObject {
+  constructor(options = {}){
+    options.color = DEFAULTS.COLOR;
+    options.pos = options.pos;
+    options.radius = DEFAULTS.RADIUS;
+    options.vel = options.vel;
+    super(options);
+  }
+
+  collideWith(otherObject){
+
+  }
+}
+
+module.exports = CannonBall;
+
+
+/***/ }),
+
 /***/ "./js/game.js":
 /*!********************!*\
   !*** ./js/game.js ***!
   \********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
 // const Ram = require('./ram');
+const Cannon = __webpack_require__(/*! ./cannon */ "./js/cannon.js");
+const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
 
 class Game {
   constructor(){
-    // this.cannon = ;
+    this.cannon = new Cannon({pos: [20, 0], game: this});
     // this.ram = ;
-  }
-  addCannon(){
-
+    this.cannonballs = [];
   }
 
   moveObjects(delta) {
-  this.allObjects().forEach((object) => {
-    object.move(delta);
-  });
-}
+    this.allObjects().forEach((object) => {
+      object.move(delta);
+    });
+  }
 
-checkCollisions() {
-  const allObjects = this.allObjects();
-  for (let i = 0; i < allObjects.length; i++) {
-    for (let j = 0; j < allObjects.length; j++) {
-      const obj1 = allObjects[i];
-      const obj2 = allObjects[j];
+  allObjects() {
+    return [].concat(this.cannon);
+  }
 
-      if (obj1.isCollidedWith(obj2)) {
-        const collision = obj1.collideWith(obj2);
-        if (collision) return;
+  checkCollisions() {
+    const allObjects = this.allObjects();
+    for (let i = 0; i < allObjects.length; i++) {
+      for (let j = 0; j < allObjects.length; j++) {
+        const obj1 = allObjects[i];
+        const obj2 = allObjects[j];
+
+        if (obj1.isCollidedWith(obj2)) {
+          const collision = obj1.collideWith(obj2);
+          if (collision) return;
+        }
       }
     }
   }
-}
 
-remove(object){
-  // if (object instanceof Ram){
-  //
-  // }
-}
+  remove(object){
+    // if (object instanceof Ram){
+    //
+    // }
+  }
+
+  add(object){
+    if (object instanceof CannonBall){
+      this.cannonballs.push(object);
+    }
+  }
+
+  isOutOfBounds(pos) {
+    return (pos[0] < 0) || (pos[1] < 0) ||
+      (pos[0] > Game.DIM_X) || (pos[1] > Game.DIM_Y);
+  }
 
   step(delta){
     this.moveObjects(delta);
-    this.checkCollisions();
+    // this.checkCollisions();
   }
 
   draw(ctx){
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
+    // debugger;
     ctx.fillStyle = Game.BG_COLOR;
     ctx.fillRect(0,0, Game.DIM_X, Game.DIM_Y);
+    // this.cannon.draw(ctx);
+    this.allObjects().forEach(function(object) {
+      object.draw(ctx);
+    });
   }
 }
 
@@ -165,7 +286,7 @@ class GameView {
   constructor(game, ctx){
     this.ctx = ctx;
     this.game = game;
-    this.cannon = this.game.addCannon();
+    this.cannon = this.game.cannon;
   }
 
   bindKeyHandlers(){
@@ -173,10 +294,10 @@ class GameView {
 
     Object.keys(GameView.MOVES).forEach((k) => {
       const move = GameView.MOVES[k];
-      key(k, () => { cannon.power(move);});
+      key(k, () => { cannon.rotate(move);});
     });
 
-    key("space", () => {cannon.shoot();});
+    key("space", () => {cannon.fireCannonBall();});
   }
 
   start() {
@@ -186,9 +307,12 @@ class GameView {
   }
 
   animate(time){
+    console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
+    // debugger;
     this.game.draw(this.ctx);
+    // this.game.cannon.draw(this.ctx);
     this.lastTime = time;
 
     requestAnimationFrame(this.animate.bind(this));
@@ -196,8 +320,8 @@ class GameView {
 }
 
 GameView.MOVES = {
-  w: ['up'],
-  s: ['down']
+  w: [0, -1],
+  s: [0, 1]
 };
 
 module.exports = GameView;
@@ -226,6 +350,89 @@ document.addEventListener("DOMContentLoaded", function(event) {
   // let game = new Game();
   // game.startGame();
  });
+
+
+/***/ }),
+
+/***/ "./js/moving_object.js":
+/*!*****************************!*\
+  !*** ./js/moving_object.js ***!
+  \*****************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const Util = __webpack_require__(/*! ./util */ "./js/util.js");
+
+class MovingObject {
+  constructor(options){
+    this.pos = options.pos;
+    this.vel = options.vel;
+    this.radius = options.radius;
+    this.color = options.color;
+    this.game = options.game;
+  }
+
+  collidedWith(otherObject){
+    this.game.remove(otherObject);
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(
+      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    );
+
+    ctx.fill();
+  }
+
+  move(timeDelta) {
+  // timeDelta is number of milliseconds since last move
+  // if the computer is busy the time delta will be larger
+  // in this case the MovingObject should move farther in this frame
+  // velocity of object is how far it should move in 1/60th of a second
+  const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
+      offsetX = this.vel[0] * velocityScale,
+      offsetY = this.vel[1] * velocityScale;
+
+  this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+
+  if (this.game.isOutOfBounds(this.pos)) {
+    // if (this.isWrappable) {
+    //   this.pos = this.game.wrap(this.pos);
+    // } else {
+      // this.remove();
+    // }
+  }
+}
+
+  isCollidedWith(otherObject){
+    let centerDist = Util.dist(this.pos, otherObject.pos);
+    return centerDist < (this.radius + otherObject.radius);
+  }
+}
+const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+module.exports = MovingObject;
+
+
+/***/ }),
+
+/***/ "./js/util.js":
+/*!********************!*\
+  !*** ./js/util.js ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+const Util = {
+  dist(pos1, pos2){
+    return Math.sqrt(
+      Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2)
+    );
+  }
+};
+
+module.exports = Util;
 
 
 /***/ })
