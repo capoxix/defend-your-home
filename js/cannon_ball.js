@@ -6,6 +6,8 @@ const DEFAULTS = {
   SPEED: 15
 };
 
+
+
 class CannonBall extends MovingObject {
   constructor(options = {}){
     options.color = DEFAULTS.COLOR;
@@ -19,5 +21,8 @@ class CannonBall extends MovingObject {
 
   }
 }
+
+CannonBall.SPEED = 15;
+CannonBall.RADIUS = 10;
 
 module.exports = CannonBall;

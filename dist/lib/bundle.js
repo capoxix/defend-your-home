@@ -122,9 +122,21 @@ class Cannon{
     /*
     */
 
+    const norm = Util.norm(this.vel);
+
+    const relVel = Util.scale(
+      Util.dir(this.vel),
+      CannonBall.SPEED
+    );
+
+    const cannonBallVel = [
+      relVel[0] + this.vel[0], relVel[1] + this.vel[1]
+    ];
+
+    // debugger;
     const cannonBall = new CannonBall({
       pos: this.pos,
-      vel: 15,
+      vel: cannonBallVel,
       color: this.color,
       game: this.game
     });
@@ -168,6 +180,8 @@ const DEFAULTS = {
   SPEED: 15
 };
 
+
+
 class CannonBall extends MovingObject {
   constructor(options = {}){
     options.color = DEFAULTS.COLOR;
@@ -181,6 +195,9 @@ class CannonBall extends MovingObject {
 
   }
 }
+
+CannonBall.SPEED = 15;
+CannonBall.RADIUS = 10;
 
 module.exports = CannonBall;
 
@@ -212,7 +229,7 @@ class Game {
   }
 
   allObjects() {
-    return [].concat(this.cannon);
+    return [].concat(this.cannon, this.cannonballs);
   }
 
   checkCollisions() {
@@ -237,6 +254,7 @@ class Game {
   }
 
   add(object){
+    debugger;
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
@@ -297,7 +315,10 @@ class GameView {
       key(k, () => { cannon.rotate(move);});
     });
 
-    key("space", () => {cannon.fireCannonBall();});
+    key("space", () => {
+      cannon.fireCannonBall();});
+
+      // key(g, function () { debugger; cannon.fireCannonBall(); });
   }
 
   start() {
@@ -321,7 +342,9 @@ class GameView {
 
 GameView.MOVES = {
   w: [0, -1],
-  s: [0, 1]
+  s: [0, 1],
+  a: [-1, 0],
+  d: [1, 0]
 };
 
 module.exports = GameView;
@@ -429,7 +452,19 @@ const Util = {
     return Math.sqrt(
       Math.pow(pos1[0] - pos2[0], 2) + Math.pow(pos1[1] - pos2[1], 2)
     );
-  }
+  },
+
+  // Find the length of the vector.
+  norm(vec) {
+    return Util.dist([0, 0], vec);
+  },
+  dir(vec) {
+    const norm = Util.norm(vec);
+    return Util.scale(vec, 1 / norm);
+  },
+  scale(vec, m) {
+    return [vec[0] * m, vec[1] * m];
+  },
 };
 
 module.exports = Util;

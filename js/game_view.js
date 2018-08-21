@@ -13,7 +13,10 @@ class GameView {
       key(k, () => { cannon.rotate(move);});
     });
 
-    key("space", () => {cannon.fireCannonBall();});
+    key("space", () => {
+      cannon.fireCannonBall();});
+
+      // key(g, function () { debugger; cannon.fireCannonBall(); });
   }
 
   start() {
@@ -37,7 +40,9 @@ class GameView {
 
 GameView.MOVES = {
   w: [0, -1],
-  s: [0, 1]
+  s: [0, 1],
+  a: [-1, 0],
+  d: [1, 0]
 };
 
 module.exports = GameView;

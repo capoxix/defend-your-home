@@ -16,7 +16,7 @@ class Game {
   }
 
   allObjects() {
-    return [].concat(this.cannon);
+    return [].concat(this.cannon, this.cannonballs);
   }
 
   checkCollisions() {
@@ -41,6 +41,7 @@ class Game {
   }
 
   add(object){
+    debugger;
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }

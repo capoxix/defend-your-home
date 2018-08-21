@@ -27,9 +27,21 @@ class Cannon{
     /*
     */
 
+    const norm = Util.norm(this.vel);
+
+    const relVel = Util.scale(
+      Util.dir(this.vel),
+      CannonBall.SPEED
+    );
+
+    const cannonBallVel = [
+      relVel[0] + this.vel[0], relVel[1] + this.vel[1]
+    ];
+
+    // debugger;
     const cannonBall = new CannonBall({
       pos: this.pos,
-      vel: 15,
+      vel: cannonBallVel,
       color: this.color,
       game: this.game
     });
