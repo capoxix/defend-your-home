@@ -11,6 +11,12 @@ class Game {
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
     this.enemies = [new Enemy({pos: [750,570], game: this})];
+
+    this.level = 5;
+    this.windVelocity = (Math.random() * this.level);
+    this.windAngle = Math.round(Math.random() * 360);
+    console.log("windVelocity", this.windVelocity);
+    console.log("windAngle", this.windAngle);
   }
 
   moveObjects(delta) {
@@ -80,6 +86,9 @@ class Game {
       object.draw(ctx);
     });
   }
+
+  // nextLevel(){
+  // }
 }
 
 
