@@ -10,7 +10,7 @@ class Game {
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [new Enemy({pos: [750,580], game: this})];
+    this.enemies = [new Enemy({pos: [750,570], game: this})];
   }
 
   moveObjects(delta) {

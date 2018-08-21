@@ -29,6 +29,8 @@ class GameView {
     // console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
+    // this.game.step();
+
     // debugger;
     this.game.draw(this.ctx);
     // this.game.cannon.draw(this.ctx);

@@ -24,7 +24,7 @@ class Cannon{
 
     ctx.fill();
     this.drawAngle();
-    this.drawRotation();
+    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -45,7 +45,7 @@ class Cannon{
     // debugger;
     const cannonBall = new CannonBall({
       pos: this.pos,
-      vel: [8,0],
+      vel: [1,0],
       color: this.color,
       game: this.game,
       angle: this.angle
@@ -75,9 +75,11 @@ class Cannon{
 
   drawRotation(){
     this.ctx.save();
+    this.ctx.translate(50, 580);
     this.ctx.fillStyle="blue";
     this.ctx.fillRect(150,30,100,100);
     this.ctx.rotate(Math.PI/180 * this.angle);
+    this.ctx.restore();
   }
 
   move(){/*undefined since cannon is not a moving object */}

@@ -119,7 +119,7 @@ class Cannon{
 
     ctx.fill();
     this.drawAngle();
-    this.drawRotation();
+    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -140,7 +140,7 @@ class Cannon{
     // debugger;
     const cannonBall = new CannonBall({
       pos: this.pos,
-      vel: [8,0],
+      vel: [1,0],
       color: this.color,
       game: this.game,
       angle: this.angle
@@ -170,9 +170,11 @@ class Cannon{
 
   drawRotation(){
     this.ctx.save();
+    this.ctx.translate(50, 580);
     this.ctx.fillStyle="blue";
     this.ctx.fillRect(150,30,100,100);
     this.ctx.rotate(Math.PI/180 * this.angle);
+    this.ctx.restore();
   }
 
   move(){/*undefined since cannon is not a moving object */}
@@ -224,7 +226,7 @@ class CannonBall extends MovingObject {
   //   // this.game.remove(otherObject);
   // }
   updateCannonBall(){
-    let gravity = 15 * (this.airTime);
+    let gravity = 4 * (this.airTime);
     this.vel[0] += this.horizontalVelocity;
     this.vel[1] += (-1 * this.verticalVelocity) + gravity;
     // debugger;
@@ -236,7 +238,7 @@ class CannonBall extends MovingObject {
   move(timeDelta) {
       // debugger;
     this.updateCannonBall();
-    this.airTime += 1*60/1000;//1000;
+    this.airTime += 1*60/5000;
     // console.log("horizontalVelocity", this.vel[0]);
     // console.log("verticalVelocity", this.vel[1]);
     const velocityScale = timeDelta / 30,//NORMAL_FRAME_TIME_DELTA,
@@ -321,7 +323,7 @@ class Game {
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [new Enemy({pos: [750,580], game: this})];
+    this.enemies = [new Enemy({pos: [750,570], game: this})];
   }
 
   moveObjects(delta) {
@@ -442,6 +444,8 @@ class GameView {
     // console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
+    // this.game.step();
+
     // debugger;
     this.game.draw(this.ctx);
     // this.game.cannon.draw(this.ctx);
@@ -528,7 +532,7 @@ class MovingObject {
   // if the computer is busy the time delta will be larger
   // in this case the MovingObject should move farther in this frame
   // velocity of object is how far it should move in 1/60th of a second
-  const velocityScale = timeDelta / 30,//NORMAL_FRAME_TIME_DELTA,
+  const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
       offsetX = this.vel[0] * velocityScale,
       offsetY = this.vel[1] * velocityScale;
 
