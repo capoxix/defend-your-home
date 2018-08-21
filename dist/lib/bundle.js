@@ -101,9 +101,9 @@ const Util = __webpack_require__(/*! ./util */ "./js/util.js");
 
 class Cannon{
   constructor(options){
-    this.radius = Cannon.RADIUS;
+    // this.radius = Cannon.RADIUS;
     this.vel = [0, 0];
-    this.color = '#D3D3D3';
+    this.color = 'black';
     this.game = options.game;
     this.pos = options.pos;
     this.angle = 0;
@@ -111,15 +111,21 @@ class Cannon{
   }
 
   draw(ctx){
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    );
+    // ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    // );
+    //
+    // ctx.fill();
 
-    ctx.fill();
+    ctx.fillStyle = this.color;
+    this.ctx.beginPath();
+    this.ctx.ellipse(this.pos[0], this.pos[1], 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
     this.drawAngle();
-    this.drawRotation();
+    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -168,16 +174,16 @@ class Cannon{
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
 
-  drawRotation(){
-    this.ctx.save();
-    this.ctx.translate(50, 450);
-    this.ctx.fillStyle = "black";
-    this.ctx.beginPath();
-    this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.restore();
-  }
+  // drawRotation(){
+  //   this.ctx.save();
+  //   this.ctx.translate(50, 450);
+  //   this.ctx.fillStyle = "black";
+  //   this.ctx.beginPath();
+  //   this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+  //   this.ctx.stroke();
+  //   this.ctx.fill();
+  //   this.ctx.restore();
+  // }
 
   move(){/*undefined since cannon is not a moving object */}
 
@@ -200,7 +206,7 @@ module.exports = Cannon;
 const MovingObject = __webpack_require__(/*! ./moving_object */ "./js/moving_object.js");
 
 const DEFAULTS = {
-  COLOR: 'gray',
+  COLOR: 'black',
   RADIUS: 10,
   SPEED: 15
 };
@@ -209,12 +215,17 @@ const DEFAULTS = {
 
 class CannonBall extends MovingObject {
   constructor(options = {}){
+    // let radian = Math.PI * (options.angle * 5)/ 180;
+    // options.pos[0] = Math.cos(radian)*options.pos[0] + options.pos[0];
+    // options.pos[1] = Math.sin(radian)*options.pos[1] + options.pos[1];
     options.color = DEFAULTS.COLOR;
+    /**/
     options.pos = options.pos;
     options.radius = DEFAULTS.RADIUS;
     options.vel = options.vel;
     super(options);
     this.angle = options.angle;
+
 
     this.radian = Math.PI * (90- this.angle)/180;
     this.airTime = 0;
@@ -228,7 +239,7 @@ class CannonBall extends MovingObject {
   //   // this.game.remove(otherObject);
   // }
   updateCannonBall(){
-    let gravity = 4 * (this.airTime);
+    let gravity = 2.5 * (this.airTime);
     this.vel[0] += this.horizontalVelocity;
     this.vel[1] += (-1 * this.verticalVelocity) + gravity;
     // debugger;
@@ -321,7 +332,7 @@ const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 class Game {
   constructor(ctx){
     this.ctx = ctx;
-    this.cannon = new Cannon({pos: [50, 580], game: this, ctx: this.ctx});
+    this.cannon = new Cannon({pos: [50, 550], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});

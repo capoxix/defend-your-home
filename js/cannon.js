@@ -6,9 +6,9 @@ const Util = require("./util");
 
 class Cannon{
   constructor(options){
-    this.radius = Cannon.RADIUS;
+    // this.radius = Cannon.RADIUS;
     this.vel = [0, 0];
-    this.color = '#D3D3D3';
+    this.color = 'black';
     this.game = options.game;
     this.pos = options.pos;
     this.angle = 0;
@@ -16,15 +16,21 @@ class Cannon{
   }
 
   draw(ctx){
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    );
+    // ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    // );
+    //
+    // ctx.fill();
 
-    ctx.fill();
+    ctx.fillStyle = this.color;
+    this.ctx.beginPath();
+    this.ctx.ellipse(this.pos[0], this.pos[1], 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
     this.drawAngle();
-    this.drawRotation();
+    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -73,16 +79,16 @@ class Cannon{
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
 
-  drawRotation(){
-    this.ctx.save();
-    this.ctx.translate(50, 450);
-    this.ctx.fillStyle = "black";
-    this.ctx.beginPath();
-    this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
-    this.ctx.stroke();
-    this.ctx.fill();
-    this.ctx.restore();
-  }
+  // drawRotation(){
+  //   this.ctx.save();
+  //   this.ctx.translate(50, 450);
+  //   this.ctx.fillStyle = "black";
+  //   this.ctx.beginPath();
+  //   this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+  //   this.ctx.stroke();
+  //   this.ctx.fill();
+  //   this.ctx.restore();
+  // }
 
   move(){/*undefined since cannon is not a moving object */}
 

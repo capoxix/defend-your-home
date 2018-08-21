@@ -1,7 +1,7 @@
 const MovingObject = require('./moving_object');
 
 const DEFAULTS = {
-  COLOR: 'gray',
+  COLOR: 'black',
   RADIUS: 10,
   SPEED: 15
 };
@@ -10,12 +10,17 @@ const DEFAULTS = {
 
 class CannonBall extends MovingObject {
   constructor(options = {}){
+    // let radian = Math.PI * (options.angle * 5)/ 180;
+    // options.pos[0] = Math.cos(radian)*options.pos[0] + options.pos[0];
+    // options.pos[1] = Math.sin(radian)*options.pos[1] + options.pos[1];
     options.color = DEFAULTS.COLOR;
+    /**/
     options.pos = options.pos;
     options.radius = DEFAULTS.RADIUS;
     options.vel = options.vel;
     super(options);
     this.angle = options.angle;
+
 
     this.radian = Math.PI * (90- this.angle)/180;
     this.airTime = 0;
@@ -29,7 +34,7 @@ class CannonBall extends MovingObject {
   //   // this.game.remove(otherObject);
   // }
   updateCannonBall(){
-    let gravity = 4 * (this.airTime);
+    let gravity = 2.5 * (this.airTime);
     this.vel[0] += this.horizontalVelocity;
     this.vel[1] += (-1 * this.verticalVelocity) + gravity;
     // debugger;

@@ -6,7 +6,7 @@ const Enemy = require('./enemy');
 class Game {
   constructor(ctx){
     this.ctx = ctx;
-    this.cannon = new Cannon({pos: [50, 580], game: this, ctx: this.ctx});
+    this.cannon = new Cannon({pos: [50, 550], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
