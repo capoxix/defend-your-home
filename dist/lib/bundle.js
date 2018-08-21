@@ -107,6 +107,7 @@ class Cannon{
     this.game = options.game;
     this.pos = options.pos;
     this.angle = 0;
+    this.ctx = options.ctx;
   }
 
   draw(ctx){
@@ -148,9 +149,12 @@ class Cannon{
 
   rotate(move){
     this.angle += move[1];
+    // this.ctx.fillStyle="blue";
+    // this.ctx.fillRect(150,30,100,100);
+    // this.ctx.rotate(Math.PI/180 * this.angle);
     console.log("angle:", this.angle);
-    this.pos[0] += move[0];
-    this.pos[1] += move[1];
+    // this.pos[0] += move[0];
+    // this.pos[1] += move[1];
     this.vel[0] += move[0];
     this.vel[1] += move[1];
     /*
@@ -219,10 +223,10 @@ class CannonBall extends MovingObject {
   move(timeDelta) {
       // debugger;
     this.updateCannonBall();
-    this.airTime += 1*60/1000;
+    this.airTime += 1*60/1000;//1000;
     // console.log("horizontalVelocity", this.vel[0]);
     // console.log("verticalVelocity", this.vel[1]);
-    const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
+    const velocityScale = timeDelta / 30,//NORMAL_FRAME_TIME_DELTA,
       offsetX = this.vel[0] * velocityScale,
       offsetY = this.vel[1] * velocityScale;
     // console.log("offsetX", offsetX);
@@ -298,8 +302,9 @@ const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js
 const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 
 class Game {
-  constructor(){
-    this.cannon = new Cannon({pos: [50, 580], game: this});
+  constructor(ctx){
+    this.ctx = ctx;
+    this.cannon = new Cannon({pos: [50, 580], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
@@ -363,6 +368,7 @@ class Game {
   }
 
   draw(ctx){
+    // this.ctx = ctx;
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     // debugger;
     ctx.fillStyle = Game.BG_COLOR;
@@ -460,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.height = Game.DIM_Y;
 
   const ctx = canvasEl.getContext("2d");
-  const game = new Game();
+  const game = new Game(ctx);
   new GameView(game, ctx).start();
   // let game = new Game();
   // game.startGame();
@@ -509,7 +515,7 @@ class MovingObject {
   // if the computer is busy the time delta will be larger
   // in this case the MovingObject should move farther in this frame
   // velocity of object is how far it should move in 1/60th of a second
-  const velocityScale = timeDelta / NORMAL_FRAME_TIME_DELTA,
+  const velocityScale = timeDelta / 30,//NORMAL_FRAME_TIME_DELTA,
       offsetX = this.vel[0] * velocityScale,
       offsetY = this.vel[1] * velocityScale;
 

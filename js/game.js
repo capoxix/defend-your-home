@@ -4,8 +4,9 @@ const CannonBall = require('./cannon_ball');
 const Enemy = require('./enemy');
 
 class Game {
-  constructor(){
-    this.cannon = new Cannon({pos: [50, 580], game: this});
+  constructor(ctx){
+    this.ctx = ctx;
+    this.cannon = new Cannon({pos: [50, 580], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
@@ -69,6 +70,7 @@ class Game {
   }
 
   draw(ctx){
+    // this.ctx = ctx;
     ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
     // debugger;
     ctx.fillStyle = Game.BG_COLOR;

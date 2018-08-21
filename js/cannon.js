@@ -12,6 +12,7 @@ class Cannon{
     this.game = options.game;
     this.pos = options.pos;
     this.angle = 0;
+    this.ctx = options.ctx;
   }
 
   draw(ctx){
@@ -53,9 +54,12 @@ class Cannon{
 
   rotate(move){
     this.angle += move[1];
+    // this.ctx.fillStyle="blue";
+    // this.ctx.fillRect(150,30,100,100);
+    // this.ctx.rotate(Math.PI/180 * this.angle);
     console.log("angle:", this.angle);
-    this.pos[0] += move[0];
-    this.pos[1] += move[1];
+    // this.pos[0] += move[0];
+    // this.pos[1] += move[1];
     this.vel[0] += move[0];
     this.vel[1] += move[1];
     /*
