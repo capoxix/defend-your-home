@@ -362,7 +362,9 @@ class Enemy extends MovingObject{
   // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
     console.log("YOU LOSE ENEMY REACHED YOU!");
-    window.cancelAnimationFrame(window.animation);
+    window.clearInterval(this.game.enemiesCreation);
+    this.game.enemies = [];
+    // window.cancelAnimationFrame(window.animation);
 
     // this.game
     // console.log("GAME OVER");
@@ -410,8 +412,7 @@ class Game {
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
 
-    // console.log("windVelocity", this.windVelocity);
-    // console.log("windAngle", this.windAngle);
+
   }
 
   moveObjects(delta) {
@@ -474,7 +475,7 @@ class Game {
 
   addEnemies(){
     let that = this;
-    setInterval(function(){
+    this.enemiesCreation = setInterval(function(){
       that.add(new Enemy({pos: [950,570], game: that}));
     }, 3000);
   }

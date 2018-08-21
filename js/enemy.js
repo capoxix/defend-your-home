@@ -34,7 +34,9 @@ class Enemy extends MovingObject{
   // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
     console.log("YOU LOSE ENEMY REACHED YOU!");
-    window.cancelAnimationFrame(window.animation);
+    window.clearInterval(this.game.enemiesCreation);
+    this.game.enemies = [];
+    // window.cancelAnimationFrame(window.animation);
 
     // this.game
     // console.log("GAME OVER");
