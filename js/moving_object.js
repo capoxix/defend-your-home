@@ -1,4 +1,8 @@
 const Util = require('./util');
+// const Enemy = require('./enemy');
+
+const Cannon = require('./cannon');
+const CannonBall = require('./cannon_ball');
 
 class MovingObject {
   constructor(options){
@@ -11,9 +15,17 @@ class MovingObject {
 
   collidedWith(otherObject){
     // debugger;
-    console.log(this, "colliding with", otherObject);
-    this.game.remove(otherObject);
-    this.game.remove(this);
+    // console.log(this, "colliding with", otherObject);
+    if (otherObject !== this) {
+      this.game.remove(otherObject);
+      this.game.remove(this);
+      let that = this;
+    }
+
+    // if(otherObject instanceof Cannon){
+    //   console.log("GAME OVER!!!!");
+    //   this.game.remove(this);
+    // }
   }
 
   draw(ctx) {
@@ -36,9 +48,8 @@ class MovingObject {
       offsetY = this.vel[1] * velocityScale;
 
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-
   if (this.game.isOutOfBounds(this.pos)) {
-    console.log("removing cannonball");
+    // console.log("removing cannonball");
     // debugger
     this.remove();
     // }

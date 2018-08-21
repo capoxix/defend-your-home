@@ -91,6 +91,10 @@ class Cannon{
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
 
+  isCollidedWith(otherObject){
+    let centerDist = Util.dist(this.pos, otherObject.pos);
+    return centerDist < (this.radius + otherObject.radius);
+  }
 
 
 

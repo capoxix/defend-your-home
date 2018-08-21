@@ -186,6 +186,10 @@ class Cannon{
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
 
+  isCollidedWith(otherObject){
+    let centerDist = Util.dist(this.pos, otherObject.pos);
+    return centerDist < (this.radius + otherObject.radius);
+  }
 
 
 
@@ -264,7 +268,7 @@ class CannonBall extends MovingObject {
   //   // this.game.remove(otherObject);
   // }
   updateCannonBall(){
-    let gravity = 2.5 * (this.airTime);
+    let gravity = 2.75 * (this.airTime);
     this.vel[0] += this.horizontalVelocity;
     this.vel[1] += (-1 * this.verticalVelocity) + gravity;
     // debugger;
@@ -343,9 +347,34 @@ class Enemy extends MovingObject{
 
     ctx.fill();
   }
+
+  move(timeDelta) {
+  // timeDelta is number of milliseconds since last move
+  // if the computer is busy the time delta will be larger
+  // in this case the MovingObject should move farther in this frame
+  // velocity of object is how far it should move in 1/60th of a second
+  const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
+      offsetX = this.vel[0] * velocityScale,
+      offsetY = this.vel[1] * velocityScale;
+      // console.log("moving enemy");
+
+  this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+  // console.log(this.pos[0]);
+  if (this.pos[0] < 200) {
+    // this.game
+    // console.log("GAME OVER");
+    // cancelAnimationFrame(window.animation);
+  }
+  if (this.game.isOutOfBounds(this.pos)) {
+    // console.log("removing cannonball");
+    // debugger
+    this.remove();
+    // }
+  }
+}
 }
 
-  Enemy.RADIUS = 30;
+Enemy.RADIUS = 30;
 
 
 module.exports = Enemy;
@@ -360,7 +389,6 @@ module.exports = Enemy;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// const Ram = require('./ram');
 const Cannon = __webpack_require__(/*! ./cannon */ "./js/cannon.js");
 const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
 const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
@@ -372,10 +400,11 @@ class Game {
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [new Enemy({pos: [950,570], game: this})];
+    this.enemies = [];//[new Enemy({pos: [950,570], game: this})];
+    this.addEnemies();
 
-    this.level = 2;
-    this.windVelocity = (Math.random() * this.level).toFixed(2);
+    this.score = 1;
+    this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
     // console.log("windVelocity", this.windVelocity);
     // console.log("windAngle", this.windAngle);
@@ -406,6 +435,15 @@ class Game {
               if (collision) return;
             }
         }
+
+        // if(obj1 instanceof Cannon || obj2 instanceof Cannon){
+        //   console.log("check collision", obj1, obj2);
+        //   if(obj1 != obj2 && !(obj1 instanceof CannonBall) && !(obj2 instanceof CannonBall)){
+        //     if (obj1.isCollidedWith(obj2)){
+        //       console.log("GAME OVER", obj1, "collidedwith", obj2);
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -415,7 +453,9 @@ class Game {
       // console.log("removing cannonball");
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
     }else if (object instanceof Enemy){
-      // console.log("delete enemy!");
+      // console.log("delete enemy!");]
+      console.log("enemy:", object);
+      console.log(this.enemies.indexOf(object));
       this.enemies.splice(this.enemies.indexOf(object), 1);
     }
   }
@@ -425,10 +465,16 @@ class Game {
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
+    if (object instanceof Enemy){
+      this.enemies.push(object);
+    }
   }
 
   addEnemies(){
-
+    let that = this;
+    setInterval(function(){
+      that.add(new Enemy({pos: [950,570], game: that}));
+    }, 3000);
   }
 
   isOutOfBounds(pos) {
@@ -479,6 +525,10 @@ class Game {
     this.ctx.drawImage(castle, 0, 505, 100,100);
   }
 
+  endGame(){
+
+  }
+
   // nextLevel(){
   // }
 }
@@ -506,6 +556,7 @@ class GameView {
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
+    this.animation;
   }
 
   bindKeyHandlers(){
@@ -525,14 +576,13 @@ class GameView {
   start() {
     this.bindKeyHandlers();
     this.lastTime = 0;
-    requestAnimationFrame(this.animate.bind(this));
+    window.animation = requestAnimationFrame(this.animate.bind(this));
   }
 
   animate(time){
     // console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
-    // this.game.step();
 
     // debugger;
     this.game.draw(this.ctx);
@@ -541,6 +591,11 @@ class GameView {
 
     requestAnimationFrame(this.animate.bind(this));
   }
+
+  // stopAnimation(){
+    // window.cancelAnimationFrame(window.animation);
+  // }
+
 }
 
 GameView.MOVES = {
@@ -588,6 +643,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 /***/ (function(module, exports, __webpack_require__) {
 
 const Util = __webpack_require__(/*! ./util */ "./js/util.js");
+// const Enemy = require('./enemy');
+
+const Cannon = __webpack_require__(/*! ./cannon */ "./js/cannon.js");
+const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
 
 class MovingObject {
   constructor(options){
@@ -600,9 +659,17 @@ class MovingObject {
 
   collidedWith(otherObject){
     // debugger;
-    console.log(this, "colliding with", otherObject);
-    this.game.remove(otherObject);
-    this.game.remove(this);
+    // console.log(this, "colliding with", otherObject);
+    if (otherObject !== this) {
+      this.game.remove(otherObject);
+      this.game.remove(this);
+      let that = this;
+    }
+
+    // if(otherObject instanceof Cannon){
+    //   console.log("GAME OVER!!!!");
+    //   this.game.remove(this);
+    // }
   }
 
   draw(ctx) {
@@ -625,9 +692,8 @@ class MovingObject {
       offsetY = this.vel[1] * velocityScale;
 
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-
   if (this.game.isOutOfBounds(this.pos)) {
-    console.log("removing cannonball");
+    // console.log("removing cannonball");
     // debugger
     this.remove();
     // }

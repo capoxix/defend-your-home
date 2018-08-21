@@ -3,6 +3,7 @@ class GameView {
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
+    this.animation;
   }
 
   bindKeyHandlers(){
@@ -22,14 +23,13 @@ class GameView {
   start() {
     this.bindKeyHandlers();
     this.lastTime = 0;
-    requestAnimationFrame(this.animate.bind(this));
+    window.animation = requestAnimationFrame(this.animate.bind(this));
   }
 
   animate(time){
     // console.log("animating");
     const timeDelta = time - this.lastTime;
     this.game.step(timeDelta);
-    // this.game.step();
 
     // debugger;
     this.game.draw(this.ctx);
@@ -38,6 +38,11 @@ class GameView {
 
     requestAnimationFrame(this.animate.bind(this));
   }
+
+  // stopAnimation(){
+    // window.cancelAnimationFrame(window.animation);
+  // }
+
 }
 
 GameView.MOVES = {

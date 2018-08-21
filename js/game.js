@@ -1,4 +1,3 @@
-// const Ram = require('./ram');
 const Cannon = require('./cannon');
 const CannonBall = require('./cannon_ball');
 const Enemy = require('./enemy');
@@ -10,10 +9,11 @@ class Game {
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [new Enemy({pos: [950,570], game: this})];
+    this.enemies = [];//[new Enemy({pos: [950,570], game: this})];
+    this.addEnemies();
 
-    this.level = 2;
-    this.windVelocity = (Math.random() * this.level).toFixed(2);
+    this.score = 1;
+    this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
     // console.log("windVelocity", this.windVelocity);
     // console.log("windAngle", this.windAngle);
@@ -44,6 +44,15 @@ class Game {
               if (collision) return;
             }
         }
+
+        // if(obj1 instanceof Cannon || obj2 instanceof Cannon){
+        //   console.log("check collision", obj1, obj2);
+        //   if(obj1 != obj2 && !(obj1 instanceof CannonBall) && !(obj2 instanceof CannonBall)){
+        //     if (obj1.isCollidedWith(obj2)){
+        //       console.log("GAME OVER", obj1, "collidedwith", obj2);
+        //     }
+        //   }
+        // }
       }
     }
   }
@@ -53,7 +62,9 @@ class Game {
       // console.log("removing cannonball");
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
     }else if (object instanceof Enemy){
-      // console.log("delete enemy!");
+      // console.log("delete enemy!");]
+      console.log("enemy:", object);
+      console.log(this.enemies.indexOf(object));
       this.enemies.splice(this.enemies.indexOf(object), 1);
     }
   }
@@ -63,10 +74,16 @@ class Game {
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
+    if (object instanceof Enemy){
+      this.enemies.push(object);
+    }
   }
 
   addEnemies(){
-
+    let that = this;
+    setInterval(function(){
+      that.add(new Enemy({pos: [950,570], game: that}));
+    }, 3000);
   }
 
   isOutOfBounds(pos) {
@@ -115,6 +132,10 @@ class Game {
   drawCastle(){
     let castle = document.getElementById("castle");
     this.ctx.drawImage(castle, 0, 505, 100,100);
+  }
+
+  endGame(){
+
   }
 
   // nextLevel(){

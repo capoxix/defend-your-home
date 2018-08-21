@@ -44,7 +44,7 @@ class CannonBall extends MovingObject {
   //   // this.game.remove(otherObject);
   // }
   updateCannonBall(){
-    let gravity = 2.5 * (this.airTime);
+    let gravity = 2.75 * (this.airTime);
     this.vel[0] += this.horizontalVelocity;
     this.vel[1] += (-1 * this.verticalVelocity) + gravity;
     // debugger;

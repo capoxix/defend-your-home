@@ -19,9 +19,34 @@ class Enemy extends MovingObject{
 
     ctx.fill();
   }
+
+  move(timeDelta) {
+  // timeDelta is number of milliseconds since last move
+  // if the computer is busy the time delta will be larger
+  // in this case the MovingObject should move farther in this frame
+  // velocity of object is how far it should move in 1/60th of a second
+  const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
+      offsetX = this.vel[0] * velocityScale,
+      offsetY = this.vel[1] * velocityScale;
+      // console.log("moving enemy");
+
+  this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+  // console.log(this.pos[0]);
+  if (this.pos[0] < 200) {
+    // this.game
+    // console.log("GAME OVER");
+    // cancelAnimationFrame(window.animation);
+  }
+  if (this.game.isOutOfBounds(this.pos)) {
+    // console.log("removing cannonball");
+    // debugger
+    this.remove();
+    // }
+  }
+}
 }
 
-  Enemy.RADIUS = 30;
+Enemy.RADIUS = 30;
 
 
 module.exports = Enemy;
