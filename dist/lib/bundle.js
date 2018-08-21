@@ -119,7 +119,7 @@ class Cannon{
 
     ctx.fill();
     this.drawAngle();
-    // this.drawRotation();
+    this.drawRotation();
   }
 
   fireCannonBall(){
@@ -165,15 +165,17 @@ class Cannon{
   drawAngle(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#0095DD";
-    this.ctx.fillText("Angle: "+this.angle, 8, 20);
+    this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
   }
 
   drawRotation(){
     this.ctx.save();
-    this.ctx.translate(50, 580);
-    this.ctx.fillStyle="blue";
-    this.ctx.fillRect(150,30,100,100);
-    this.ctx.rotate(Math.PI/180 * this.angle);
+    this.ctx.translate(50, 450);
+    this.ctx.fillStyle = "black";
+    this.ctx.beginPath();
+    this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+    this.ctx.stroke();
+    this.ctx.fill();
     this.ctx.restore();
   }
 
