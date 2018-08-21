@@ -11,7 +11,6 @@ class Cannon{
     this.color = '#D3D3D3';
     this.game = options.game;
     this.pos = options.pos;
-    // super(options);
     this.angle = 0;
   }
 
@@ -43,7 +42,7 @@ class Cannon{
     // debugger;
     const cannonBall = new CannonBall({
       pos: this.pos,
-      vel: cannonBallVel,
+      vel: [8,0],
       color: this.color,
       game: this.game,
       angle: this.angle
@@ -53,8 +52,8 @@ class Cannon{
   }
 
   rotate(move){
-    // this.angle += move[1];
-    // console.log("angle:", this.angle);
+    this.angle += move[1];
+    console.log("angle:", this.angle);
     this.pos[0] += move[0];
     this.pos[1] += move[1];
     this.vel[0] += move[0];
