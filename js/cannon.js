@@ -1,5 +1,6 @@
 // const MovingObject = require('./moving_object');
 const CannonBall = require('./cannon_ball');
+const Enemy = require('./enemy');
 const Util = require("./util");
 
 

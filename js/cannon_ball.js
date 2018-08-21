@@ -17,8 +17,8 @@ class CannonBall extends MovingObject {
     super(options);
   }
 
-  collideWith(otherObject){
-
+  collidedWith(otherObject){
+    // this.game.remove(otherObject);
   }
 }
 

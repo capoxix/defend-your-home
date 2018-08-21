@@ -10,7 +10,10 @@ class MovingObject {
   }
 
   collidedWith(otherObject){
+    // debugger;
+    // console.log(this, "colliding with", otherObject);
     this.game.remove(otherObject);
+    this.game.remove(this);
   }
 
   draw(ctx) {

@@ -95,6 +95,7 @@
 
 // const MovingObject = require('./moving_object');
 const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
+const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 const Util = __webpack_require__(/*! ./util */ "./js/util.js");
 
 
@@ -191,8 +192,8 @@ class CannonBall extends MovingObject {
     super(options);
   }
 
-  collideWith(otherObject){
-
+  collidedWith(otherObject){
+    // this.game.remove(otherObject);
   }
 }
 
@@ -200,6 +201,44 @@ CannonBall.SPEED = 15;
 CannonBall.RADIUS = 10;
 
 module.exports = CannonBall;
+
+
+/***/ }),
+
+/***/ "./js/enemy.js":
+/*!*********************!*\
+  !*** ./js/enemy.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const MovingObject = __webpack_require__(/*! ./moving_object */ "./js/moving_object.js");
+
+class Enemy extends MovingObject{
+  constructor(options){
+    options.radius = Enemy.RADIUS;
+    options.vel = [-1, 0];
+    options.color = 'brown';
+    // .game = options.game;
+    // this.pos = options.pos;
+    super(options);
+  }
+
+  draw(ctx){
+    ctx.fillStyle = this.color;
+    ctx.beginPath();
+    ctx.arc(
+      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    );
+
+    ctx.fill();
+  }
+}
+
+  Enemy.RADIUS = 30;
+
+
+module.exports = Enemy;
 
 
 /***/ }),
@@ -214,12 +253,15 @@ module.exports = CannonBall;
 // const Ram = require('./ram');
 const Cannon = __webpack_require__(/*! ./cannon */ "./js/cannon.js");
 const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
+const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 
 class Game {
   constructor(){
-    this.cannon = new Cannon({pos: [20, 0], game: this});
+    this.cannon = new Cannon({pos: [50, 580], game: this});
     // this.ram = ;
     this.cannonballs = [];
+    // this.enemy = new Enemy({pos: [750, 580], game: this});
+    this.enemies = [new Enemy({pos: [750,580], game: this})];
   }
 
   moveObjects(delta) {
@@ -229,7 +271,7 @@ class Game {
   }
 
   allObjects() {
-    return [].concat(this.cannon, this.cannonballs);
+    return [].concat(this.cannon, this.cannonballs, this.enemies);
   }
 
   checkCollisions() {
@@ -239,11 +281,12 @@ class Game {
         const obj1 = allObjects[i];
         const obj2 = allObjects[j];
 
-        if (!(obj1 instanceof Cannon)) {
-          if (obj1.isCollidedWith(obj2)) {
-            const collision = obj1.collideWith(obj2);
-            if (collision) return;
-          }
+        if (!(obj1 instanceof Cannon) && obj1 !== obj2) {
+          // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
+            if (obj1.isCollidedWith(obj2)) {
+              const collision = obj1.collidedWith(obj2);
+              if (collision) return;
+            }
         }
       }
     }
@@ -251,10 +294,12 @@ class Game {
 
   remove(object){
     if (object instanceof CannonBall){
-      // console.log("removing cannonball");
+      console.log("removing cannonball");
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
+    }else if (object instanceof Enemy){
+      console.log("delete enemy!");
+      this.enemies.splice(this.enemies.indexOf(object), 1);
     }
-
   }
 
   add(object){
@@ -400,7 +445,10 @@ class MovingObject {
   }
 
   collidedWith(otherObject){
+    // debugger;
+    // console.log(this, "colliding with", otherObject);
     this.game.remove(otherObject);
+    this.game.remove(this);
   }
 
   draw(ctx) {

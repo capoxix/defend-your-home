@@ -1,12 +1,15 @@
 // const Ram = require('./ram');
 const Cannon = require('./cannon');
 const CannonBall = require('./cannon_ball');
+const Enemy = require('./enemy');
 
 class Game {
   constructor(){
-    this.cannon = new Cannon({pos: [20, 0], game: this});
+    this.cannon = new Cannon({pos: [50, 580], game: this});
     // this.ram = ;
     this.cannonballs = [];
+    // this.enemy = new Enemy({pos: [750, 580], game: this});
+    this.enemies = [new Enemy({pos: [750,580], game: this})];
   }
 
   moveObjects(delta) {
@@ -16,7 +19,7 @@ class Game {
   }
 
   allObjects() {
-    return [].concat(this.cannon, this.cannonballs);
+    return [].concat(this.cannon, this.cannonballs, this.enemies);
   }
 
   checkCollisions() {
@@ -26,11 +29,12 @@ class Game {
         const obj1 = allObjects[i];
         const obj2 = allObjects[j];
 
-        if (!(obj1 instanceof Cannon)) {
-          if (obj1.isCollidedWith(obj2)) {
-            const collision = obj1.collideWith(obj2);
-            if (collision) return;
-          }
+        if (!(obj1 instanceof Cannon) && obj1 !== obj2) {
+          // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
+            if (obj1.isCollidedWith(obj2)) {
+              const collision = obj1.collidedWith(obj2);
+              if (collision) return;
+            }
         }
       }
     }
@@ -38,10 +42,12 @@ class Game {
 
   remove(object){
     if (object instanceof CannonBall){
-      // console.log("removing cannonball");
+      console.log("removing cannonball");
       this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
+    }else if (object instanceof Enemy){
+      console.log("delete enemy!");
+      this.enemies.splice(this.enemies.indexOf(object), 1);
     }
-
   }
 
   add(object){
