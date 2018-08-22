@@ -22,29 +22,6 @@ class Enemy extends MovingObject{
 
   draw(ctx){
     let enemyImg = document.getElementById('enemy');
-    // if (this.animationDelay >= 5) debugger;
-    // let c = ctx;
-    // let that = this;
-    // setInterval(function(){
-    //   that.animationDelay += 1;
-    //   if (that.animationDelay++ >= 1){
-    //     that.animationDelay = 0;
-    //     that.animationCount++;
-    //
-    //     if (that.animationCount >= that.enemyAnimation.length){
-    //       that.animationCount = 0;
-    //       // console.log(this.animationCurrentFrame);
-    //       // debugger;
-    //       that.enemyAnimation[that.animationCount];
-    //     }
-    //     // ctx.globalAlpha = 2;
-    //     // ctx.clearRect(this.pos[0], this.pos[1]-50, 30, 75);
-    //     c.drawImage(enemyImg,  that.enemyAnimation[that.animationCount][0], that.enemyAnimation[that.animationCount][1],
-    //         that.enemyAnimation[that.animationCount][2],
-    //         that.enemyAnimation[that.animationCount][3], that.pos[0],that.pos[1]-50, 30,75);
-    //   }
-    // }, 1000);
-
       this.animationDelay += 1;
 
     if (this.animationDelay++ >= 15){
@@ -93,18 +70,11 @@ class Enemy extends MovingObject{
       // console.log("moving enemy");
 
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-  // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
-    // console.log("YOU LOSE ENEMY REACHED YOU!");
-    // window.clearInterval(this.game.enemiesCreation);
-    // this.game.enemies = [];
     this.game.endGame();
   }
   if (this.game.isOutOfBounds(this.pos)) {
-    // console.log("removing cannonball");
-    // debugger
     this.remove();
-    // }
   }
 }
 }

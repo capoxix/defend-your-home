@@ -33,10 +33,6 @@ class CannonBall extends MovingObject {
     this.windRadian = Math.PI * this.game.windAngle / 180;
     this.windVerticalVelocity = Math.sin(this.windRadian) * this.game.windVelocity;
     this.windHorizontalVelocity = Math.cos(this.windRadian)* this.game.windVelocity;
-    // debugger;
-    // console.log("windRadian", this.windRadian);
-    // console.log("windVerticalVelocity", this.windVerticalVelocity);
-    // console.log("windHorizontalVecloity", this.windHorizontalVelocity);
   }
 
   // collidedWith(otherObject){

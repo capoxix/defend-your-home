@@ -301,10 +301,6 @@ class CannonBall extends MovingObject {
     this.windRadian = Math.PI * this.game.windAngle / 180;
     this.windVerticalVelocity = Math.sin(this.windRadian) * this.game.windVelocity;
     this.windHorizontalVelocity = Math.cos(this.windRadian)* this.game.windVelocity;
-    // debugger;
-    // console.log("windRadian", this.windRadian);
-    // console.log("windVerticalVelocity", this.windVerticalVelocity);
-    // console.log("windHorizontalVecloity", this.windHorizontalVelocity);
   }
 
   // collidedWith(otherObject){
@@ -393,29 +389,6 @@ class Enemy extends MovingObject{
 
   draw(ctx){
     let enemyImg = document.getElementById('enemy');
-    // if (this.animationDelay >= 5) debugger;
-    // let c = ctx;
-    // let that = this;
-    // setInterval(function(){
-    //   that.animationDelay += 1;
-    //   if (that.animationDelay++ >= 1){
-    //     that.animationDelay = 0;
-    //     that.animationCount++;
-    //
-    //     if (that.animationCount >= that.enemyAnimation.length){
-    //       that.animationCount = 0;
-    //       // console.log(this.animationCurrentFrame);
-    //       // debugger;
-    //       that.enemyAnimation[that.animationCount];
-    //     }
-    //     // ctx.globalAlpha = 2;
-    //     // ctx.clearRect(this.pos[0], this.pos[1]-50, 30, 75);
-    //     c.drawImage(enemyImg,  that.enemyAnimation[that.animationCount][0], that.enemyAnimation[that.animationCount][1],
-    //         that.enemyAnimation[that.animationCount][2],
-    //         that.enemyAnimation[that.animationCount][3], that.pos[0],that.pos[1]-50, 30,75);
-    //   }
-    // }, 1000);
-
       this.animationDelay += 1;
 
     if (this.animationDelay++ >= 15){
@@ -464,18 +437,11 @@ class Enemy extends MovingObject{
       // console.log("moving enemy");
 
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-  // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
-    // console.log("YOU LOSE ENEMY REACHED YOU!");
-    // window.clearInterval(this.game.enemiesCreation);
-    // this.game.enemies = [];
     this.game.endGame();
   }
   if (this.game.isOutOfBounds(this.pos)) {
-    // console.log("removing cannonball");
-    // debugger
     this.remove();
-    // }
   }
 }
 }
@@ -511,7 +477,7 @@ class Game {
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
-    this.windAngle = Math.round(Math.random() * 360);
+    this.windAngle = Math.round(Math.random() * 360 - 180);
     this.sound = sound.bind(this);
     this.crashSound = new sound('sounds/explosion.mp3');
 
@@ -578,7 +544,7 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,520], game: that}));
+      that.add(new Enemy({pos: [950,525], game: that}));
     }, 3000);
   }
 
@@ -623,6 +589,7 @@ class Game {
     // this.ctx.fillRect(0,0,100,100);
     this.ctx.drawImage(arrow, -25,-25, 50,50);
     this.ctx.restore();
+    // console.log(this.windAngle)
   }
 
   drawCastle(){
@@ -634,6 +601,7 @@ class Game {
     console.log("YOU LOSE ENEMY REACHED YOU!");
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
+    this.cannonballs = [];
   }
 
   // nextLevel(){

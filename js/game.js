@@ -14,7 +14,7 @@ class Game {
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
-    this.windAngle = Math.round(Math.random() * 360);
+    this.windAngle = Math.round(Math.random() * 360 - 180);
     this.sound = sound.bind(this);
     this.crashSound = new sound('sounds/explosion.mp3');
 
@@ -81,7 +81,7 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,520], game: that}));
+      that.add(new Enemy({pos: [950,525], game: that}));
     }, 3000);
   }
 
@@ -126,6 +126,7 @@ class Game {
     // this.ctx.fillRect(0,0,100,100);
     this.ctx.drawImage(arrow, -25,-25, 50,50);
     this.ctx.restore();
+    // console.log(this.windAngle)
   }
 
   drawCastle(){
@@ -137,6 +138,7 @@ class Game {
     console.log("YOU LOSE ENEMY REACHED YOU!");
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
+    this.cannonballs = [];
   }
 
   // nextLevel(){
