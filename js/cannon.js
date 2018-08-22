@@ -13,6 +13,7 @@ class Cannon{
     this.pos = options.pos;
     this.angle = 0;
     this.ctx = options.ctx;
+    this.reloading = false;
   }
 
   draw(ctx){
@@ -68,8 +69,15 @@ class Cannon{
       game: this.game,
       angle: this.angle
     });
-
-    this.game.add(cannonBall);
+    if (!this.reloading) {
+      this.game.add(cannonBall);
+      this.reloading = true;
+    } else {
+      let that = this;
+      setTimeout(function(){
+        that.reloading = false;
+      }, 3000);
+    }
   }
 
   rotate(move){
