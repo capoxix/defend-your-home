@@ -19,10 +19,6 @@ class Enemy extends MovingObject{
     this.animationDelay = 0;
   }
 
-  updateFrame(){
-
-  }
-
   draw(ctx){
     let enemyImg = document.getElementById('enemy');
       this.animationDelay += 1;
@@ -82,10 +78,11 @@ class Enemy extends MovingObject{
   }
 
   // collidedWith(otherObject){
-  //   if (otherObject instanceof CannonBall){
+  //   // if (otherObject instanceof this){
+  //   //   console.log("enemy colliding with itself")
   //     // this.game.crashSound.play();
   //     // this.game.changeWind();
-  //     this.game.remove(otherObject);
+  //     // this.game.remove(otherObject);
   //     // this.game.remove(this);
   //   }
   // }

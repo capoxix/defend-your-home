@@ -93,6 +93,7 @@ class CannonBall extends MovingObject {
       this.game.changeWind();
       this.game.remove(otherObject);
       this.game.remove(this);
+      this.game.score++;
     }
   }
 }

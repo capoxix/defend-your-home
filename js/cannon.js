@@ -17,9 +17,9 @@ class Cannon{
     this.pos = options.pos;
     this.angle = 0;
     this.ctx = options.ctx;
-    this.reloading = false;
+    // this.reloading = false;
     this.drawReloading = this.drawReloading.bind(this);
-    this.reload = this.reload.bind(this);
+    // this.reload = this.reload.bind(this);
   }
 
   draw(ctx){
@@ -52,9 +52,6 @@ class Cannon{
   }
 
   fireCannonBall(){
-    /*
-    */
-
     const norm = Util.norm(this.vel);
 
     const relVel = Util.scale(
@@ -77,37 +74,11 @@ class Cannon{
       angle: this.angle
     });
 
-    // this.game.add(cannonBall);
-
-    // if (!this.reloading) {
-    //   this.game.add(cannonBall);
-    //   this.reloading = true;
-    //   // this.drawReloading();
-    // } else {
-    //   let that = this;
-    //   setTimeout(function(){
-    //     that.reloading = false;
-    //     // that.drawReloading();
-    //   }, 3000);
-    // }
-    this.reload(cannonBall);
-  }
-
-  reload(cannonBall){
-    if (!this.reloading) {
+    if(this.game.cannonBallsCount != 0) {
       this.game.add(cannonBall);
-      this.reloading = true;
-      // this.drawReloading();
-    } else {
-      let that = this;
-      setTimeout(function(){
-        that.reloading = false;
-        // that.drawReloading();
-      }, 300);
+      this.game.cannonBallsCount -= 1;
     }
   }
-
-
 
   rotate(move){
     this.angle += move[1];
@@ -130,13 +101,16 @@ class Cannon{
 
   drawReloading(){
     // console.log("calling reloading");
+    // this.ctx.font="16px Arial";
+    // this.ctx.fillStyle= "#0095DD";
+    // if (this.reloading) {
+    //   this.ctx.fillText("Reloading...", 50, 50);
+    // } else {
+    //   this.ctx.fillText("Ready!", 50, 50);
+    // }
     this.ctx.font="16px Arial";
     this.ctx.fillStyle= "#0095DD";
-    if (this.reloading) {
-      this.ctx.fillText("Reloading...", 50, 50);
-    } else {
-      this.ctx.fillText("Ready!", 50, 50);
-    }
+    this.ctx.fillText("Available cannonballs: "+this.game.cannonBallsCount, 50,50);
   }
 
   isCollidedWith(otherObject){

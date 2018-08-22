@@ -22,7 +22,17 @@ class Game {
     this.sound = sound.bind(this);
     this.crashSound = new sound('sounds/explosion.mp3');
     this.changeWind = this.changeWind.bind(this);
+    this.score = 0;
+    this.cannonBallsCount = 0;
+    this.addCannonBalls();
 
+  }
+  addCannonBalls(){
+    // this.game.cannonBallsCount += 1;
+    let that = this;
+    setInterval(function(){
+      that.cannonBallsCount += 1;
+    }, 1000);
   }
 
   changeWind(){
@@ -92,7 +102,7 @@ class Game {
     let that = this;
     this.enemiesCreation = setInterval(function(){
       that.add(new Enemy({pos: [950,525], game: that}));
-    }, 4000);
+    }, 1000);
   }
 
   isOutOfBounds(pos) {
@@ -114,6 +124,7 @@ class Game {
     // this.cannon.draw(ctx);
     this.drawWind();
     this.drawCastle();
+    this.drawScore();
     this.allObjects().forEach(function(object) {
       object.draw(ctx);
     });
@@ -142,6 +153,12 @@ class Game {
   drawCastle(){
     let castle = document.getElementById("castle");
     this.ctx.drawImage(castle, 0, 505, 100,100);
+  }
+
+  drawScore(){
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText("Current Score: "+this.score, 320, 50);
   }
 
   endGame(){
