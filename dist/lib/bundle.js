@@ -109,6 +109,7 @@ class Cannon{
     this.angle = 0;
     this.ctx = options.ctx;
     this.reloading = false;
+    this.drawReloading = this.drawReloading.bind(this);
   }
 
   draw(ctx){
@@ -135,6 +136,7 @@ class Cannon{
     ctx.fill();
 
     this.drawAngle();
+    this.drawReloading();
     // this.drawWind();
     // this.drawRotation();
   }
@@ -167,10 +169,12 @@ class Cannon{
     if (!this.reloading) {
       this.game.add(cannonBall);
       this.reloading = true;
+      // this.drawReloading();
     } else {
       let that = this;
       setTimeout(function(){
         that.reloading = false;
+        // that.drawReloading();
       }, 3000);
     }
   }
@@ -192,6 +196,17 @@ class Cannon{
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#0095DD";
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
+  }
+
+  drawReloading(){
+    console.log("calling reloading");
+    this.ctx.font="16px Arial";
+    this.ctx.fillStyle= "#0095DD";
+    if (this.reloading) {
+      this.ctx.fillText("Reloading...", 50, 50);
+    } else {
+      this.ctx.fillText("Ready!", 50, 50);
+    }
   }
 
   isCollidedWith(otherObject){
@@ -369,14 +384,10 @@ class Enemy extends MovingObject{
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
   // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
-    console.log("YOU LOSE ENEMY REACHED YOU!");
-    window.clearInterval(this.game.enemiesCreation);
-    this.game.enemies = [];
-    // window.cancelAnimationFrame(window.animation);
-
-    // this.game
-    // console.log("GAME OVER");
-    // cancelAnimationFrame(window.animation);
+    // console.log("YOU LOSE ENEMY REACHED YOU!");
+    // window.clearInterval(this.game.enemiesCreation);
+    // this.game.enemies = [];
+    this.game.endGame();
   }
   if (this.game.isOutOfBounds(this.pos)) {
     // console.log("removing cannonball");
@@ -537,7 +548,9 @@ class Game {
   }
 
   endGame(){
-
+    console.log("YOU LOSE ENEMY REACHED YOU!");
+    window.clearInterval(this.enemiesCreation);
+    this.enemies = [];
   }
 
   // nextLevel(){

@@ -33,14 +33,10 @@ class Enemy extends MovingObject{
   this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
   // console.log(this.pos[0]);
   if (this.pos[0] < 200) {
-    console.log("YOU LOSE ENEMY REACHED YOU!");
-    window.clearInterval(this.game.enemiesCreation);
-    this.game.enemies = [];
-    // window.cancelAnimationFrame(window.animation);
-
-    // this.game
-    // console.log("GAME OVER");
-    // cancelAnimationFrame(window.animation);
+    // console.log("YOU LOSE ENEMY REACHED YOU!");
+    // window.clearInterval(this.game.enemiesCreation);
+    // this.game.enemies = [];
+    this.game.endGame();
   }
   if (this.game.isOutOfBounds(this.pos)) {
     // console.log("removing cannonball");

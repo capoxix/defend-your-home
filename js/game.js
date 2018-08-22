@@ -133,7 +133,9 @@ class Game {
   }
 
   endGame(){
-
+    console.log("YOU LOSE ENEMY REACHED YOU!");
+    window.clearInterval(this.enemiesCreation);
+    this.enemies = [];
   }
 
   // nextLevel(){

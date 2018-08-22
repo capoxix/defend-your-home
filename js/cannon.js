@@ -14,6 +14,7 @@ class Cannon{
     this.angle = 0;
     this.ctx = options.ctx;
     this.reloading = false;
+    this.drawReloading = this.drawReloading.bind(this);
   }
 
   draw(ctx){
@@ -40,6 +41,7 @@ class Cannon{
     ctx.fill();
 
     this.drawAngle();
+    this.drawReloading();
     // this.drawWind();
     // this.drawRotation();
   }
@@ -72,10 +74,12 @@ class Cannon{
     if (!this.reloading) {
       this.game.add(cannonBall);
       this.reloading = true;
+      // this.drawReloading();
     } else {
       let that = this;
       setTimeout(function(){
         that.reloading = false;
+        // that.drawReloading();
       }, 3000);
     }
   }
@@ -97,6 +101,17 @@ class Cannon{
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#0095DD";
     this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
+  }
+
+  drawReloading(){
+    console.log("calling reloading");
+    this.ctx.font="16px Arial";
+    this.ctx.fillStyle= "#0095DD";
+    if (this.reloading) {
+      this.ctx.fillText("Reloading...", 50, 50);
+    } else {
+      this.ctx.fillText("Ready!", 50, 50);
+    }
   }
 
   isCollidedWith(otherObject){
