@@ -35,14 +35,33 @@ class GameView {
   animate(time){
     // console.log("animating");
     const timeDelta = time - this.lastTime;
-    this.game.step(timeDelta);
+    // let fps = 20;
+    // let that = this;
 
+//     setTimeout(function() {
+//       that.game.step(timeDelta);
+//       that.game.draw(that.ctx);
+//       // this.game.cannon.draw(this.ctx);
+//       that.lastTime = time;
+//
+//       requestAnimationFrame(that.animate.bind(that));
+//
+//     // ... Code for Drawing the Frame ...
+//
+// }, 1000 / fps);
+
+  this.game.step(timeDelta);
+  this.game.draw(this.ctx);
+  // this.game.cannon.draw(this.ctx);
+  this.lastTime = time;
+
+  requestAnimationFrame(this.animate.bind(this));
     // debugger;
-    this.game.draw(this.ctx);
-    // this.game.cannon.draw(this.ctx);
-    this.lastTime = time;
-
-    requestAnimationFrame(this.animate.bind(this));
+    // this.game.draw(this.ctx);
+    // // this.game.cannon.draw(this.ctx);
+    // this.lastTime = time;
+    //
+    // requestAnimationFrame(this.animate.bind(this));
 
 
 
