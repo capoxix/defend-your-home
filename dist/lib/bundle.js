@@ -390,23 +390,23 @@ class Enemy extends MovingObject{
   }
 
   draw(ctx){
-    // let enemyImg = document.getElementById('enemy');
-    // // if (this.animationDelay >= 5) debugger;
-    // this.animationDelay += 1;
-    // if (this.animationDelay++ >= 5){
-    //   this.animationDelay = 0;
-    //   this.animationCount++;
-    //
-    //   if (this.animationCount >= this.enemyAnimation.length){
-    //     this.animationCount = 0;
-    //     console.log(this.animationCurrentFrame);
-    //     debugger;
-    //     this.animationCurrentFrame = this.enemyAnimation[this.animationCount];
-    //   }
-    //   ctx.drawImage(enemyImg,this.animationCurrentFrame[0], this.animationCurrentFrame[1],
-    //     this.animationCurrentFrame[2],
-    //     this.animationCurrentFrame[3], this.pos[0],this.pos[1]-50, 30,75);
-    // }
+    let enemyImg = document.getElementById('enemy');
+    // if (this.animationDelay >= 5) debugger;
+    this.animationDelay += 1;
+    if (this.animationDelay++ >= 15){
+      this.animationDelay = 0;
+      this.animationCount++;
+
+      if (this.animationCount >= this.enemyAnimation.length){
+        this.animationCount = 0;
+        // console.log(this.animationCurrentFrame);
+        // debugger;
+        this.enemyAnimation[this.animationCount];
+      }
+      ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
+          this.enemyAnimation[this.animationCount][2],
+          this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1]-50, 30,75);
+    }
 
 
 
@@ -415,13 +415,13 @@ class Enemy extends MovingObject{
       // ctx.drawImage(enemyImg,sprite[0], sprite[1], sprite[2], sprite[3], this.pos[0],this.pos[1]-50, 30,75);
       // ctx.restore();
 
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    );
-
-    ctx.fill();
+    // ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    // );
+    //
+    // ctx.fill();
 
   }
 
