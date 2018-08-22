@@ -120,11 +120,11 @@ class Cannon{
     this.ctx.save();
     this.ctx.translate(130, 570);
     this.ctx.rotate((this.angle-25) * 3 * Math.PI/180);
-    this.ctx.drawImage(cannonTop,-45 ,-45 , 85, 85);
+    this.ctx.drawImage(cannonTop,-35 ,-35 , 70, 70);
     this.ctx.restore();
     this.ctx.save();
     this.ctx.translate(130,570);
-    this.ctx.drawImage(cannonBottom, -47.5, -47.5, 95, 95);
+    this.ctx.drawImage(cannonBottom, -40, -40, 80, 80);
     this.ctx.restore();
 
   }
