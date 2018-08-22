@@ -1,6 +1,9 @@
 const Game = require('./game');
 const GameView = require('./game_view');
 
+// import Game from './game.js';
+// import GameView from './game_view.js';
+
 document.addEventListener("DOMContentLoaded", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;

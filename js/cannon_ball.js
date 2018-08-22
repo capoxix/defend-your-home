@@ -1,4 +1,6 @@
 const MovingObject = require('./moving_object');
+const Enemy = require('./enemy');
+// import MovingObject from './moving_object.js';
 
 const DEFAULTS = {
   COLOR: 'black',
@@ -33,6 +35,10 @@ class CannonBall extends MovingObject {
     this.windRadian = Math.PI * this.game.windAngle / 180;
     this.windVerticalVelocity = Math.sin(this.windRadian) * this.game.windVelocity;
     this.windHorizontalVelocity = Math.cos(this.windRadian)* this.game.windVelocity;
+    // debugger;
+    // // console.log("windRadian", this.windRadian);
+    // console.log("windVerticalVelocity", this.windVerticalVelocity);
+    // console.log("windHorizontalVecloity", this.windHorizontalVelocity);
   }
 
   // collidedWith(otherObject){
@@ -79,10 +85,21 @@ class CannonBall extends MovingObject {
       // }
     }
   }
+
+  collidedWith(otherObject){
+    if (otherObject instanceof Enemy){
+      console.log("cannonball collidedwith");
+      this.game.crashSound.play();
+      this.game.changeWind();
+      this.game.remove(otherObject);
+      this.game.remove(this);
+    }
+  }
 }
 
 CannonBall.SPEED = 15;
 CannonBall.RADIUS = 10;
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
+// export default CannonBall;
 module.exports = CannonBall;

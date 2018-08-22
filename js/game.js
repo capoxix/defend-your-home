@@ -2,6 +2,10 @@ const Cannon = require('./cannon');
 const CannonBall = require('./cannon_ball');
 const Enemy = require('./enemy');
 
+// import Cannon from  './cannon.js';
+// import CannonBall from './cannon_ball.js';
+// import Enemy from './enemy.js';
+
 class Game {
   constructor(ctx){
     this.ctx = ctx;
@@ -14,10 +18,16 @@ class Game {
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
-    this.windAngle = Math.round(Math.random() * 360 - 180);
+    this.windAngle = Math.round(Math.random() * 360);
     this.sound = sound.bind(this);
     this.crashSound = new sound('sounds/explosion.mp3');
+    this.changeWind = this.changeWind.bind(this);
 
+  }
+
+  changeWind(){
+    this.windVelocity = (Math.random() * 2).toFixed(2);
+    this.windAngle = Math.round(Math.random() * 360);
   }
 
   moveObjects(delta) {
@@ -82,7 +92,7 @@ class Game {
     let that = this;
     this.enemiesCreation = setInterval(function(){
       that.add(new Enemy({pos: [950,525], game: that}));
-    }, 3000);
+    }, 4000);
   }
 
   isOutOfBounds(pos) {
@@ -119,7 +129,7 @@ class Game {
     // this.ctx.translate(150, 100);
     // this.ctx.translate(400,300);
     this.ctx.translate(475,125);
-    this.ctx.rotate((this.windAngle-90) * Math.PI/180);
+    this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
     this.ctx.fillStyle = "yellow";
@@ -167,4 +177,5 @@ Game.DIM_X = 1000;
 Game.DIM_Y = 600;
 Game.BG_COLOR = 'lightblue';
 
+// export default Game;
 module.exports = Game;

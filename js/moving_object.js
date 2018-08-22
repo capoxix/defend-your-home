@@ -1,8 +1,12 @@
-const Util = require('./util');
+// import Util from './util.js';
+const Util = require('./util.js');
+// import Cannon from './cannon.js';
+// import CannonBall from './cannon_ball.js';
+// import Enemy from './enemy.js';
+// const Cannon = require('./cannon');
+// const CannonBall = require('./cannon_ball');
 // const Enemy = require('./enemy');
 
-const Cannon = require('./cannon');
-const CannonBall = require('./cannon_ball');
 
 class MovingObject {
   constructor(options){
@@ -13,21 +17,7 @@ class MovingObject {
     this.game = options.game;
   }
 
-  collidedWith(otherObject){
-    // debugger;
-    // console.log(this, "colliding with", otherObject);
-    if (otherObject !== this) {
-      this.game.crashSound.play();
-      this.game.remove(otherObject);
-      this.game.remove(this);
-      let that = this;
-    }
-
-    // if(otherObject instanceof Cannon){
-    //   console.log("GAME OVER!!!!");
-    //   this.game.remove(this);
-    // }
-  }
+  collidedWith(otherObject){}
 
   draw(ctx) {
     ctx.fillStyle = this.color;
@@ -44,18 +34,18 @@ class MovingObject {
   // if the computer is busy the time delta will be larger
   // in this case the MovingObject should move farther in this frame
   // velocity of object is how far it should move in 1/60th of a second
-  const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
-      offsetX = this.vel[0] * velocityScale,
-      offsetY = this.vel[1] * velocityScale;
+    const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
+        offsetX = this.vel[0] * velocityScale,
+        offsetY = this.vel[1] * velocityScale;
 
-  this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-  if (this.game.isOutOfBounds(this.pos)) {
-    // console.log("removing cannonball");
-    // debugger
-    this.remove();
-    // }
+    this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
+    if (this.game.isOutOfBounds(this.pos)) {
+      // console.log("removing cannonball");
+      // debugger
+      this.remove();
+      // }
+    }
   }
-}
 
   isCollidedWith(otherObject){
     let centerDist = Util.dist(this.pos, otherObject.pos);
@@ -67,4 +57,7 @@ class MovingObject {
   }
 }
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
+// export default MovingObject;
+
+// export default MovingObject;
 module.exports = MovingObject;

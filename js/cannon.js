@@ -1,7 +1,11 @@
-// const MovingObject = require('./moving_object');
+const MovingObject = require('./moving_object');
 const CannonBall = require('./cannon_ball');
 const Enemy = require('./enemy');
 const Util = require("./util");
+
+// import CannonBall from './cannon_ball.js';
+// import Enemy from './enemy.js';
+// import Util from './util.js';
 
 
 class Cannon{
@@ -99,7 +103,7 @@ class Cannon{
       setTimeout(function(){
         that.reloading = false;
         // that.drawReloading();
-      }, 500);
+      }, 300);
     }
   }
 
@@ -159,4 +163,5 @@ class Cannon{
 }
 
 Cannon.RADIUS = 15;
+// export default Cannon;
 module.exports = Cannon;
