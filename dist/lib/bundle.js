@@ -413,7 +413,7 @@ class Enemy extends MovingObject{
     //         that.enemyAnimation[that.animationCount][3], that.pos[0],that.pos[1]-50, 30,75);
     //   }
     // }, 1000);
-    
+
     this.animationDelay += 1;
     if (this.animationDelay++ >= 1){
       this.animationDelay = 0;
