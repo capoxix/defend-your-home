@@ -31,22 +31,24 @@ class Cannon{
     //
     // ctx.fill();
 
-    ctx.fillStyle = this.color;
-    this.ctx.beginPath();
-    this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*3 * Math.PI/180, 0, 2 * Math.PI);
-    this.ctx.stroke();
-    this.ctx.fill();
 
-    ctx.fillStyle = 'brown';
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], 595, 10, 0 , 2 * Math.PI, true
-    );
-
-    ctx.fill();
+    // ctx.fillStyle = this.color;
+    // this.ctx.beginPath();
+    // this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*3 * Math.PI/180, 0, 2 * Math.PI);
+    // this.ctx.stroke();
+    // this.ctx.fill();
+    //
+    // ctx.fillStyle = 'brown';
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], 595, 10, 0 , 2 * Math.PI, true
+    // );
+    //
+    // ctx.fill();
 
     this.drawAngle();
     this.drawReloading();
+    this.drawRotation();
     // this.drawWind();
     // this.drawRotation();
   }
@@ -100,14 +102,6 @@ class Cannon{
   }
 
   drawReloading(){
-    // console.log("calling reloading");
-    // this.ctx.font="16px Arial";
-    // this.ctx.fillStyle= "#0095DD";
-    // if (this.reloading) {
-    //   this.ctx.fillText("Reloading...", 50, 50);
-    // } else {
-    //   this.ctx.fillText("Ready!", 50, 50);
-    // }
     this.ctx.font="16px Arial";
     this.ctx.fillStyle= "#0095DD";
     this.ctx.fillText("Available cannonballs: "+this.game.cannonBallsCount, 50,50);
@@ -120,16 +114,21 @@ class Cannon{
 
 
 
-  // drawRotation(){
-  //   this.ctx.save();
-  //   this.ctx.translate(50, 450);
-  //   this.ctx.fillStyle = "black";
-  //   this.ctx.beginPath();
-  //   this.ctx.ellipse(100, 100, 20, 50, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
-  //   this.ctx.stroke();
-  //   this.ctx.fill();
-  //   this.ctx.restore();
-  // }
+  drawRotation(){
+    let cannonTop = document.getElementById('cannon-top');
+    let cannonBottom = document.getElementById('cannon-bottom');
+    this.ctx.save();
+    this.ctx.translate(130, 570);
+    this.ctx.rotate((this.angle-25) * 3 * Math.PI/180);
+    this.ctx.drawImage(cannonTop,-45 ,-45 , 85, 85);
+    this.ctx.restore();
+    this.ctx.save();
+    this.ctx.translate(130,570);
+    this.ctx.drawImage(cannonBottom, -47.5, -47.5, 95, 95);
+    this.ctx.restore();
+
+  }
+
 
   move(){/*undefined since cannon is not a moving object */}
 
