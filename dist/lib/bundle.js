@@ -194,7 +194,7 @@ class Cannon{
       setTimeout(function(){
         that.reloading = false;
         // that.drawReloading();
-      }, 2000);
+      }, 500);
     }
   }
 
@@ -382,7 +382,7 @@ class Enemy extends MovingObject{
     this.enemyAnimation = [[8,510, 31, 74],[48,510, 47,74], [104,511,39,73],
     [152,511, 29, 73], [192,510, 40, 74], [240,510,32,74]];
 
-    this.enemiesAnimation =
+    // this.enemiesAnimation =
     this.animationCount = 0;
     this.animationDelay = 0;
   }
@@ -418,23 +418,22 @@ class Enemy extends MovingObject{
 
       this.animationDelay += 1;
 
-    if (this.animationDelay++ >= 1){
+    if (this.animationDelay++ >= 15){
       this.animationDelay = 0;
       this.animationCount++;
 
       if (this.animationCount >= this.enemyAnimation.length){
         this.animationCount = 0;
-        // console.log(this.animationCurrentFrame);
-        // debugger;
         this.enemyAnimation[this.animationCount];
       }
-      // ctx.globalAlpha = 2;
-      // ctx.clearRect(this.pos[0], this.pos[1]-50, 30, 75);
-      // ctx.save();
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
-          this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1]-50, 30,75);
+          this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
       // ctx.restore();
+    } else {
+      ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
+          this.enemyAnimation[this.animationCount][2],
+          this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
     }
 
 
@@ -579,7 +578,7 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,570], game: that}));
+      that.add(new Enemy({pos: [950,520], game: that}));
     }, 3000);
   }
 

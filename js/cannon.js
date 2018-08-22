@@ -99,7 +99,7 @@ class Cannon{
       setTimeout(function(){
         that.reloading = false;
         // that.drawReloading();
-      }, 2000);
+      }, 500);
     }
   }
 

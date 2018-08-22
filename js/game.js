@@ -81,7 +81,7 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,570], game: that}));
+      that.add(new Enemy({pos: [950,520], game: that}));
     }, 3000);
   }
 
