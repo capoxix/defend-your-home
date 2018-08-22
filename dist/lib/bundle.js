@@ -110,6 +110,7 @@ class Cannon{
     this.ctx = options.ctx;
     this.reloading = false;
     this.drawReloading = this.drawReloading.bind(this);
+    this.reload = this.reload.bind(this);
   }
 
   draw(ctx){
@@ -123,7 +124,7 @@ class Cannon{
 
     ctx.fillStyle = this.color;
     this.ctx.beginPath();
-    this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*5 * Math.PI/180, 0, 2 * Math.PI);
+    this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*3 * Math.PI/180, 0, 2 * Math.PI);
     this.ctx.stroke();
     this.ctx.fill();
 
@@ -166,6 +167,24 @@ class Cannon{
       game: this.game,
       angle: this.angle
     });
+
+    // this.game.add(cannonBall);
+
+    // if (!this.reloading) {
+    //   this.game.add(cannonBall);
+    //   this.reloading = true;
+    //   // this.drawReloading();
+    // } else {
+    //   let that = this;
+    //   setTimeout(function(){
+    //     that.reloading = false;
+    //     // that.drawReloading();
+    //   }, 3000);
+    // }
+    this.reload(cannonBall);
+  }
+
+  reload(cannonBall){
     if (!this.reloading) {
       this.game.add(cannonBall);
       this.reloading = true;
@@ -175,14 +194,16 @@ class Cannon{
       setTimeout(function(){
         that.reloading = false;
         // that.drawReloading();
-      }, 3000);
+      }, 2000);
     }
   }
+
+
 
   rotate(move){
     this.angle += move[1];
 
-    console.log("angle:", this.angle);
+    // console.log("angle:", this.angle);
     // this.pos[0] += move[0];
     // this.pos[1] += move[1];
     this.vel[0] += move[0];
@@ -195,11 +216,11 @@ class Cannon{
   drawAngle(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "#0095DD";
-    this.ctx.fillText("Angle: "+this.angle* 5, 8, 20);
+    this.ctx.fillText("Angle: "+this.angle * 3, 8, 20);
   }
 
   drawReloading(){
-    console.log("calling reloading");
+    // console.log("calling reloading");
     this.ctx.font="16px Arial";
     this.ctx.fillStyle= "#0095DD";
     if (this.reloading) {
@@ -270,11 +291,10 @@ class CannonBall extends MovingObject {
     this.radian = Math.PI * (90- this.angle)/180;
     this.airTime = 0;
     //
-    this.pos[0] = Math.cos(this.radian)*this.pos[0] + this.pos[0];
-    this.pos[1] = this.pos[1] + 2;
-    // this.pos[1] = Math.sin(this.radian)*this.pos[1] + this.pos[1];
-    //
-    console.log(options.vel[0]);
+    this.pos[1] = Math.cos(Math.PI* this.angle* 5/ 180)* -25 + this.pos[1];
+    this.pos[0] = Math.sin(Math.PI* this.angle*5/180) * 25 + this.pos[0];
+
+    // console.log(options.vel[0]);
     this.verticalVelocity = Math.sin(this.radian) * options.vel[0];
     this.horizontalVelocity = Math.cos(this.radian) * options.vel[0];
 
