@@ -22,7 +22,7 @@ class Enemy extends MovingObject{
     let enemyImg = document.getElementById('enemy');
     // if (this.animationDelay >= 5) debugger;
     this.animationDelay += 1;
-    if (this.animationDelay++ >= 15){
+    if (this.animationDelay++ >= 18){
       this.animationDelay = 0;
       this.animationCount++;
 
@@ -32,6 +32,7 @@ class Enemy extends MovingObject{
         // debugger;
         this.enemyAnimation[this.animationCount];
       }
+      // ctx.globalAlpha = 2;
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
           this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1]-50, 30,75);

@@ -393,7 +393,7 @@ class Enemy extends MovingObject{
     let enemyImg = document.getElementById('enemy');
     // if (this.animationDelay >= 5) debugger;
     this.animationDelay += 1;
-    if (this.animationDelay++ >= 15){
+    if (this.animationDelay++ >= 18){
       this.animationDelay = 0;
       this.animationCount++;
 
@@ -403,6 +403,7 @@ class Enemy extends MovingObject{
         // debugger;
         this.enemyAnimation[this.animationCount];
       }
+      // ctx.globalAlpha = 2;
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
           this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1]-50, 30,75);
@@ -484,7 +485,8 @@ class Game {
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
-
+    this.sound = sound.bind(this);
+    this.crashSound = new sound('sounds/explosion.mp3');
 
   }
 
@@ -609,6 +611,21 @@ class Game {
 
   // nextLevel(){
   // }
+}
+
+function sound(src){
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+      this.sound.play();
+  };
+  this.stop = function(){
+      this.sound.pause();
+  };
 }
 
 
@@ -739,6 +756,7 @@ class MovingObject {
     // debugger;
     // console.log(this, "colliding with", otherObject);
     if (otherObject !== this) {
+      this.game.crashSound.play();
       this.game.remove(otherObject);
       this.game.remove(this);
       let that = this;

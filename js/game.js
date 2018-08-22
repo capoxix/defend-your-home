@@ -15,7 +15,8 @@ class Game {
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
-
+    this.sound = sound.bind(this);
+    this.crashSound = new sound('sounds/explosion.mp3');
 
   }
 
@@ -140,6 +141,21 @@ class Game {
 
   // nextLevel(){
   // }
+}
+
+function sound(src){
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = function(){
+      this.sound.play();
+  };
+  this.stop = function(){
+      this.sound.pause();
+  };
 }
 
 

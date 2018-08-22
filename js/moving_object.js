@@ -17,6 +17,7 @@ class MovingObject {
     // debugger;
     // console.log(this, "colliding with", otherObject);
     if (otherObject !== this) {
+      this.game.crashSound.play();
       this.game.remove(otherObject);
       this.game.remove(this);
       let that = this;
