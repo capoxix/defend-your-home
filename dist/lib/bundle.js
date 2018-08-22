@@ -392,8 +392,30 @@ class Enemy extends MovingObject{
   draw(ctx){
     let enemyImg = document.getElementById('enemy');
     // if (this.animationDelay >= 5) debugger;
+    // let c = ctx;
+    // let that = this;
+    // setInterval(function(){
+    //   that.animationDelay += 1;
+    //   if (that.animationDelay++ >= 1){
+    //     that.animationDelay = 0;
+    //     that.animationCount++;
+    //
+    //     if (that.animationCount >= that.enemyAnimation.length){
+    //       that.animationCount = 0;
+    //       // console.log(this.animationCurrentFrame);
+    //       // debugger;
+    //       that.enemyAnimation[that.animationCount];
+    //     }
+    //     // ctx.globalAlpha = 2;
+    //     // ctx.clearRect(this.pos[0], this.pos[1]-50, 30, 75);
+    //     c.drawImage(enemyImg,  that.enemyAnimation[that.animationCount][0], that.enemyAnimation[that.animationCount][1],
+    //         that.enemyAnimation[that.animationCount][2],
+    //         that.enemyAnimation[that.animationCount][3], that.pos[0],that.pos[1]-50, 30,75);
+    //   }
+    // }, 1000);
+    
     this.animationDelay += 1;
-    if (this.animationDelay++ >= 18){
+    if (this.animationDelay++ >= 1){
       this.animationDelay = 0;
       this.animationCount++;
 
@@ -404,6 +426,7 @@ class Enemy extends MovingObject{
         this.enemyAnimation[this.animationCount];
       }
       // ctx.globalAlpha = 2;
+      // ctx.clearRect(this.pos[0], this.pos[1]-50, 30, 75);
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
           this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1]-50, 30,75);
