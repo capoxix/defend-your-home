@@ -28,6 +28,7 @@ class Game {
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
+    // this.highScores = [];
     // this.muteVolume = this.muteVolume.bind(this);
     // this.addVolumeButton();
     // this.addVolumeEventListener = this.addVolumeEventListener.bind(this);
@@ -162,6 +163,7 @@ class Game {
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
     this.cannonballs = [];
+    window.highScores.push(this.score);
   }
 
   drawEndGame(){

@@ -9,28 +9,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
 
-  let started = false;
+  window.highScores = [];
+
+  // let started = false;
   // let muted = false;
 
-  const ctx = canvasEl.getContext("2d");
-  const game = new Game(ctx);
+  let ctx = canvasEl.getContext("2d");
+  let game = new Game(ctx);
   let gameV = new GameView(game, ctx);//.setup();//.start();
   gameV.setup();
 
   let startButton = document.getElementById("start");
   startButton.addEventListener("click", () => {
-    if(!started){
+    // if(!started){
       gameV.start();
-      started = true;
-    }
+    //   started = true;
+    // }
+  });
+
+  let newGameButton = document.getElementById("new-game");
+    newGameButton.addEventListener("click", () => {
+      game = new Game(ctx);
+      gameV = new GameView(game, ctx);
+      console.log("game", game);
+      console.log("gameview", gameV);
+      console.log(ctx);
+      gameV.setup();
   });
 
   let stopButton = document.getElementById("stop");
   stopButton.addEventListener("click", () => {
-    if(started) {
+    // if(started) {
       gameV.stop();
-      started= false;
-  }
+      // started= false;
+  // }
   });
 
   let audioNode = document.getElementById("sound");

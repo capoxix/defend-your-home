@@ -466,6 +466,7 @@ class Game {
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
+    // this.highScores = [];
     // this.muteVolume = this.muteVolume.bind(this);
     // this.addVolumeButton();
     // this.addVolumeEventListener = this.addVolumeEventListener.bind(this);
@@ -600,6 +601,7 @@ class Game {
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
     this.cannonballs = [];
+    window.highScores.push(this.score);
   }
 
   drawEndGame(){
@@ -666,11 +668,12 @@ class GameView {
     this.game = game;
     this.cannon = this.game.cannon;
 
-    this.requestId = undefined;
+    // this.requestId = undefined;
 
     // this.loop = this.loop.bind(this);
-    // this.start = this.start.bind(this);
-    // this.stop =  this.stop.bind(this);
+    this.start = this.start.bind(this);
+    this.stop =  this.stop.bind(this);
+    this.animate = this.animate.bind(this);
     //
     // this.lastTime = 0;
 
@@ -693,53 +696,65 @@ class GameView {
   start() {
     this.bindKeyHandlers();
     this.lastTime = 0;
-    window.animation = requestAnimationFrame(this.animate.bind(this));
+    this.animationPlaying = true;
+    // if(!this.requestId){
+      this.requestId = window.requestAnimationFrame(this.animate);
+    // }
+    //window.animation = requestAnimationFrame(this.animate.bind(this));
   }
-
+  //
   setup(){
     this.game.draw(this.ctx);
   }
 
-  // stop(){
-  //
-  // }
-
   animate(time){
     // console.log("animating");
-    const timeDelta = time - this.lastTime;
+    if(this.animationPlaying) {
+      const timeDelta = time - this.lastTime;
+      // debugger;
+      // window.time = time;
+      console.log('time', time);
+      console.log('lastTime', this.lastTime);
+      this.game.step(timeDelta);
+      this.game.draw(this.ctx);
+      // this.game.cannon.draw(this.ctx);
+      this.lastTime = time;
 
-    this.game.step(timeDelta);
-    this.game.draw(this.ctx);
-    // this.game.cannon.draw(this.ctx);
-    this.lastTime = time;
+      requestAnimationFrame(this.animate.bind(this));
+    }
+  }
 
-    requestAnimationFrame(this.animate.bind(this));
+  stop(){
+    window.cancelAnimationFrame(this.requestId);
+    this.animationPlaying = false;
+    // this.lastTime = time;
   }
 
   /**/
 
     // start(){
     //   // debugger;
+    //   this.lastTime = 0;
+    //   this.animationPlaying = true;
     //   if(!this.requestId){
     //     this.requestId = window.requestAnimationFrame(this.loop);
     //   }
     // }
     //
     // loop(time){
-    //   this.requestId = undefined;
-    //
-    //   const timeDelta = time- this.lastTime;
-    //   this.game.step(timeDelta);
-    //   this.game.draw(this.ctx);
-    //   this.start();
+    //   if(this.animationPlaying){
+    //     const timeDelta = time- this.lastTime;
+    //     this.game.step(timeDelta);
+    //     this.game.draw(this.ctx);
+    //     window.requestAnimationFrame(this.loop);
+    //   }
     //
     // }
     //
     // stop(){
-    //   if(this.requestId) {
+    //
     //     window.cancelAnimationFrame(this.requestId);
-    //     this.requestId = undefined;
-    //   }
+    //     this.animationPlaying = false;
     // }
 
 
@@ -780,28 +795,40 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
 
-  let started = false;
+  window.highScores = [];
+
+  // let started = false;
   // let muted = false;
 
-  const ctx = canvasEl.getContext("2d");
-  const game = new Game(ctx);
+  let ctx = canvasEl.getContext("2d");
+  let game = new Game(ctx);
   let gameV = new GameView(game, ctx);//.setup();//.start();
   gameV.setup();
 
   let startButton = document.getElementById("start");
   startButton.addEventListener("click", () => {
-    if(!started){
+    // if(!started){
       gameV.start();
-      started = true;
-    }
+    //   started = true;
+    // }
+  });
+
+  let newGameButton = document.getElementById("new-game");
+    newGameButton.addEventListener("click", () => {
+      game = new Game(ctx);
+      gameV = new GameView(game, ctx);
+      console.log("game", game);
+      console.log("gameview", gameV);
+      console.log(ctx);
+      gameV.setup();
   });
 
   let stopButton = document.getElementById("stop");
   stopButton.addEventListener("click", () => {
-    if(started) {
+    // if(started) {
       gameV.stop();
-      started= false;
-  }
+      // started= false;
+  // }
   });
 
   let audioNode = document.getElementById("sound");
