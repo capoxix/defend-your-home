@@ -17,12 +17,13 @@ p {
 }
 
 button{
-  margin: 0 auto;
+  /* margin: 0 auto;
   width: 50px;
-  height: 50px;
-  background: url('images/volume.png');
+  height: 50px; */
+  /* background: yellow; */
+  /* background: url('./images/volume.png'); */
 }
 
 .muted{
-  background: url('images/muted.png');
+  /* background: url('../../images/muted.png'); */
 }

@@ -73,7 +73,7 @@ class Enemy extends MovingObject{
   // }
 }
 
-Enemy.RADIUS = 20;
+Enemy.RADIUS = 25;
 
 // export default Enemy;
 module.exports = Enemy;

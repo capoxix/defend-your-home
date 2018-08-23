@@ -28,8 +28,10 @@ class Game {
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
-    this.muteVolume = this.muteVolume.bind(this);
-    this.addVolumeButton();
+    // this.muteVolume = this.muteVolume.bind(this);
+    // this.addVolumeButton();
+    // this.addVolumeEventListener = this.addVolumeEventListener.bind(this);
+    // this.addVolumeEventListener();
 
   }
   addCannonBalls(){
@@ -168,34 +170,10 @@ class Game {
     this.ctx.fillText(this.endGameMsg, 320, 70);
   }
 
+
   // nextLevel(){
+  //
   // }
-
-  nextLevel(){
-
-  }
-
-  addVolumeButton(){
-    this.muteButton = document.createElement("BUTTON");
-    this.muteButton.addEventListener("click", this.muteVolume);
-    // this.muteButton = document.createElement("BUTTON").addEventListener("click", this.muteVolume);
-    let volumeContainer = document.getElementById("sound-button");
-    volumeContainer.appendChild(this.muteButton);
-  }
-
-  muteVolume(){
-    // debugger;
-    let audioNode = document.getElementById("sound");
-    if (!audioNode.muted) {
-      // this.muted = false;
-      audioNode.muted = true;
-      this.muteButton.classList.add("muted");
-    } else {
-      // this.muted = false;
-      audioNode.muted = false;
-      this.muteButton.classList.remove("muted");
-    }
-  }
 
   soundFnc(src){
     // debugger;
@@ -217,23 +195,7 @@ class Game {
   }
 }
 
-// function sound(src){
-//   // debugger;
-//   this.sound = document.createElement("audio");
-//   this.sound.setAttribute("id", 'sound');
-//   this.sound.src = src;
-//   this.sound.setAttribute("preload", "auto");
-//   this.sound.setAttribute("controls", "none");
-//   this.sound.style.display = "none";
-//   this.sound.volume = 0.01;
-//   document.body.appendChild(this.sound);
-//   this.play = function(){
-//       this.sound.play();
-//   };
-//   this.stop = function(){
-//       this.sound.pause();
-//   };
-// }
+
 
 
 Game.DIM_X = 1000;

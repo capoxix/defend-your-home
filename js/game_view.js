@@ -6,11 +6,10 @@
 
 class GameView {
   constructor(game, ctx){
-    
+
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
-    this.animation;
   }
 
   bindKeyHandlers(){
@@ -32,6 +31,14 @@ class GameView {
     this.lastTime = 0;
     window.animation = requestAnimationFrame(this.animate.bind(this));
   }
+
+  setup(){
+    this.game.draw(this.ctx);
+  }
+
+  // stop(){
+  //
+  // }
 
   animate(time){
     // console.log("animating");
