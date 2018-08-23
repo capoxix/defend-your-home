@@ -665,6 +665,15 @@ class GameView {
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
+
+    this.requestId = undefined;
+
+    // this.loop = this.loop.bind(this);
+    // this.start = this.start.bind(this);
+    // this.stop =  this.stop.bind(this);
+    //
+    // this.lastTime = 0;
+
   }
 
   bindKeyHandlers(){
@@ -707,6 +716,32 @@ class GameView {
     requestAnimationFrame(this.animate.bind(this));
   }
 
+  /**/
+
+    // start(){
+    //   // debugger;
+    //   if(!this.requestId){
+    //     this.requestId = window.requestAnimationFrame(this.loop);
+    //   }
+    // }
+    //
+    // loop(time){
+    //   this.requestId = undefined;
+    //
+    //   const timeDelta = time- this.lastTime;
+    //   this.game.step(timeDelta);
+    //   this.game.draw(this.ctx);
+    //   this.start();
+    //
+    // }
+    //
+    // stop(){
+    //   if(this.requestId) {
+    //     window.cancelAnimationFrame(this.requestId);
+    //     this.requestId = undefined;
+    //   }
+    // }
+
 
   // stopAnimation(){
     // window.cancelAnimationFrame(window.animation);
@@ -746,6 +781,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.height = Game.DIM_Y;
 
   let started = false;
+  // let muted = false;
 
   const ctx = canvasEl.getContext("2d");
   const game = new Game(ctx);
@@ -772,13 +808,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let volumeMute = document.getElementById("volume-mute");
 
   volumeMute.addEventListener("click", ()=>{
-    console.log("muting");
-    console.log(audioNode);
-    audioNode.muted = true;
+    if (!audioNode.muted)
+      audioNode.muted = true;
   });
 
   let volumeOpen = document.getElementById("volume-up");
   volumeOpen.addEventListener("click",()=>{
+    if (audioNode.muted)
     audioNode.muted = false;
   });
 

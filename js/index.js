@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.height = Game.DIM_Y;
 
   let started = false;
+  // let muted = false;
 
   const ctx = canvasEl.getContext("2d");
   const game = new Game(ctx);
@@ -36,13 +37,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
   let volumeMute = document.getElementById("volume-mute");
 
   volumeMute.addEventListener("click", ()=>{
-    console.log("muting");
-    console.log(audioNode);
-    audioNode.muted = true;
+    if (!audioNode.muted)
+      audioNode.muted = true;
   });
 
   let volumeOpen = document.getElementById("volume-up");
   volumeOpen.addEventListener("click",()=>{
+    if (audioNode.muted)
     audioNode.muted = false;
   });
 

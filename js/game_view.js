@@ -10,6 +10,15 @@ class GameView {
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
+
+    this.requestId = undefined;
+
+    // this.loop = this.loop.bind(this);
+    // this.start = this.start.bind(this);
+    // this.stop =  this.stop.bind(this);
+    //
+    // this.lastTime = 0;
+
   }
 
   bindKeyHandlers(){
@@ -51,6 +60,32 @@ class GameView {
 
     requestAnimationFrame(this.animate.bind(this));
   }
+
+  /**/
+
+    // start(){
+    //   // debugger;
+    //   if(!this.requestId){
+    //     this.requestId = window.requestAnimationFrame(this.loop);
+    //   }
+    // }
+    //
+    // loop(time){
+    //   this.requestId = undefined;
+    //
+    //   const timeDelta = time- this.lastTime;
+    //   this.game.step(timeDelta);
+    //   this.game.draw(this.ctx);
+    //   this.start();
+    //
+    // }
+    //
+    // stop(){
+    //   if(this.requestId) {
+    //     window.cancelAnimationFrame(this.requestId);
+    //     this.requestId = undefined;
+    //   }
+    // }
 
 
   // stopAnimation(){
