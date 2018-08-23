@@ -69,13 +69,12 @@ class CannonBall extends MovingObject {
 
   move(timeDelta) {
       // debugger;
+      /**/
     this.updateCannonBall();
-    /* modified */
-    this.airTime += 1*60/3300;
+    this.airTime += 50/4000;
     const velocityScale = timeDelta / 30;//NORMAL_FRAME_TIME_DELTA,
-    /* modified */
-    const  offsetX = this.vel[0] * velocityScale ;//+this.windHorizontalVelocity;
-    const  offsetY = this.vel[1] * velocityScale ;//+ this.windVerticalVelocity;
+    const  offsetX = this.vel[0] * velocityScale +this.windHorizontalVelocity;
+    const  offsetY = this.vel[1] * velocityScale + this.windVerticalVelocity;
     // console.log("offsetX", offsetX);
     // console.log("offsetY", offsetY);
     // debugger;
