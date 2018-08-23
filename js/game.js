@@ -27,6 +27,7 @@ class Game {
     this.addCannonBalls();
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
+    this.endGameMsg = '';
 
   }
   addCannonBalls(){
@@ -115,6 +116,7 @@ class Game {
     this.drawWind();
     this.drawCastle();
     this.drawScore();
+    this.drawEndGame();
     this.allObjects().forEach(function(object) {
       object.draw(ctx);
     });
@@ -148,13 +150,20 @@ class Game {
 
   endGame(){
     // console.log("YOU LOSE ENEMY REACHED YOU!");
-    this.ctx.font = "16px Arial";
-    this.ctx.fillStyle = "black";
-    this.ctx.fillText("YOU LOSE ENEMY REACHED YOU", 320, 70);
+    // this.ctx.font = "16px Arial";
+    // this.ctx.fillStyle = "black";
+    // this.ctx.fillText("YOU LOSE ENEMY REACHED YOU", 320, 70);
+    this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
     console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
     this.cannonballs = [];
+  }
+
+  drawEndGame(){
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText(this.endGameMsg, 320, 70);
   }
 
   // nextLevel(){
