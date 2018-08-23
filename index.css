@@ -1,71 +1,8 @@
-#game {
-  height: 600px;
-  margin: 0 auto;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  width: 800px;
-  background-color: lightblue;
-}
-
-.angle{
-  position: absolute;
-  left: 30px;
-  bottom: 50px;
-  width: 22px;
-  height: 20px;
-}
-
-.reload {
-  position: absolute;
-  left: 18px;
-  bottom: 0px;
-  width: 70px;
-  height: 20px;
-  background: lightgreen;
-  border-radius: 10px;
-  color: black;
-}
-
-
-
-.cannon {
-  position: absolute;
-  left: 50px;
-  bottom: 20px;
-  width: 12px;
-  height: 30px;
-  background: black;
-  border-radius: 0px 0px 20px 20px;
-  display: block;
-
-}
-
-.cannonWheels{
-  position: absolute;
-  left: 3px;
-  bottom: 0px;
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background: darkgrey;
-  display: block;
-}
 
 p {
   font-size: 13px;
   margin-top: 0px;
   margin-bottom: 0px;
-}
-
-#cannonBall {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background-color: darkgrey;
-  /* display: block; */
-
 }
 
 .instructions{
@@ -79,40 +16,13 @@ p {
   font-size: 20px;
 }
 
-#ram {
-  position: absolute;
-  left: 700px;
-  bottom: 10px;
-  width: 70px;
-  height: 35px;
-  background-color: brown;
-  border-radius: 10px;
-  transition: all 1s linear;
-}
-
-.wind{
-  background-color: white;
-  width: 100px;
-  height: 100px;
-  border-radius: 20px;
-  border-color: 1px solid black;
+button{
   margin: 0 auto;
+  width: 50px;
+  height: 50px;
+  background: url('images/volume.png');
 }
 
-.wind-triangle{
-  position: absolute;
-  bottom: 550px;
-  left: 380px;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid black;
+.muted{
+  background: url('images/muted.png');
 }
-
-/* .wind-rectangle{
-  position: absolute;
-  background-color: black;
-  bottom: 550px;
-  left: 390px;
-  width: 30px;
-  height: 10px;
-} */

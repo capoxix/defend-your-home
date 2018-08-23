@@ -6,6 +6,7 @@
 
 class GameView {
   constructor(game, ctx){
+    
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;

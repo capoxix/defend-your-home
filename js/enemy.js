@@ -67,10 +67,10 @@ class Enemy extends MovingObject{
       delete this;
   }
 
-  changeScore(){
-    let score = document.getElementById("score");
-    score.innerHTML = this.score;
-  }
+  // changeScore(){
+  //   let score = document.getElementById("score");
+  //   score.innerHTML = this.score;
+  // }
 }
 
 Enemy.RADIUS = 20;

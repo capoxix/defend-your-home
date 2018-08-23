@@ -10,17 +10,17 @@ class Game {
   constructor(ctx){
     this.ctx = ctx;
     this.cannon = new Cannon({pos: [120, 525], game: this, ctx: this.ctx});
-    // this.ram = ;
+    this.highScores = [];
     this.cannonballs = [];
-    // this.enemy = new Enemy({pos: [750, 580], game: this});
-    this.enemies = [];//[new Enemy({pos: [950,570], game: this})];
+    this.enemies = [];
     this.addEnemies();
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
-    this.sound = sound.bind(this);
-    this.crashSound = new sound('sounds/explosion.mp3');
+    this.soundFnc = this.soundFnc.bind(this);
+    this.crashSound = this.soundFnc('sounds/explosion.mp3');
+    // debugger;
     this.changeWind = this.changeWind.bind(this);
     this.score = 0;
     this.cannonBallsCount = 0;
@@ -28,6 +28,8 @@ class Game {
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
+    this.muteVolume = this.muteVolume.bind(this);
+    this.addVolumeButton();
 
   }
   addCannonBalls(){
@@ -154,7 +156,7 @@ class Game {
     // this.ctx.fillStyle = "black";
     // this.ctx.fillText("YOU LOSE ENEMY REACHED YOU", 320, 70);
     this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
-    console.log("YOU LOSE!!!");
+    // console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
     this.cannonballs = [];
@@ -168,24 +170,70 @@ class Game {
 
   // nextLevel(){
   // }
+
+  nextLevel(){
+
+  }
+
+  addVolumeButton(){
+    this.muteButton = document.createElement("BUTTON");
+    this.muteButton.addEventListener("click", this.muteVolume);
+    // this.muteButton = document.createElement("BUTTON").addEventListener("click", this.muteVolume);
+    let volumeContainer = document.getElementById("sound-button");
+    volumeContainer.appendChild(this.muteButton);
+  }
+
+  muteVolume(){
+    // debugger;
+    let audioNode = document.getElementById("sound");
+    if (!audioNode.muted) {
+      // this.muted = false;
+      audioNode.muted = true;
+      this.muteButton.classList.add("muted");
+    } else {
+      // this.muted = false;
+      audioNode.muted = false;
+      this.muteButton.classList.remove("muted");
+    }
+  }
+
+  soundFnc(src){
+    // debugger;
+    this.sound = document.createElement("audio");
+    this.sound.setAttribute("id", 'sound');
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    this.sound.volume = 0.01;
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    };
+    this.stop = function(){
+        this.sound.pause();
+    };
+    return this.sound;
+  }
 }
 
-function sound(src){
-  this.sound = document.createElement("audio");
-  this.sound.src = src;
-  this.sound.setAttribute("preload", "auto");
-  this.sound.setAttribute("controls", "none");
-  this.sound.style.display = "none";
-  this.sound.volume = 0.01;
-  document.body.appendChild(this.sound);
-  this.play = function(){
-      this.sound.play();
-  };
-  this.stop = function(){
-      this.sound.pause();
-  };
-}
-
+// function sound(src){
+//   // debugger;
+//   this.sound = document.createElement("audio");
+//   this.sound.setAttribute("id", 'sound');
+//   this.sound.src = src;
+//   this.sound.setAttribute("preload", "auto");
+//   this.sound.setAttribute("controls", "none");
+//   this.sound.style.display = "none";
+//   this.sound.volume = 0.01;
+//   document.body.appendChild(this.sound);
+//   this.play = function(){
+//       this.sound.play();
+//   };
+//   this.stop = function(){
+//       this.sound.pause();
+//   };
+// }
 
 
 Game.DIM_X = 1000;
