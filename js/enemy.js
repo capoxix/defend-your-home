@@ -6,7 +6,7 @@ const CannonBall = require('./cannon_ball');
 class Enemy extends MovingObject{
   constructor(options){
     options.radius = Enemy.RADIUS;
-    options.vel = [-0.5, 0];
+    // options.vel = [-0.5, 0];
     options.color = 'brown';
     // .game = options.game;
     // this.pos = options.pos;
@@ -31,31 +31,15 @@ class Enemy extends MovingObject{
         this.animationCount = 0;
         this.enemyAnimation[this.animationCount];
       }
+
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
           this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
-      // ctx.restore();
     } else {
       ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
           this.enemyAnimation[this.animationCount][2],
           this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
     }
-
-
-
-      // ctx.clearRect(this.pos[0], this.pos[1]-50, 30,75);
-      // updateFrame()
-      // ctx.drawImage(enemyImg,sprite[0], sprite[1], sprite[2], sprite[3], this.pos[0],this.pos[1]-50, 30,75);
-      // ctx.restore();
-
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    // );
-    //
-    // ctx.fill();
-
   }
 
   move(timeDelta) {
@@ -66,26 +50,27 @@ class Enemy extends MovingObject{
     const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
         offsetX = this.vel[0] * velocityScale,
         offsetY = this.vel[1] * velocityScale;
-        // console.log("moving enemy");
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.pos[0] < 200) {
       this.game.endGame();
     }
     if (this.game.isOutOfBounds(this.pos)) {
-      this.remove();
+      this.game.remove(this);
     }
   }
 
-  // collidedWith(otherObject){
-  //   // if (otherObject instanceof this){
-  //   //   console.log("enemy colliding with itself")
-  //     // this.game.crashSound.play();
-  //     // this.game.changeWind();
-  //     // this.game.remove(otherObject);
-  //     // this.game.remove(this);
-  //   }
-  // }
+  collidedWith(otherObject){
+    // console.log('deleting enemy got hit by', otherObject);
+    //   //weird bug where object still 'exists', but not really
+    //   this.game.remove(this);
+      delete this;
+  }
+
+  changeScore(){
+    let score = document.getElementById("score");
+    score.innerHTML = this.score;
+  }
 }
 
 Enemy.RADIUS = 20;

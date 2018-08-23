@@ -23,34 +23,9 @@ class Cannon{
   }
 
   draw(ctx){
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    // );
-    //
-    // ctx.fill();
-
-
-    // ctx.fillStyle = this.color;
-    // this.ctx.beginPath();
-    // this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*3 * Math.PI/180, 0, 2 * Math.PI);
-    // this.ctx.stroke();
-    // this.ctx.fill();
-    //
-    // ctx.fillStyle = 'brown';
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], 595, 10, 0 , 2 * Math.PI, true
-    // );
-    //
-    // ctx.fill();
-
     this.drawAngle();
     this.drawReloading();
     this.drawRotation();
-    // this.drawWind();
-    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -65,7 +40,6 @@ class Cannon{
       relVel[0] + this.vel[0], relVel[1] + this.vel[1]
     ];
 
-    // debugger;
     let dupPos = Array.from(this.pos);
 
     const cannonBall = new CannonBall({
@@ -118,12 +92,12 @@ class Cannon{
     let cannonTop = document.getElementById('cannon-top');
     let cannonBottom = document.getElementById('cannon-bottom');
     this.ctx.save();
-    this.ctx.translate(130, 570);
+    this.ctx.translate(130, 520);
     this.ctx.rotate((this.angle-25) * 3 * Math.PI/180);
     this.ctx.drawImage(cannonTop,-35 ,-35 , 70, 70);
     this.ctx.restore();
     this.ctx.save();
-    this.ctx.translate(130,570);
+    this.ctx.translate(130,520);
     this.ctx.drawImage(cannonBottom, -40, -40, 80, 80);
     this.ctx.restore();
 

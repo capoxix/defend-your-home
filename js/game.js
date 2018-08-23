@@ -9,7 +9,7 @@ const Enemy = require('./enemy');
 class Game {
   constructor(ctx){
     this.ctx = ctx;
-    this.cannon = new Cannon({pos: [120, 575], game: this, ctx: this.ctx});
+    this.cannon = new Cannon({pos: [120, 525], game: this, ctx: this.ctx});
     // this.ram = ;
     this.cannonballs = [];
     // this.enemy = new Enemy({pos: [750, 580], game: this});
@@ -25,6 +25,8 @@ class Game {
     this.score = 0;
     this.cannonBallsCount = 0;
     this.addCannonBalls();
+    this.enemiesVelocity = [-0.5 + (-this.score/70),0];
+    this.endGame = this.endGame.bind(this);
 
   }
   addCannonBalls(){
@@ -59,21 +61,14 @@ class Game {
 
         if (!(obj1 instanceof Cannon || obj2 instanceof Cannon)) {
           // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
-          if(obj1 !== obj2)
+          if((obj1 instanceof Enemy && obj2 instanceof CannonBall)
+          || obj2 instanceof Enemy && obj1 instanceof CannonBall){
             if (obj1.isCollidedWith(obj2)) {
               const collision = obj1.collidedWith(obj2);
               if (collision) return;
             }
+          }
         }
-
-        // if(obj1 instanceof Cannon || obj2 instanceof Cannon){
-        //   console.log("check collision", obj1, obj2);
-        //   if(obj1 != obj2 && !(obj1 instanceof CannonBall) && !(obj2 instanceof CannonBall)){
-        //     if (obj1.isCollidedWith(obj2)){
-        //       console.log("GAME OVER", obj1, "collidedwith", obj2);
-        //     }
-        //   }
-        // }
       }
     }
   }
@@ -81,15 +76,14 @@ class Game {
   remove(object){
     if (object instanceof CannonBall){
       if(this.cannonballs.indexOf(object)!== -1)
-      this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
+        this.cannonballs.splice(this.cannonballs.indexOf(object), 1);
     }else if (object instanceof Enemy){
       if (this.enemies.indexOf(object) !== -1)
-      this.enemies.splice(this.enemies.indexOf(object), 1);
+        this.enemies.splice(this.enemies.indexOf(object), 1);
     }
   }
 
   add(object){
-    // debugger;
     if (object instanceof CannonBall){
       this.cannonballs.push(object);
     }
@@ -101,8 +95,8 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,525], game: that}));
-    }, 1000);
+      that.add(new Enemy({pos: [950,475], game: that, vel: that.enemiesVelocity}));
+    }, 3000);
   }
 
   isOutOfBounds(pos) {
@@ -116,12 +110,8 @@ class Game {
   }
 
   draw(ctx){
-    // this.ctx = ctx;
-    ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
-    // debugger;
-    ctx.fillStyle = Game.BG_COLOR;
-    ctx.fillRect(0,0, Game.DIM_X, Game.DIM_Y);
-    // this.cannon.draw(ctx);
+    let background = document.getElementById("background");
+    ctx.drawImage(background, 0,0,Game.DIM_X, Game.DIM_Y);
     this.drawWind();
     this.drawCastle();
     this.drawScore();
@@ -136,23 +126,18 @@ class Game {
     this.ctx.fillText(this.windVelocity, 465, 90);
 
     this.ctx.save();
-    /*translate to center of canvas?*/
-    // this.ctx.translate(150, 100);
-    // this.ctx.translate(400,300);
     this.ctx.translate(475,125);
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
     this.ctx.fillStyle = "yellow";
-    // this.ctx.fillRect(0,0,100,100);
     this.ctx.drawImage(arrow, -25,-25, 50,50);
     this.ctx.restore();
-    // console.log(this.windAngle)
   }
 
   drawCastle(){
     let castle = document.getElementById("castle");
-    this.ctx.drawImage(castle, 0, 505, 100,100);
+    this.ctx.drawImage(castle, 0, 400, 150,150);
   }
 
   drawScore(){
@@ -162,7 +147,11 @@ class Game {
   }
 
   endGame(){
-    console.log("YOU LOSE ENEMY REACHED YOU!");
+    // console.log("YOU LOSE ENEMY REACHED YOU!");
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText("YOU LOSE ENEMY REACHED YOU", 320, 70);
+    console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
     this.enemies = [];
     this.cannonballs = [];
