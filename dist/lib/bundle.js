@@ -613,6 +613,20 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
+
+    // let audioNode = document.getElementById("sound");
+    // let volumeMute = document.getElementById("volume-mute");
+    //
+    // volumeMute.addEventListener("click", ()=>{
+    //   if (!audioNode.muted)
+    //     audioNode.muted = true;
+    // });
+    //
+    // let volumeOpen = document.getElementById("volume-up");
+    // volumeOpen.addEventListener("click",()=>{
+    //   if (audioNode.muted)
+    //   audioNode.muted = false;
+    // });
   }
 
   drawEndGame(){
@@ -846,6 +860,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx);
       gameV = new GameView(game, ctx);
+      // audioNode = document.getElementById("sound");
+      // audioNode.parentNode.removeChild(audioNode);
       // console.log("game", game);
       // console.log("gameview", gameV);
       // console.log(ctx);

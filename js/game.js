@@ -175,6 +175,20 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
+
+    // let audioNode = document.getElementById("sound");
+    // let volumeMute = document.getElementById("volume-mute");
+    //
+    // volumeMute.addEventListener("click", ()=>{
+    //   if (!audioNode.muted)
+    //     audioNode.muted = true;
+    // });
+    //
+    // let volumeOpen = document.getElementById("volume-up");
+    // volumeOpen.addEventListener("click",()=>{
+    //   if (audioNode.muted)
+    //   audioNode.muted = false;
+    // });
   }
 
   drawEndGame(){
