@@ -1,11 +1,12 @@
 class GameView {
-  constructor(game, ctx){
+  constructor(game, ctx, bgSoundFnc){
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
     this.start = this.start.bind(this);
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
+    this.bgSound = bgSoundFnc('sounds/background.mp3');
   }
 
   bindKeyHandlers(){
@@ -25,7 +26,11 @@ class GameView {
     this.game.addCannonBalls();
     this.animationPlaying = true;
     this.animate();
-
+    let that = this;
+    this.bgSound.play();
+    setInterval(function(){
+      that.bgSound.play();
+    },56000);
   }
 
   setup(){

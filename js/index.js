@@ -28,7 +28,9 @@ window.addEventListener("DOMContentLoaded", function(event) {
     return sound;
   }
 
-  function bgSoundFunc(src){
+
+
+  function bgSoundFnc(src){
     let bgsound = document.getElementById("bgsound");
     bgsound.setAttribute("id", 'bgsound');
     bgsound.src = src;
@@ -48,7 +50,7 @@ window.addEventListener("DOMContentLoaded", function(event) {
 
   let ctx = canvasEl.getContext("2d");
   let game = new Game(ctx, soundFnc);
-  let gameV = new GameView(game, ctx);
+  let gameV = new GameView(game, ctx, bgSoundFnc);
   gameV.setup();
 
   let startButton = document.getElementById("start");
@@ -66,7 +68,7 @@ window.addEventListener("DOMContentLoaded", function(event) {
 
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx, soundFnc);
-      gameV = new GameView(game, ctx);
+      gameV = new GameView(game, ctx, bgSoundFnc);
 
       gameV.setup();
   });
@@ -79,17 +81,22 @@ window.addEventListener("DOMContentLoaded", function(event) {
     }
   });
 
+  let bgAudioNode = document.getElementById("bgsound");
   let audioNode = document.getElementById("sound");
   let volumeMute = document.getElementById("volume-mute");
 
   volumeMute.addEventListener("click", ()=>{
-    if (!audioNode.muted)
+    if (!audioNode.muted) {
+      bgAudioNode.muted = true;
       audioNode.muted = true;
+    }
   });
 
   let volumeOpen = document.getElementById("volume-up");
   volumeOpen.addEventListener("click",()=>{
-    if (audioNode.muted)
-    audioNode.muted = false;
+    if (audioNode.muted) {
+      bgAudioNode.muted = false;
+      audioNode.muted = false;
+  }
   });
  });
