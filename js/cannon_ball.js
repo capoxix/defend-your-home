@@ -1,6 +1,5 @@
 const MovingObject = require('./moving_object');
 const Enemy = require('./enemy');
-// import MovingObject from './moving_object.js';
 
 const DEFAULTS = {
   COLOR: 'black',
@@ -25,7 +24,6 @@ class CannonBall extends MovingObject {
     this.pos[1] = Math.cos(Math.PI* this.angle/ 180)* -38 + this.pos[1];
     this.pos[0] = Math.sin(Math.PI* this.angle/180) * 38+ this.pos[0];
 
-    // console.log(options.vel[0]);
     this.verticalVelocity = Math.sin(this.radian) * options.vel[0];
     this.horizontalVelocity = Math.cos(this.radian) * options.vel[0];
 
@@ -52,11 +50,9 @@ class CannonBall extends MovingObject {
   }
 
   move(timeDelta) {
-      // debugger;
-      /**/
     this.updateCannonBall();
     this.airTime += 50/4000;
-    const velocityScale = timeDelta / 30;//NORMAL_FRAME_TIME_DELTA,
+    const velocityScale = timeDelta / 30;
     const  offsetX = this.vel[0] * velocityScale +this.windHorizontalVelocity;
     const  offsetY = this.vel[1] * velocityScale + this.windVerticalVelocity;
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
@@ -67,8 +63,6 @@ class CannonBall extends MovingObject {
 
   collidedWith(otherObject){
     if (otherObject instanceof Enemy && this.game.enemies.indexOf(otherObject)!== -1){
-      // console.log("cannonball collidedwith");
-      // this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/20),0];
       this.game.crashSound.play();
       this.game.changeWind();
       this.game.remove(otherObject);
@@ -76,9 +70,7 @@ class CannonBall extends MovingObject {
       otherObject.collidedWith(this);
 
       this.game.score++;
-      /*chaning velocity of enemies not making them disappear.... */
       this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/70),0];
-      // console.log(this.game.enemiesVelocity);
     }
   }
 }
@@ -87,5 +79,4 @@ CannonBall.SPEED = 15;
 CannonBall.RADIUS = 10;
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
-// export default CannonBall;
 module.exports = CannonBall;

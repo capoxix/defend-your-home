@@ -98,54 +98,20 @@ const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js
 const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 const Util = __webpack_require__(/*! ./util */ "./js/util.js");
 
-// import CannonBall from './cannon_ball.js';
-// import Enemy from './enemy.js';
-// import Util from './util.js';
-
-
 class Cannon{
   constructor(options){
-    // this.radius = Cannon.RADIUS;
     this.vel = [0, 0];
-    this.color = 'black';
     this.game = options.game;
     this.pos = options.pos;
     this.angle = 0;
     this.ctx = options.ctx;
-    // this.reloading = false;
     this.drawReloading = this.drawReloading.bind(this);
-    // this.reload = this.reload.bind(this);
   }
 
   draw(ctx){
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    // );
-    //
-    // ctx.fill();
-
-
-    // ctx.fillStyle = this.color;
-    // this.ctx.beginPath();
-    // this.ctx.ellipse(this.pos[0], this.pos[1], 10, 25, this.angle*3 * Math.PI/180, 0, 2 * Math.PI);
-    // this.ctx.stroke();
-    // this.ctx.fill();
-    //
-    // ctx.fillStyle = 'brown';
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], 595, 10, 0 , 2 * Math.PI, true
-    // );
-    //
-    // ctx.fill();
-
     this.drawAngle();
     this.drawReloading();
     this.drawRotation();
-    // this.drawWind();
-    // this.drawRotation();
   }
 
   fireCannonBall(){
@@ -160,7 +126,6 @@ class Cannon{
       relVel[0] + this.vel[0], relVel[1] + this.vel[1]
     ];
 
-    // debugger;
     let dupPos = Array.from(this.pos);
 
     const cannonBall = new CannonBall({
@@ -178,17 +143,10 @@ class Cannon{
   }
 
   rotate(move){
-    // console.log(this.angle);
-    if(this.angle < 25 || move[1] === -1) this.angle += move[1];
 
-    // console.log("angle:", this.angle);
-    // this.pos[0] += move[0];
-    // this.pos[1] += move[1];
+    if(this.angle < 25 || move[1] === -1) this.angle += move[1];
     this.vel[0] += move[0];
     this.vel[1] += move[1];
-    /*
-    rotation of cannon
-    */
   }
 
   drawAngle(){
@@ -211,8 +169,6 @@ class Cannon{
     let centerDist = Util.dist(this.pos, otherObject.pos);
     return centerDist < (this.radius + otherObject.radius);
   }
-
-
 
   drawRotation(){
     let cannonTop = document.getElementById('cannon-top');
@@ -251,7 +207,6 @@ module.exports = Cannon;
 
 const MovingObject = __webpack_require__(/*! ./moving_object */ "./js/moving_object.js");
 const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
-// import MovingObject from './moving_object.js';
 
 const DEFAULTS = {
   COLOR: 'black',
@@ -276,7 +231,6 @@ class CannonBall extends MovingObject {
     this.pos[1] = Math.cos(Math.PI* this.angle/ 180)* -38 + this.pos[1];
     this.pos[0] = Math.sin(Math.PI* this.angle/180) * 38+ this.pos[0];
 
-    // console.log(options.vel[0]);
     this.verticalVelocity = Math.sin(this.radian) * options.vel[0];
     this.horizontalVelocity = Math.cos(this.radian) * options.vel[0];
 
@@ -303,11 +257,9 @@ class CannonBall extends MovingObject {
   }
 
   move(timeDelta) {
-      // debugger;
-      /**/
     this.updateCannonBall();
     this.airTime += 50/4000;
-    const velocityScale = timeDelta / 30;//NORMAL_FRAME_TIME_DELTA,
+    const velocityScale = timeDelta / 30;
     const  offsetX = this.vel[0] * velocityScale +this.windHorizontalVelocity;
     const  offsetY = this.vel[1] * velocityScale + this.windVerticalVelocity;
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
@@ -318,8 +270,6 @@ class CannonBall extends MovingObject {
 
   collidedWith(otherObject){
     if (otherObject instanceof Enemy && this.game.enemies.indexOf(otherObject)!== -1){
-      // console.log("cannonball collidedwith");
-      // this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/20),0];
       this.game.crashSound.play();
       this.game.changeWind();
       this.game.remove(otherObject);
@@ -327,9 +277,7 @@ class CannonBall extends MovingObject {
       otherObject.collidedWith(this);
 
       this.game.score++;
-      /*chaning velocity of enemies not making them disappear.... */
       this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/70),0];
-      // console.log(this.game.enemiesVelocity);
     }
   }
 }
@@ -338,7 +286,6 @@ CannonBall.SPEED = 15;
 CannonBall.RADIUS = 10;
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
 
-// export default CannonBall;
 module.exports = CannonBall;
 
 
@@ -359,15 +306,10 @@ const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js
 class Enemy extends MovingObject{
   constructor(options){
     options.radius = Enemy.RADIUS;
-    // options.vel = [-0.5, 0];
     options.color = 'brown';
-    // .game = options.game;
-    // this.pos = options.pos;
     super(options);
     this.enemyAnimation = [[8,510, 31, 74],[48,510, 47,74], [104,511,39,73],
     [152,511, 29, 73], [192,510, 40, 74], [240,510,32,74]];
-
-    // this.enemiesAnimation =
     this.animationCount = 0;
     this.animationDelay = 0;
   }
@@ -396,13 +338,10 @@ class Enemy extends MovingObject{
   }
 
   move(timeDelta) {
-  // timeDelta is number of milliseconds since last move
-  // if the computer is busy the time delta will be larger
-  // in this case the MovingObject should move farther in this frame
-  // velocity of object is how far it should move in 1/60th of a second
-    const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
-        offsetX = this.vel[0] * velocityScale,
-        offsetY = this.vel[1] * velocityScale;
+
+    const velocityScale = timeDelta /30;
+    const offsetX = this.vel[0] * velocityScale;
+    const offsetY = this.vel[1] * velocityScale;
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.pos[0] < 200) {
@@ -414,21 +353,11 @@ class Enemy extends MovingObject{
   }
 
   collidedWith(otherObject){
-    // console.log('deleting enemy got hit by', otherObject);
-    //   //weird bug where object still 'exists', but not really
-    //   this.game.remove(this);
-      delete this;
+    delete this;
   }
-
-  // changeScore(){
-  //   let score = document.getElementById("score");
-  //   score.innerHTML = this.score;
-  // }
 }
 
 Enemy.RADIUS = 25;
-
-// export default Enemy;
 module.exports = Enemy;
 
 
@@ -460,7 +389,7 @@ class Game {
     this.crashSound = soundFnc('sounds/explosion.mp3');
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.enemiesVelocity = [-0.5 + (-this.score/50),0];
+    this.enemiesVelocity = [-0.75 + (-this.score/50),0];
     this.endGameMsg = '';
     this.endGame = this.endGame.bind(this);
     this.changeWind = this.changeWind.bind(this);
@@ -625,54 +554,11 @@ class Game {
       }
     }
 
-
-    // let audioNode = document.getElementById("sound");
-    // let volumeMute = document.getElementById("volume-mute");
-    //
-    // volumeMute.addEventListener("click", ()=>{
-    //   if (!audioNode.muted)
-    //     audioNode.muted = true;
-    // });
-    //
-    // let volumeOpen = document.getElementById("volume-up");
-    // volumeOpen.addEventListener("click",()=>{
-    //   if (audioNode.muted)
-    //   audioNode.muted = false;
-    // });
-
-
   drawEndGame(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
     this.ctx.fillText(this.endGameMsg, 320, 70);
   }
-
-  // newGame(){
-  //   this.endGameMsg = "";
-  //   this.score = 0;
-  //   this.windVelocity = (Math.random() * 2).toFixed(2);
-  //   this.windAngle = Math.round(Math.random() * 360);
-  // }
-
-
-  // soundFnc(src){
-  //   // debugger;
-  //   this.sound = document.createElement("audio");
-  //   this.sound.setAttribute("id", 'sound');
-  //   this.sound.src = src;
-  //   this.sound.setAttribute("preload", "auto");
-  //   this.sound.setAttribute("controls", "none");
-  //   this.sound.style.display = "none";
-  //   this.sound.volume = 0.01;
-  //   document.body.appendChild(this.sound);
-  //   this.play = function(){
-  //       this.sound.play();
-  //   };
-  //   this.stop = function(){
-  //       this.sound.pause();
-  //   };
-  //   return this.sound;
-  // }
 }
 
 
@@ -695,26 +581,16 @@ module.exports = Game;
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-// var fps = 30;
-// var now;
-// var then = Date.now();
-// var interval = 1000/fps;
-// var delta;
-
 class GameView {
   constructor(game, ctx){
 
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
-
-    // this.requestId = undefined;
-
-    // this.loop = this.loop.bind(this);
     this.start = this.start.bind(this);
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
-    //
+
     this.lastTime = 0;
 
   }
@@ -729,43 +605,28 @@ class GameView {
 
     key("space", () => {
       cannon.fireCannonBall();});
-
-      // key(g, function () { debugger; cannon.fireCannonBall(); });
   }
 
   start() {
     this.bindKeyHandlers();
-    // this.lastTime = 0;
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
-    // if(!this.requestId){
-      this.animate(this.lastTime);
-    // }
-    //window.animation = requestAnimationFrame(this.animate.bind(this));
+    this.animate(this.lastTime);
+
   }
-  //
+
   setup(){
     this.game.draw(this.ctx);
   }
 
   animate(time){
-    // debugger;
-    // console.log(time);
-    // console.log("animating");
     if(this.animationPlaying) {
-      // console.log("time type", typeof(time));
-      // debugger;
-      const timeDelta = 1000/60;//time - this.lastTime;
-      // console.log("timeDelta", timeDelta);
-      // debugger;
-      // window.time = time;
-      // console.log('time', time);
-      // console.log("datetime", new Date().getTime());
-      // console.log('lastTime', this.lastTime);
+
+      const timeDelta = 1000/60;
+
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
-      // this.game.cannon.draw(this.ctx);
       this.lastTime = time;
 
       this.requestId = requestAnimationFrame(this.animate.bind(this));
@@ -777,43 +638,7 @@ class GameView {
     window.cancelAnimationFrame(this.requestId);
     this.game.cancelEnemies();
     this.game.cancelCannonBalls();
-    // this.animationPlaying = false;
-    // this.lastTime = time;
-
   }
-
-  /**/
-
-    // start(){
-    //   // debugger;
-    //   this.lastTime = 0;
-    //   this.animationPlaying = true;
-    //   if(!this.requestId){
-    //     this.requestId = window.requestAnimationFrame(this.loop);
-    //   }
-    // }
-    //
-    // loop(time){
-    //   if(this.animationPlaying){
-    //     const timeDelta = time- this.lastTime;
-    //     this.game.step(timeDelta);
-    //     this.game.draw(this.ctx);
-    //     window.requestAnimationFrame(this.loop);
-    //   }
-    //
-    // }
-    //
-    // stop(){
-    //
-    //     window.cancelAnimationFrame(this.requestId);
-    //     this.animationPlaying = false;
-    // }
-
-
-  // stopAnimation(){
-    // window.cancelAnimationFrame(window.animation);
-  // }
-
 }
 
 GameView.MOVES = {
@@ -839,9 +664,6 @@ module.exports = GameView;
 const Game = __webpack_require__(/*! ./game */ "./js/game.js");
 const GameView = __webpack_require__(/*! ./game_view */ "./js/game_view.js");
 
-// import Game from './game.js';
-// import GameView from './game_view.js';
-
 document.addEventListener("DOMContentLoaded", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
@@ -851,7 +673,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let started = false;
   function soundFnc(src){
-    // debugger;
+
     let sound = document.getElementById("sound");
     sound.setAttribute("id", 'sound');
     sound.src = src;
@@ -859,7 +681,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sound.setAttribute("controls", "none");
     sound.style.display = "none";
     sound.volume = 0.01;
-    // document.body.appendChild(sound);
     function play(){
         sound.play();
     }
@@ -868,11 +689,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     return sound;
   }
-  // let muted = false;
 
   let ctx = canvasEl.getContext("2d");
   let game = new Game(ctx, soundFnc);
-  let gameV = new GameView(game, ctx);//.setup();//.start();
+  let gameV = new GameView(game, ctx);
   gameV.setup();
 
   let startButton = document.getElementById("start");
@@ -885,21 +705,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let newGameButton = document.getElementById("new-game");
     newGameButton.addEventListener("click", () => {
-      // started = false;
-      // game.newGame();
-      // gameV.setup();
-      /**/
       started = false;
       gameV.stop();
 
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx, soundFnc);
       gameV = new GameView(game, ctx);
-      // audioNode = document.getElementById("sound");
-      // audioNode.parentNode.removeChild(audioNode);
-      // console.log("game", game);
-      // console.log("gameview", gameV);
-      // console.log(ctx);
+
       gameV.setup();
   });
 
@@ -924,12 +736,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if (audioNode.muted)
     audioNode.muted = false;
   });
-
-
-
-
-  // let game = new Game();
-  // game.startGame();
  });
 
 
@@ -942,15 +748,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-// import Util from './util.js';
 const Util = __webpack_require__(/*! ./util.js */ "./js/util.js");
-// import Cannon from './cannon.js';
-// import CannonBall from './cannon_ball.js';
-// import Enemy from './enemy.js';
-// const Cannon = require('./cannon');
-// const CannonBall = require('./cannon_ball');
-// const Enemy = require('./enemy');
-
 
 class MovingObject {
   constructor(options){
@@ -974,20 +772,14 @@ class MovingObject {
   }
 
   move(timeDelta) {
-  // timeDelta is number of milliseconds since last move
-  // if the computer is busy the time delta will be larger
-  // in this case the MovingObject should move farther in this frame
-  // velocity of object is how far it should move in 1/60th of a second
-    const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
-        offsetX = this.vel[0] * velocityScale,
-        offsetY = this.vel[1] * velocityScale;
+
+    const velocityScale = timeDelta /30;
+    const offsetX = this.vel[0] * velocityScale;
+    const offsetY = this.vel[1] * velocityScale;
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.game.isOutOfBounds(this.pos)) {
-      // console.log("removing cannonball");
-      // debugger
       this.remove();
-      // }
     }
   }
 
@@ -1001,9 +793,7 @@ class MovingObject {
   }
 }
 const NORMAL_FRAME_TIME_DELTA = 1000 / 60;
-// export default MovingObject;
 
-// export default MovingObject;
 module.exports = MovingObject;
 
 

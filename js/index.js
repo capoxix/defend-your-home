@@ -1,9 +1,6 @@
 const Game = require('./game');
 const GameView = require('./game_view');
 
-// import Game from './game.js';
-// import GameView from './game_view.js';
-
 document.addEventListener("DOMContentLoaded", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
@@ -13,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let started = false;
   function soundFnc(src){
-    // debugger;
+
     let sound = document.getElementById("sound");
     sound.setAttribute("id", 'sound');
     sound.src = src;
@@ -21,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     sound.setAttribute("controls", "none");
     sound.style.display = "none";
     sound.volume = 0.01;
-    // document.body.appendChild(sound);
     function play(){
         sound.play();
     }
@@ -30,11 +26,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
     return sound;
   }
-  // let muted = false;
 
   let ctx = canvasEl.getContext("2d");
   let game = new Game(ctx, soundFnc);
-  let gameV = new GameView(game, ctx);//.setup();//.start();
+  let gameV = new GameView(game, ctx);
   gameV.setup();
 
   let startButton = document.getElementById("start");
@@ -47,21 +42,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let newGameButton = document.getElementById("new-game");
     newGameButton.addEventListener("click", () => {
-      // started = false;
-      // game.newGame();
-      // gameV.setup();
-      /**/
       started = false;
       gameV.stop();
 
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx, soundFnc);
       gameV = new GameView(game, ctx);
-      // audioNode = document.getElementById("sound");
-      // audioNode.parentNode.removeChild(audioNode);
-      // console.log("game", game);
-      // console.log("gameview", gameV);
-      // console.log(ctx);
+
       gameV.setup();
   });
 
@@ -86,10 +73,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
     if (audioNode.muted)
     audioNode.muted = false;
   });
-
-
-
-
-  // let game = new Game();
-  // game.startGame();
  });

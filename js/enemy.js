@@ -6,15 +6,10 @@ const CannonBall = require('./cannon_ball');
 class Enemy extends MovingObject{
   constructor(options){
     options.radius = Enemy.RADIUS;
-    // options.vel = [-0.5, 0];
     options.color = 'brown';
-    // .game = options.game;
-    // this.pos = options.pos;
     super(options);
     this.enemyAnimation = [[8,510, 31, 74],[48,510, 47,74], [104,511,39,73],
     [152,511, 29, 73], [192,510, 40, 74], [240,510,32,74]];
-
-    // this.enemiesAnimation =
     this.animationCount = 0;
     this.animationDelay = 0;
   }
@@ -43,13 +38,10 @@ class Enemy extends MovingObject{
   }
 
   move(timeDelta) {
-  // timeDelta is number of milliseconds since last move
-  // if the computer is busy the time delta will be larger
-  // in this case the MovingObject should move farther in this frame
-  // velocity of object is how far it should move in 1/60th of a second
-    const velocityScale = timeDelta /30,//NORMAL_FRAME_TIME_DELTA,
-        offsetX = this.vel[0] * velocityScale,
-        offsetY = this.vel[1] * velocityScale;
+
+    const velocityScale = timeDelta /30;
+    const offsetX = this.vel[0] * velocityScale;
+    const offsetY = this.vel[1] * velocityScale;
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.pos[0] < 200) {
@@ -61,19 +53,9 @@ class Enemy extends MovingObject{
   }
 
   collidedWith(otherObject){
-    // console.log('deleting enemy got hit by', otherObject);
-    //   //weird bug where object still 'exists', but not really
-    //   this.game.remove(this);
-      delete this;
+    delete this;
   }
-
-  // changeScore(){
-  //   let score = document.getElementById("score");
-  //   score.innerHTML = this.score;
-  // }
 }
 
 Enemy.RADIUS = 25;
-
-// export default Enemy;
 module.exports = Enemy;

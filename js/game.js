@@ -17,7 +17,7 @@ class Game {
     this.crashSound = soundFnc('sounds/explosion.mp3');
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.enemiesVelocity = [-0.5 + (-this.score/50),0];
+    this.enemiesVelocity = [-0.75 + (-this.score/50),0];
     this.endGameMsg = '';
     this.endGame = this.endGame.bind(this);
     this.changeWind = this.changeWind.bind(this);
@@ -182,54 +182,11 @@ class Game {
       }
     }
 
-
-    // let audioNode = document.getElementById("sound");
-    // let volumeMute = document.getElementById("volume-mute");
-    //
-    // volumeMute.addEventListener("click", ()=>{
-    //   if (!audioNode.muted)
-    //     audioNode.muted = true;
-    // });
-    //
-    // let volumeOpen = document.getElementById("volume-up");
-    // volumeOpen.addEventListener("click",()=>{
-    //   if (audioNode.muted)
-    //   audioNode.muted = false;
-    // });
-
-
   drawEndGame(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
     this.ctx.fillText(this.endGameMsg, 320, 70);
   }
-
-  // newGame(){
-  //   this.endGameMsg = "";
-  //   this.score = 0;
-  //   this.windVelocity = (Math.random() * 2).toFixed(2);
-  //   this.windAngle = Math.round(Math.random() * 360);
-  // }
-
-
-  // soundFnc(src){
-  //   // debugger;
-  //   this.sound = document.createElement("audio");
-  //   this.sound.setAttribute("id", 'sound');
-  //   this.sound.src = src;
-  //   this.sound.setAttribute("preload", "auto");
-  //   this.sound.setAttribute("controls", "none");
-  //   this.sound.style.display = "none";
-  //   this.sound.volume = 0.01;
-  //   document.body.appendChild(this.sound);
-  //   this.play = function(){
-  //       this.sound.play();
-  //   };
-  //   this.stop = function(){
-  //       this.sound.pause();
-  //   };
-  //   return this.sound;
-  // }
 }
 
 
