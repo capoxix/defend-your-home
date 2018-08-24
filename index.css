@@ -37,6 +37,7 @@ i.fa.fa-volume-off{
 
 button,i{
   border-radius: 5px;
+  color: black;
 }
 
 button:hover, i:hover{

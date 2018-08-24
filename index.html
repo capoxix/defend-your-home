@@ -5,17 +5,18 @@
     <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
-
-
   </head>
 
   <body>
     <script type="application/javascript" src="js/keymaster.js"></script>
     <script type="text/javascript" src='dist/lib/bundle.js'></script>
     <div class='buttons'>
-      <div class='game-buttons'>
+      <div class='volume-buttons'>
         <i id="volume-up" class="fa fa-volume-up fa-2x" aria-hidden="true"></i>
         <i id="volume-mute" class="fa fa-volume-off fa-2x" aria-hidden="false"></i>
+      </div>
+      <div class='game-buttons'>
+
         <i id="start"class="fa fa-play fa-2x" aria-hidden="true"></i>
         <i id="stop" class="fa fa-stop fa-2x" aria-hidden="true"></i>
         <i id='new-game' class="fas fa-redo fa-2x" aria-hidden="true"></i>
@@ -23,8 +24,8 @@
         <!-- <button id="new-game">new game</button> -->
       </div>
       <div class="contact-buttons">
-        <i class="fab fa-github fa-2x" aria-hidden="true"></i>
-        <i class="fab fa-linkedin-in fa-2x" aria-hidden="true"></i>
+        <a href="https://github.com/capoxix"><i class="fab fa-github fa-2x" aria-hidden="true" ></i></a>
+        <a href="https://www.linkedin.com/in/garbo-cheng-ye/"><i class="fab fa-linkedin-in fa-2x" aria-hidden="true"></i></a>
       </div>
       <!-- <button id="start">start</button>
       <button id="stop">stop</button> -->
@@ -58,8 +59,8 @@
 
       <audio id="sound"></audio>
       <div id="Current Player Highscores">
-        <p>High Scores</p>
-        <ol id='scoreList'></ol>
+        <!-- <p>High Scores</p>
+        <ol id='scoreList'></ol> -->
       </div>
   </body>
 </html>

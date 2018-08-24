@@ -374,10 +374,6 @@ const Cannon = __webpack_require__(/*! ./cannon */ "./js/cannon.js");
 const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
 const Enemy = __webpack_require__(/*! ./enemy */ "./js/enemy.js");
 
-// import Cannon from  './cannon.js';
-// import CannonBall from './cannon_ball.js';
-// import Enemy from './enemy.js';
-
 class Game {
   constructor(ctx , soundFnc){
     this.ctx = ctx;
@@ -524,7 +520,7 @@ class Game {
 
   endGame(){
 
-    this.endGameMsg = "YOU LOSE ENEMY REACHED YOUR HOME!";
+    this.endGameMsg = "GAME OVER";
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
     window.clearInterval(this.cannonBallCreations);
@@ -533,7 +529,7 @@ class Game {
     this.cannonballs = [];
     window.highScores.push(this.score);
     if (this.score > window.highScore) window.highScore = this.score;
-    this.displayScores();
+    //this.displayScores();
 
   }
 
@@ -558,7 +554,7 @@ class Game {
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 270, 65);
+    this.ctx.fillText(this.endGameMsg, 360, 65);
   }
 
   drawHighScore(){
@@ -598,7 +594,7 @@ class GameView {
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
 
-    this.lastTime = 0;
+    // this.lastTime = 0;
 
   }
 
@@ -619,7 +615,7 @@ class GameView {
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
-    this.animate(this.lastTime);
+    this.animate();
 
   }
 
@@ -634,7 +630,7 @@ class GameView {
 
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
-      this.lastTime = time;
+      // this.lastTime = time;
 
       this.requestId = requestAnimationFrame(this.animate.bind(this));
       window.requestId = this.requestId;
@@ -655,7 +651,6 @@ GameView.MOVES = {
   d: [1, 0]
 };
 
-// export default GameView;
 module.exports = GameView;
 
 

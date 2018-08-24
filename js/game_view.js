@@ -8,7 +8,7 @@ class GameView {
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
 
-    this.lastTime = 0;
+    // this.lastTime = 0;
 
   }
 
@@ -29,7 +29,7 @@ class GameView {
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
-    this.animate(this.lastTime);
+    this.animate();
 
   }
 
@@ -44,7 +44,7 @@ class GameView {
 
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
-      this.lastTime = time;
+      // this.lastTime = time;
 
       this.requestId = requestAnimationFrame(this.animate.bind(this));
       window.requestId = this.requestId;
@@ -65,5 +65,4 @@ GameView.MOVES = {
   d: [1, 0]
 };
 
-// export default GameView;
 module.exports = GameView;

@@ -2,10 +2,6 @@ const Cannon = require('./cannon');
 const CannonBall = require('./cannon_ball');
 const Enemy = require('./enemy');
 
-// import Cannon from  './cannon.js';
-// import CannonBall from './cannon_ball.js';
-// import Enemy from './enemy.js';
-
 class Game {
   constructor(ctx , soundFnc){
     this.ctx = ctx;
@@ -152,7 +148,7 @@ class Game {
 
   endGame(){
 
-    this.endGameMsg = "YOU LOSE ENEMY REACHED YOUR HOME!";
+    this.endGameMsg = "GAME OVER";
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
     window.clearInterval(this.cannonBallCreations);
@@ -161,7 +157,7 @@ class Game {
     this.cannonballs = [];
     window.highScores.push(this.score);
     if (this.score > window.highScore) window.highScore = this.score;
-    this.displayScores();
+    //this.displayScores();
 
   }
 
@@ -186,7 +182,7 @@ class Game {
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 270, 65);
+    this.ctx.fillText(this.endGameMsg, 360, 65);
   }
 
   drawHighScore(){
