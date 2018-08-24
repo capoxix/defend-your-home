@@ -28,8 +28,11 @@ class GameView {
     this.animate();
     let that = this;
     this.bgSound.play();
+    let bgAudioNode = document.getElementById("bgsound");
     setInterval(function(){
-      that.bgSound.play();
+      if(!bgAudioNode.muted){
+        that.bgSound.play();
+      }
     },56000);
   }
 
