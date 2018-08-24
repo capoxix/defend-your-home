@@ -324,7 +324,7 @@ class CannonBall extends MovingObject {
       this.game.score++;
       /*chaning velocity of enemies not making them disappear.... */
       this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/70),0];
-      console.log(this.game.enemiesVelocity);
+      // console.log(this.game.enemiesVelocity);
     }
   }
 }
