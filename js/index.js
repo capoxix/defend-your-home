@@ -1,7 +1,7 @@
 const Game = require('./game');
 const GameView = require('./game_view');
 
-window.addEventListener("load", function(event) {
+window.addEventListener("DOMContentLoaded", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
