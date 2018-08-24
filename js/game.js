@@ -170,6 +170,7 @@ class Game {
     // console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
+    window.clearInterval(this.cannonBallCreations);
 
     this.enemies = [];
     this.cannonballs = [];

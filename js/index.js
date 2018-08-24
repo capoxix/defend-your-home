@@ -29,6 +29,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let newGameButton = document.getElementById("new-game");
     newGameButton.addEventListener("click", () => {
+
+      /**/
+      started = false;
+      gameV.stop();
+
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx);
       gameV = new GameView(game, ctx);
