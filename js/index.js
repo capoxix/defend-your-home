@@ -2,7 +2,6 @@ const Game = require('./game');
 const GameView = require('./game_view');
 
 window.addEventListener("DOMContentLoaded", function(event) {
-  // if (document.readyState !== 'complete')location.reload();
 
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
@@ -53,7 +52,8 @@ window.addEventListener("DOMContentLoaded", function(event) {
   let ctx = canvasEl.getContext("2d");
   let game = new Game(ctx, soundFnc);
   let gameV = new GameView(game, ctx, bgSoundFnc);
-  gameV.setup();
+
+
 
   let startButton = document.getElementById("start");
   startButton.addEventListener("click", () => {
@@ -101,4 +101,9 @@ window.addEventListener("DOMContentLoaded", function(event) {
       audioNode.muted = false;
   }
   });
+
+  setTimeout(function(){
+      gameV.setup();}, 2000);
+  // })
+
  });
