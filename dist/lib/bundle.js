@@ -451,7 +451,7 @@ class Game {
     this.highScores = [];
     this.cannonballs = [];
     this.enemies = [];
-    this.addEnemies();
+    // this.addEnemies();
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
@@ -462,7 +462,7 @@ class Game {
     this.changeWind = this.changeWind.bind(this);
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.addCannonBalls();
+    // this.addCannonBalls();
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
@@ -476,9 +476,13 @@ class Game {
   addCannonBalls(){
     // this.game.cannonBallsCount += 1;
     let that = this;
-    setInterval(function(){
+    this.cannonBallCreations = setInterval(function(){
       that.cannonBallsCount += 1;
     }, 1000);
+  }
+
+  cancelCannonBalls(){
+    clearInterval(this.cannonBallCreations);
   }
 
   changeWind(){
@@ -543,6 +547,10 @@ class Game {
     }, 3000);
   }
 
+  cancelEnemies(){
+    clearInterval(this.enemiesCreation);
+  }
+
   isOutOfBounds(pos) {
     return (pos[0] < 0) || (pos[1] < 0) ||
       (pos[0] > Game.DIM_X) || (pos[1] > Game.DIM_Y);
@@ -599,6 +607,8 @@ class Game {
     this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
     // console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
+    window.cancelAnimationFrame(window.requestId);
+
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
@@ -675,7 +685,7 @@ class GameView {
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
     //
-    // this.lastTime = 0;
+    this.lastTime = 0;
 
   }
 
@@ -695,10 +705,12 @@ class GameView {
 
   start() {
     this.bindKeyHandlers();
-    this.lastTime = 0;
+    // this.lastTime = 0;
+    this.game.addEnemies();
+    this.game.addCannonBalls();
     this.animationPlaying = true;
     // if(!this.requestId){
-      this.requestId = window.requestAnimationFrame(this.animate);
+      this.animate(this.lastTime);
     // }
     //window.animation = requestAnimationFrame(this.animate.bind(this));
   }
@@ -708,26 +720,36 @@ class GameView {
   }
 
   animate(time){
+    // debugger;
+    // console.log(time);
     // console.log("animating");
     if(this.animationPlaying) {
-      const timeDelta = time - this.lastTime;
+      // console.log("time type", typeof(time));
+      // debugger;
+      const timeDelta = 1000/60;//time - this.lastTime;
+      // console.log("timeDelta", timeDelta);
       // debugger;
       // window.time = time;
-      console.log('time', time);
-      console.log('lastTime', this.lastTime);
+      // console.log('time', time);
+      // console.log("datetime", new Date().getTime());
+      // console.log('lastTime', this.lastTime);
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
       // this.game.cannon.draw(this.ctx);
       this.lastTime = time;
 
-      requestAnimationFrame(this.animate.bind(this));
+      this.requestId = requestAnimationFrame(this.animate.bind(this));
+      window.requestId = this.requestId;
     }
   }
 
   stop(){
     window.cancelAnimationFrame(this.requestId);
-    this.animationPlaying = false;
+    this.game.cancelEnemies();
+    this.game.cancelCannonBalls();
+    // this.animationPlaying = false;
     // this.lastTime = time;
+
   }
 
   /**/
@@ -797,7 +819,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   window.highScores = [];
 
-  // let started = false;
+  let started = false;
   // let muted = false;
 
   let ctx = canvasEl.getContext("2d");
@@ -807,28 +829,29 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let startButton = document.getElementById("start");
   startButton.addEventListener("click", () => {
-    // if(!started){
+    if(!started){
       gameV.start();
-    //   started = true;
-    // }
+      started = true;
+    }
   });
 
   let newGameButton = document.getElementById("new-game");
     newGameButton.addEventListener("click", () => {
+      ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
       game = new Game(ctx);
       gameV = new GameView(game, ctx);
-      console.log("game", game);
-      console.log("gameview", gameV);
-      console.log(ctx);
+      // console.log("game", game);
+      // console.log("gameview", gameV);
+      // console.log(ctx);
       gameV.setup();
   });
 
   let stopButton = document.getElementById("stop");
   stopButton.addEventListener("click", () => {
-    // if(started) {
+    if(started) {
       gameV.stop();
-      // started= false;
-  // }
+      started= false;
+    }
   });
 
   let audioNode = document.getElementById("sound");

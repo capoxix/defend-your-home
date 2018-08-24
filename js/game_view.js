@@ -18,7 +18,7 @@ class GameView {
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
     //
-    // this.lastTime = 0;
+    this.lastTime = 0;
 
   }
 
@@ -38,10 +38,12 @@ class GameView {
 
   start() {
     this.bindKeyHandlers();
-    this.lastTime = 0;
+    // this.lastTime = 0;
+    this.game.addEnemies();
+    this.game.addCannonBalls();
     this.animationPlaying = true;
     // if(!this.requestId){
-      this.requestId = window.requestAnimationFrame(this.animate);
+      this.animate(this.lastTime);
     // }
     //window.animation = requestAnimationFrame(this.animate.bind(this));
   }
@@ -51,26 +53,36 @@ class GameView {
   }
 
   animate(time){
+    // debugger;
+    // console.log(time);
     // console.log("animating");
     if(this.animationPlaying) {
-      const timeDelta = time - this.lastTime;
+      // console.log("time type", typeof(time));
+      // debugger;
+      const timeDelta = 1000/60;//time - this.lastTime;
+      // console.log("timeDelta", timeDelta);
       // debugger;
       // window.time = time;
-      console.log('time', time);
-      console.log('lastTime', this.lastTime);
+      // console.log('time', time);
+      // console.log("datetime", new Date().getTime());
+      // console.log('lastTime', this.lastTime);
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
       // this.game.cannon.draw(this.ctx);
       this.lastTime = time;
 
-      requestAnimationFrame(this.animate.bind(this));
+      this.requestId = requestAnimationFrame(this.animate.bind(this));
+      window.requestId = this.requestId;
     }
   }
 
   stop(){
     window.cancelAnimationFrame(this.requestId);
-    this.animationPlaying = false;
+    this.game.cancelEnemies();
+    this.game.cancelCannonBalls();
+    // this.animationPlaying = false;
     // this.lastTime = time;
+
   }
 
   /**/

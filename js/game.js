@@ -13,7 +13,7 @@ class Game {
     this.highScores = [];
     this.cannonballs = [];
     this.enemies = [];
-    this.addEnemies();
+    // this.addEnemies();
 
     this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
@@ -24,7 +24,7 @@ class Game {
     this.changeWind = this.changeWind.bind(this);
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.addCannonBalls();
+    // this.addCannonBalls();
     this.enemiesVelocity = [-0.5 + (-this.score/70),0];
     this.endGame = this.endGame.bind(this);
     this.endGameMsg = '';
@@ -38,9 +38,13 @@ class Game {
   addCannonBalls(){
     // this.game.cannonBallsCount += 1;
     let that = this;
-    setInterval(function(){
+    this.cannonBallCreations = setInterval(function(){
       that.cannonBallsCount += 1;
     }, 1000);
+  }
+
+  cancelCannonBalls(){
+    clearInterval(this.cannonBallCreations);
   }
 
   changeWind(){
@@ -105,6 +109,10 @@ class Game {
     }, 3000);
   }
 
+  cancelEnemies(){
+    clearInterval(this.enemiesCreation);
+  }
+
   isOutOfBounds(pos) {
     return (pos[0] < 0) || (pos[1] < 0) ||
       (pos[0] > Game.DIM_X) || (pos[1] > Game.DIM_Y);
@@ -161,6 +169,8 @@ class Game {
     this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
     // console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
+    window.cancelAnimationFrame(window.requestId);
+
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
