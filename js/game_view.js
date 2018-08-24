@@ -1,15 +1,11 @@
 class GameView {
   constructor(game, ctx){
-
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
     this.start = this.start.bind(this);
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
-
-    // this.lastTime = 0;
-
   }
 
   bindKeyHandlers(){
@@ -25,7 +21,6 @@ class GameView {
   }
 
   start() {
-    // this.bindKeyHandlers();
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
@@ -45,7 +40,6 @@ class GameView {
 
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
-      // this.lastTime = time;
 
       this.requestId = requestAnimationFrame(this.animate.bind(this));
       window.requestId = this.requestId;

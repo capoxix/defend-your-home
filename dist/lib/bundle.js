@@ -185,10 +185,7 @@ class Cannon{
 
   }
 
-
   move(){/*undefined since cannon is not a moving object */}
-
-
 }
 
 Cannon.RADIUS = 15;
@@ -214,8 +211,6 @@ const DEFAULTS = {
   SPEED: 15
 };
 
-
-
 class CannonBall extends MovingObject {
   constructor(options = {}){
 
@@ -227,7 +222,6 @@ class CannonBall extends MovingObject {
     this.angle = options.angle;
     this.radian = Math.PI * (90- this.angle)/180;
     this.airTime = 0;
-    //
     this.pos[1] = Math.cos(Math.PI* this.angle/ 180)* -38 + this.pos[1];
     this.pos[0] = Math.sin(Math.PI* this.angle/180) * 38+ this.pos[0];
 
@@ -247,13 +241,6 @@ class CannonBall extends MovingObject {
   }
 
   draw(ctx) {
-    // ctx.fillStyle = this.color;
-    // ctx.beginPath();
-    // ctx.arc(
-    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    // );
-
-    // ctx.fill();
     let cannonball = document.getElementById('cannonball');
     ctx.drawImage(cannonball, this.pos[0] ,this.pos[1] , 15, 15);
   }
@@ -302,9 +289,7 @@ module.exports = CannonBall;
 
 const MovingObject = __webpack_require__(/*! ./moving_object */ "./js/moving_object.js");
 const CannonBall = __webpack_require__(/*! ./cannon_ball */ "./js/cannon_ball.js");
-// import MovingObject from './moving_object.js';
-// let b = MovingObject;
-// debugger;
+
 class Enemy extends MovingObject{
   constructor(options){
     options.radius = Enemy.RADIUS;
@@ -359,7 +344,7 @@ class Enemy extends MovingObject{
   }
 }
 
-Enemy.RADIUS = 28;
+Enemy.RADIUS = 30;
 module.exports = Enemy;
 
 
@@ -437,7 +422,6 @@ class Game {
         const obj2 = allObjects[j];
 
         if (!(obj1 instanceof Cannon || obj2 instanceof Cannon)) {
-          // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
           if((obj1 instanceof Enemy && obj2 instanceof CannonBall)
           || obj2 instanceof Enemy && obj1 instanceof CannonBall){
             if (obj1.isCollidedWith(obj2)) {
@@ -521,7 +505,6 @@ class Game {
   }
 
   endGame(){
-
     this.endGameMsg = "GAME OVER";
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
@@ -530,33 +513,14 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
+
     if (this.score > window.highScore) window.highScore = this.score;
-    //this.displayScores();
 
   }
-
-    displayScores(){
-      function sortNumber(a,b) {
-        return a - b;
-      }
-      window.highScores = window.highScores.sort(sortNumber);
-      let scoreListNode = document.getElementById("scoreList");
-      while (scoreListNode.firstChild) {
-        scoreListNode.removeChild(scoreListNode.firstChild);
-      }
-
-      for (let i = window.highScores.length -1; i >= 0; i--) {
-        let li = document.createElement('LI');
-        let textNode = document.createTextNode(`${window.highScores[i]}`);
-        li.appendChild(textNode);
-        scoreListNode.appendChild(li);
-      }
-    }
-
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 360, 65);
+    this.ctx.fillText(this.endGameMsg, 400, 65);
   }
 
   drawHighScore(){
@@ -588,16 +552,12 @@ module.exports = Game;
 
 class GameView {
   constructor(game, ctx){
-
     this.ctx = ctx;
     this.game = game;
     this.cannon = this.game.cannon;
     this.start = this.start.bind(this);
     this.stop =  this.stop.bind(this);
     this.animate = this.animate.bind(this);
-
-    // this.lastTime = 0;
-
   }
 
   bindKeyHandlers(){
@@ -613,7 +573,6 @@ class GameView {
   }
 
   start() {
-    // this.bindKeyHandlers();
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
@@ -633,7 +592,6 @@ class GameView {
 
       this.game.step(timeDelta);
       this.game.draw(this.ctx);
-      // this.lastTime = time;
 
       this.requestId = requestAnimationFrame(this.animate.bind(this));
       window.requestId = this.requestId;

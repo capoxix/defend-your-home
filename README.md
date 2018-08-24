@@ -2,52 +2,74 @@
 
 ## Background and Overview
 
-Defend your home is a 2D game where the user uses a cannon to defend his home from getting attacked by an enemy.
+Defend your home is a 2D game where the user utilizes a cannon to defend his/her home from getting attacked by enemies.
 
-## MVP
-
-- [ ] Users will be able to use keys to adjust cannon angle and shoot to defend your home
-- [ ] As game progresses, user will experience different levels of difficulties
-- [ ] Hear sounds on collision
-- [ ] See previous highscore
-
-
-## Wireframes
-
-This app will consist of a single screen with the game loaded. Instructions will be included below the game screen and links to the github and my LinkedIn will be included.
-
-![link](wireframe.png)
+![link](readme-images/game-screen.png)
 
 ## Technologies
 
-This project will be built using the following:
-
 - Vanilla JavaScript for DOM manipulation.
-- HTML and CSS for display of game.
+- HTML5 and CSS3 to display the different game components.
 - Webpack to bundle and serve the various scripts.
 
-## Implementation Timeline
+## Features
 
-**Over the weekend**
+- User game control for changing cannon angle and shooting cannonball
+- Wind effects shown with direction and strength
+- Sound effects when cannonball hits target
+- Current score and highest score
+- Control of gameplay: Start, Pause, New Game, Volume ON/OFF
 
-- [ ] Worked on general game structure and handling collisions between different objects.
-- [ ] General controllers for users to use for gameplay
+## Implementation of Game
 
-Day 1: Setup with webpack and add layers to game. Wind layer to increase difficulty of game.
+For collision handling, I measured the distance between their positions and compared it to the addition of both object's  occupied radius. If the distance is less than their radius, then they are colliding with each other.
 
-- [ ] Get webpack working with files
-- [ ] Implement wind layer for gameplay
+```js
+isCollidedWith(otherObject){
+  let centerDist = Util.dist(this.pos, otherObject.pos);
+  return centerDist < (this.radius + otherObject.radius);
+}
+```
 
-Day 2: Learn how to add sounds for gameplay and increase difficulty of gameplay
+To separate the different angles of the game's cannon and wind, I used geometry equations .
 
-- [ ] Have sound whenever collision occurs
-- [ ] Increase difficulty of game as player increases score
+```js
+this.radian = Math.PI * (90- this.angle)/180;
+this.airTime = 0;
+this.pos[1] = Math.cos(Math.PI* this.angle/ 180)* -38 + this.pos[1];
+this.pos[0] = Math.sin(Math.PI* this.angle/180) * 38+ this.pos[0];
 
-Day 3: Implement a way to keep track of high scores
-- [ ] record current player's score
-- [ ] display current player scores
+this.verticalVelocity = Math.sin(this.radian) * options.vel[1];
+this.horizontalVelocity = Math.cos(this.radian) * options.vel[0];
 
-Day 4: Style the front end of game and ensure smooth gameplay
+this.windRadian = Math.PI * this.game.windAngle / 180;
+this.windVerticalVelocity = Math.sin(this.windRadian) * this.game.windVelocity;
+this.windHorizontalVelocity = Math.cos(this.windRadian)* this.game.windVelocity;
+```
 
-- [ ] Make game look better
-- [ ] Fix any bugs from gameplay
+In order to make the game come to live, I used a sprite sheet that has the object's different looks when moving, and a delay variable to show the different look after every 15 frame.
+
+```js
+draw(ctx){
+  let enemyImg = document.getElementById('enemy');
+    this.animationDelay += 1;
+
+  if (this.animationDelay++ >= 15){
+    this.animationDelay = 0;
+    this.animationCount++;
+
+    if (this.animationCount >= this.enemyAnimation.length){
+      this.animationCount = 0;
+      this.enemyAnimation[this.animationCount];
+    }
+
+    ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
+        this.enemyAnimation[this.animationCount][2],
+        this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
+  } else {
+    ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
+        this.enemyAnimation[this.animationCount][2],
+        this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
+  }
+}
+```

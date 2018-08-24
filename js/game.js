@@ -63,7 +63,6 @@ class Game {
         const obj2 = allObjects[j];
 
         if (!(obj1 instanceof Cannon || obj2 instanceof Cannon)) {
-          // if (obj1 instanceof CannonBall && obj2 instanceof Enemy)
           if((obj1 instanceof Enemy && obj2 instanceof CannonBall)
           || obj2 instanceof Enemy && obj1 instanceof CannonBall){
             if (obj1.isCollidedWith(obj2)) {
@@ -147,7 +146,6 @@ class Game {
   }
 
   endGame(){
-
     this.endGameMsg = "GAME OVER";
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
@@ -156,33 +154,14 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
+
     if (this.score > window.highScore) window.highScore = this.score;
-    //this.displayScores();
 
   }
-
-    displayScores(){
-      function sortNumber(a,b) {
-        return a - b;
-      }
-      window.highScores = window.highScores.sort(sortNumber);
-      let scoreListNode = document.getElementById("scoreList");
-      while (scoreListNode.firstChild) {
-        scoreListNode.removeChild(scoreListNode.firstChild);
-      }
-
-      for (let i = window.highScores.length -1; i >= 0; i--) {
-        let li = document.createElement('LI');
-        let textNode = document.createTextNode(`${window.highScores[i]}`);
-        li.appendChild(textNode);
-        scoreListNode.appendChild(li);
-      }
-    }
-
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 360, 65);
+    this.ctx.fillText(this.endGameMsg, 400, 65);
   }
 
   drawHighScore(){

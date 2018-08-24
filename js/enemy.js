@@ -1,8 +1,6 @@
 const MovingObject = require('./moving_object');
 const CannonBall = require('./cannon_ball');
-// import MovingObject from './moving_object.js';
-// let b = MovingObject;
-// debugger;
+
 class Enemy extends MovingObject{
   constructor(options){
     options.radius = Enemy.RADIUS;
@@ -57,5 +55,5 @@ class Enemy extends MovingObject{
   }
 }
 
-Enemy.RADIUS = 28;
+Enemy.RADIUS = 30;
 module.exports = Enemy;

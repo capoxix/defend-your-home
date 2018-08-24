@@ -90,10 +90,7 @@ class Cannon{
 
   }
 
-
   move(){/*undefined since cannon is not a moving object */}
-
-
 }
 
 Cannon.RADIUS = 15;
