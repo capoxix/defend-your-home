@@ -7,7 +7,7 @@ p {
 
 .instructions{
   margin: 0 auto;
-  width: 800px;
+  width: 1000px;
   background-color: azure;
 
 }
@@ -17,13 +17,41 @@ p {
 }
 
 button{
-  /* margin: 0 auto;
-  width: 50px;
-  height: 50px; */
-  /* background: yellow; */
-  /* background: url('./images/volume.png'); */
+  cursor: pointer;
+}
+.canvas-container{
+  margin: 0 auto;
+  width: 1000px;
 }
 
-.muted{
-  /* background: url('../../images/muted.png'); */
+i{
+  cursor: pointer;
+  padding: 5px;
+}
+
+i.fa.fa-volume-off{
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+
+button,i{
+  border-radius: 5px;
+}
+
+button:hover, i:hover{
+  color: white;
+  background-color: black;
+}
+
+.buttons{
+  margin: 0 auto;
+  width: 1000px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-instructions{
+  display: flex;
+  justify-content: space-between;
 }

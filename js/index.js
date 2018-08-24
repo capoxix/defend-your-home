@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   canvasEl.height = Game.DIM_Y;
 
   window.highScores = [];
+  window.highScore = 0;
 
   let started = false;
   function soundFnc(src){

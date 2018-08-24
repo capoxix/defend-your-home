@@ -116,6 +116,7 @@ class Game {
     this.drawCastle();
     this.drawScore();
     this.drawEndGame();
+    this.drawHighScore();
     this.allObjects().forEach(function(object) {
       object.draw(ctx);
     });
@@ -124,10 +125,10 @@ class Game {
   drawWind(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.windVelocity, 465, 90);
+    this.ctx.fillText(this.windVelocity, 475, 90);
 
     this.ctx.save();
-    this.ctx.translate(475,125);
+    this.ctx.translate(485,125);
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
@@ -135,7 +136,7 @@ class Game {
     this.ctx.restore();
 
     let wind = document.getElementById('wind');
-    this.ctx.drawImage(wind, 455,150, 50, 50);
+    this.ctx.drawImage(wind, 465,150, 50, 50);
   }
 
   drawCastle(){
@@ -146,12 +147,12 @@ class Game {
   drawScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("Score: "+this.score, 30, 50);
+    this.ctx.fillText("Score: "+this.score, 20, 30);
   }
 
   endGame(){
 
-    this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
+    this.endGameMsg = "YOU LOSE ENEMY REACHED YOUR HOME!";
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
     window.clearInterval(this.cannonBallCreations);
@@ -159,7 +160,7 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
-
+    if (this.score > window.highScore) window.highScore = this.score;
     this.displayScores();
 
   }
@@ -183,9 +184,15 @@ class Game {
     }
 
   drawEndGame(){
+    this.ctx.font = "30px Arial";
+    this.ctx.fillStyle = "red";
+    this.ctx.fillText(this.endGameMsg, 270, 65);
+  }
+
+  drawHighScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText(this.endGameMsg, 320, 70);
+    this.ctx.fillText("High Score: "+window.highScore, 870, 30);
   }
 }
 

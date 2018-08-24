@@ -38,14 +38,14 @@ Day 1: Setup with webpack and add layers to game. Wind layer to increase difficu
 - [ ] Get webpack working with files
 - [ ] Implement wind layer for gameplay
 
-Day 2: Learn how to add sounds for gameplay and add levels to gameplay
+Day 2: Learn how to add sounds for gameplay and increase difficulty of gameplay
 
 - [ ] Have sound whenever collision occurs
-- [ ] Add level layer to game
+- [ ] Increase difficulty of game as player increases score
 
 Day 3: Implement a way to keep track of high scores
-- [ ] record player highscore
-- [ ] display player highscore
+- [ ] record current player's score
+- [ ] display current player scores
 
 Day 4: Style the front end of game and ensure smooth gameplay
 
