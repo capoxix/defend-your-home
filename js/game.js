@@ -111,8 +111,8 @@ class Game {
     this.drawWind();
     this.drawCastle();
     this.drawScore();
-    this.drawEndGame();
     this.drawHighScore();
+    this.drawEndGame();
     this.allObjects().forEach(function(object) {
       object.draw(ctx);
     });
