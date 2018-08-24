@@ -44,7 +44,7 @@ class Enemy extends MovingObject{
     const offsetY = this.vel[1] * velocityScale;
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-    if (this.pos[0] < 200) {
+    if (this.pos[0] < 180) {
       this.game.endGame();
     }
     if (this.game.isOutOfBounds(this.pos)) {
@@ -57,5 +57,5 @@ class Enemy extends MovingObject{
   }
 }
 
-Enemy.RADIUS = 25;
+Enemy.RADIUS = 28;
 module.exports = Enemy;

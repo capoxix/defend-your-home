@@ -1,7 +1,7 @@
 const Game = require('./game');
 const GameView = require('./game_view');
 
-document.addEventListener("DOMContentLoaded", function(event) {
+window.addEventListener("load", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
@@ -26,6 +26,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
         sound.pause();
     }
     return sound;
+  }
+
+  function bgSoundFunc(src){
+    let bgsound = document.getElementById("bgsound");
+    bgsound.setAttribute("id", 'bgsound');
+    bgsound.src = src;
+    bgsound.setAttribute("preload", "auto");
+    bgsound.setAttribute("controls", "none");
+    bgsound.style.display = "none";
+    bgsound.volume = 0.01;
+    function play(){
+        bgsound.play();
+    }
+    function stop(){
+        bgsound.pause();
+    }
+    return bgsound;
+
   }
 
   let ctx = canvasEl.getContext("2d");

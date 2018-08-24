@@ -13,7 +13,7 @@ class Game {
     this.crashSound = soundFnc('sounds/explosion.mp3');
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.enemiesVelocity = [-0.75 + (-this.score/50),0];
+    this.enemiesVelocity = [-0.75 + (-this.score/80),0];
     this.endGameMsg = '';
     this.endGame = this.endGame.bind(this);
     this.changeWind = this.changeWind.bind(this);

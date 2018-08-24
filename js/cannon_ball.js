@@ -40,13 +40,15 @@ class CannonBall extends MovingObject {
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    );
+    // ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    // );
 
-    ctx.fill();
+    // ctx.fill();
+    let cannonball = document.getElementById('cannonball');
+    ctx.drawImage(cannonball, this.pos[0] ,this.pos[1] , 15, 15);
   }
 
   move(timeDelta) {
@@ -70,7 +72,7 @@ class CannonBall extends MovingObject {
       otherObject.collidedWith(this);
 
       this.game.score++;
-      this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/70),0];
+      this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/80),0];
     }
   }
 }

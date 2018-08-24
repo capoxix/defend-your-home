@@ -247,13 +247,15 @@ class CannonBall extends MovingObject {
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
-    ctx.beginPath();
-    ctx.arc(
-      this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
-    );
+    // ctx.fillStyle = this.color;
+    // ctx.beginPath();
+    // ctx.arc(
+    //   this.pos[0], this.pos[1], this.radius, 0 , 2 * Math.PI, true
+    // );
 
-    ctx.fill();
+    // ctx.fill();
+    let cannonball = document.getElementById('cannonball');
+    ctx.drawImage(cannonball, this.pos[0] ,this.pos[1] , 15, 15);
   }
 
   move(timeDelta) {
@@ -277,7 +279,7 @@ class CannonBall extends MovingObject {
       otherObject.collidedWith(this);
 
       this.game.score++;
-      this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/70),0];
+      this.game.enemiesVelocity = [this.game.enemiesVelocity[0] + (-this.game.score/80),0];
     }
   }
 }
@@ -344,7 +346,7 @@ class Enemy extends MovingObject{
     const offsetY = this.vel[1] * velocityScale;
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
-    if (this.pos[0] < 200) {
+    if (this.pos[0] < 180) {
       this.game.endGame();
     }
     if (this.game.isOutOfBounds(this.pos)) {
@@ -357,7 +359,7 @@ class Enemy extends MovingObject{
   }
 }
 
-Enemy.RADIUS = 25;
+Enemy.RADIUS = 28;
 module.exports = Enemy;
 
 
@@ -385,7 +387,7 @@ class Game {
     this.crashSound = soundFnc('sounds/explosion.mp3');
     this.score = 0;
     this.cannonBallsCount = 0;
-    this.enemiesVelocity = [-0.75 + (-this.score/50),0];
+    this.enemiesVelocity = [-0.75 + (-this.score/80),0];
     this.endGameMsg = '';
     this.endGame = this.endGame.bind(this);
     this.changeWind = this.changeWind.bind(this);
@@ -666,7 +668,7 @@ module.exports = GameView;
 const Game = __webpack_require__(/*! ./game */ "./js/game.js");
 const GameView = __webpack_require__(/*! ./game_view */ "./js/game_view.js");
 
-document.addEventListener("DOMContentLoaded", function(event) {
+window.addEventListener("load", function(event) {
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
@@ -691,6 +693,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
         sound.pause();
     }
     return sound;
+  }
+
+  function bgSoundFunc(src){
+    let bgsound = document.getElementById("bgsound");
+    bgsound.setAttribute("id", 'bgsound');
+    bgsound.src = src;
+    bgsound.setAttribute("preload", "auto");
+    bgsound.setAttribute("controls", "none");
+    bgsound.style.display = "none";
+    bgsound.volume = 0.01;
+    function play(){
+        bgsound.play();
+    }
+    function stop(){
+        bgsound.pause();
+    }
+    return bgsound;
+
   }
 
   let ctx = canvasEl.getContext("2d");
