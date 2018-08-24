@@ -12,10 +12,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
   window.highScores = [];
 
   let started = false;
+  function soundFnc(src){
+    // debugger;
+    let sound = document.getElementById("sound");
+    sound.setAttribute("id", 'sound');
+    sound.src = src;
+    sound.setAttribute("preload", "auto");
+    sound.setAttribute("controls", "none");
+    sound.style.display = "none";
+    sound.volume = 0.01;
+    // document.body.appendChild(sound);
+    function play(){
+        sound.play();
+    }
+    function stop(){
+        sound.pause();
+    }
+    return sound;
+  }
   // let muted = false;
 
   let ctx = canvasEl.getContext("2d");
-  let game = new Game(ctx);
+  let game = new Game(ctx, soundFnc);
   let gameV = new GameView(game, ctx);//.setup();//.start();
   gameV.setup();
 
@@ -29,13 +47,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   let newGameButton = document.getElementById("new-game");
     newGameButton.addEventListener("click", () => {
-
+      // started = false;
+      // game.newGame();
+      // gameV.setup();
       /**/
       started = false;
       gameV.stop();
 
       ctx.clearRect(0,0, Game.DIM_X, Game.DIM_Y);
-      game = new Game(ctx);
+      game = new Game(ctx, soundFnc);
       gameV = new GameView(game, ctx);
       // audioNode = document.getElementById("sound");
       // audioNode.parentNode.removeChild(audioNode);

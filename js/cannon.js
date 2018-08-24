@@ -83,7 +83,8 @@ class Cannon{
   }
 
   rotate(move){
-    this.angle += move[1];
+    // console.log(this.angle);
+    if(this.angle < 25 || move[1] === -1) this.angle += move[1];
 
     // console.log("angle:", this.angle);
     // this.pos[0] += move[0];
@@ -97,14 +98,18 @@ class Cannon{
 
   drawAngle(){
     this.ctx.font = "16px Arial";
-    this.ctx.fillStyle = "#0095DD";
-    this.ctx.fillText("Angle: "+this.angle * 3, 8, 20);
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText(this.angle, 90, 490);
+    this.ctx.beginPath();
+    this.ctx.arc(112, 478, 2, 0, 2 * Math.PI);
+    this.ctx.strokeStyle='black';
+    this.ctx.stroke();
   }
 
   drawReloading(){
     this.ctx.font="16px Arial";
-    this.ctx.fillStyle= "#0095DD";
-    this.ctx.fillText("Available cannonballs: "+this.game.cannonBallsCount, 50,50);
+    this.ctx.fillStyle= "black";
+    this.ctx.fillText("# of cannonballs: "+this.game.cannonBallsCount, 50,570);
   }
 
   isCollidedWith(otherObject){
@@ -119,7 +124,7 @@ class Cannon{
     let cannonBottom = document.getElementById('cannon-bottom');
     this.ctx.save();
     this.ctx.translate(130, 520);
-    this.ctx.rotate((this.angle-25) * 3 * Math.PI/180);
+    this.ctx.rotate((this.angle-70)  * Math.PI/180);
     this.ctx.drawImage(cannonTop,-35 ,-35 , 70, 70);
     this.ctx.restore();
     this.ctx.save();

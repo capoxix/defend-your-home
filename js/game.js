@@ -7,36 +7,22 @@ const Enemy = require('./enemy');
 // import Enemy from './enemy.js';
 
 class Game {
-  constructor(ctx){
+  constructor(ctx , soundFnc){
     this.ctx = ctx;
     this.cannon = new Cannon({pos: [120, 525], game: this, ctx: this.ctx});
-    this.highScores = [];
     this.cannonballs = [];
     this.enemies = [];
-    // this.addEnemies();
-
-    this.score = 1;
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
-    this.soundFnc = this.soundFnc.bind(this);
-    this.crashSound = this.soundFnc('sounds/explosion.mp3');
-    // debugger;
-    this.changeWind = this.changeWind.bind(this);
+    this.crashSound = soundFnc('sounds/explosion.mp3');
     this.score = 0;
     this.cannonBallsCount = 0;
-    // this.addCannonBalls();
-    this.enemiesVelocity = [-0.5 + (-this.score/70),0];
-    this.endGame = this.endGame.bind(this);
+    this.enemiesVelocity = [-0.5 + (-this.score/50),0];
     this.endGameMsg = '';
-    // this.highScores = [];
-    // this.muteVolume = this.muteVolume.bind(this);
-    // this.addVolumeButton();
-    // this.addVolumeEventListener = this.addVolumeEventListener.bind(this);
-    // this.addVolumeEventListener();
-
+    this.endGame = this.endGame.bind(this);
+    this.changeWind = this.changeWind.bind(this);
   }
   addCannonBalls(){
-    // this.game.cannonBallsCount += 1;
     let that = this;
     this.cannonBallCreations = setInterval(function(){
       that.cannonBallsCount += 1;
@@ -45,6 +31,17 @@ class Game {
 
   cancelCannonBalls(){
     clearInterval(this.cannonBallCreations);
+  }
+
+  addEnemies(){
+    let that = this;
+    this.enemiesCreation = setInterval(function(){
+      that.add(new Enemy({pos: [950,475], game: that, vel: that.enemiesVelocity}));
+    }, 3000);
+  }
+
+  cancelEnemies(){
+    clearInterval(this.enemiesCreation);
   }
 
   changeWind(){
@@ -102,17 +99,6 @@ class Game {
     }
   }
 
-  addEnemies(){
-    let that = this;
-    this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [950,475], game: that, vel: that.enemiesVelocity}));
-    }, 3000);
-  }
-
-  cancelEnemies(){
-    clearInterval(this.enemiesCreation);
-  }
-
   isOutOfBounds(pos) {
     return (pos[0] < 0) || (pos[1] < 0) ||
       (pos[0] > Game.DIM_X) || (pos[1] > Game.DIM_Y);
@@ -145,9 +131,11 @@ class Game {
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
-    this.ctx.fillStyle = "yellow";
     this.ctx.drawImage(arrow, -25,-25, 50,50);
     this.ctx.restore();
+
+    let wind = document.getElementById('wind');
+    this.ctx.drawImage(wind, 455,150, 50, 50);
   }
 
   drawCastle(){
@@ -158,16 +146,12 @@ class Game {
   drawScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("Current Score: "+this.score, 320, 50);
+    this.ctx.fillText("Score: "+this.score, 30, 50);
   }
 
   endGame(){
-    // console.log("YOU LOSE ENEMY REACHED YOU!");
-    // this.ctx.font = "16px Arial";
-    // this.ctx.fillStyle = "black";
-    // this.ctx.fillText("YOU LOSE ENEMY REACHED YOU", 320, 70);
+
     this.endGameMsg = "YOU LOSE ENEMY REACHED YOU!";
-    // console.log("YOU LOSE!!!");
     window.clearInterval(this.enemiesCreation);
     window.cancelAnimationFrame(window.requestId);
     window.clearInterval(this.cannonBallCreations);
@@ -175,6 +159,29 @@ class Game {
     this.enemies = [];
     this.cannonballs = [];
     window.highScores.push(this.score);
+
+    this.displayScores();
+
+  }
+
+    displayScores(){
+      function sortNumber(a,b) {
+        return a - b;
+      }
+      window.highScores = window.highScores.sort(sortNumber);
+      let scoreListNode = document.getElementById("scoreList");
+      while (scoreListNode.firstChild) {
+        scoreListNode.removeChild(scoreListNode.firstChild);
+      }
+
+      for (let i = window.highScores.length -1; i >= 0; i--) {
+        let li = document.createElement('LI');
+        let textNode = document.createTextNode(`${window.highScores[i]}`);
+        li.appendChild(textNode);
+        scoreListNode.appendChild(li);
+      }
+    }
+
 
     // let audioNode = document.getElementById("sound");
     // let volumeMute = document.getElementById("volume-mute");
@@ -189,7 +196,7 @@ class Game {
     //   if (audioNode.muted)
     //   audioNode.muted = false;
     // });
-  }
+
 
   drawEndGame(){
     this.ctx.font = "16px Arial";
@@ -197,29 +204,32 @@ class Game {
     this.ctx.fillText(this.endGameMsg, 320, 70);
   }
 
-
-  // nextLevel(){
-  //
+  // newGame(){
+  //   this.endGameMsg = "";
+  //   this.score = 0;
+  //   this.windVelocity = (Math.random() * 2).toFixed(2);
+  //   this.windAngle = Math.round(Math.random() * 360);
   // }
 
-  soundFnc(src){
-    // debugger;
-    this.sound = document.createElement("audio");
-    this.sound.setAttribute("id", 'sound');
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    this.sound.volume = 0.01;
-    document.body.appendChild(this.sound);
-    this.play = function(){
-        this.sound.play();
-    };
-    this.stop = function(){
-        this.sound.pause();
-    };
-    return this.sound;
-  }
+
+  // soundFnc(src){
+  //   // debugger;
+  //   this.sound = document.createElement("audio");
+  //   this.sound.setAttribute("id", 'sound');
+  //   this.sound.src = src;
+  //   this.sound.setAttribute("preload", "auto");
+  //   this.sound.setAttribute("controls", "none");
+  //   this.sound.style.display = "none";
+  //   this.sound.volume = 0.01;
+  //   document.body.appendChild(this.sound);
+  //   this.play = function(){
+  //       this.sound.play();
+  //   };
+  //   this.stop = function(){
+  //       this.sound.pause();
+  //   };
+  //   return this.sound;
+  // }
 }
 
 
