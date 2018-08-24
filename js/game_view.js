@@ -25,7 +25,7 @@ class GameView {
   }
 
   start() {
-    this.bindKeyHandlers();
+    // this.bindKeyHandlers();
     this.game.addEnemies();
     this.game.addCannonBalls();
     this.animationPlaying = true;
@@ -34,6 +34,7 @@ class GameView {
   }
 
   setup(){
+    this.bindKeyHandlers();
     this.game.draw(this.ctx);
   }
 
