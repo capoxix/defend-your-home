@@ -636,6 +636,8 @@ const Game = __webpack_require__(/*! ./game */ "./js/game.js");
 const GameView = __webpack_require__(/*! ./game_view */ "./js/game_view.js");
 
 window.addEventListener("DOMContentLoaded", function(event) {
+  // if (document.readyState !== 'complete')location.reload();
+
   const canvasEl = document.getElementById('game-canvas');
   canvasEl.width = Game.DIM_X;
   canvasEl.height = Game.DIM_Y;
