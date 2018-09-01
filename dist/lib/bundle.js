@@ -672,7 +672,7 @@ window.addEventListener("DOMContentLoaded", function(event) {
     bgsound.setAttribute("preload", "auto");
     bgsound.setAttribute("controls", "none");
     bgsound.style.display = "none";
-    bgsound.volume = 0.01;
+    bgsound.volume = 0.03;
     function play(){
         bgsound.play();
     }
@@ -737,8 +737,7 @@ window.addEventListener("DOMContentLoaded", function(event) {
   });
 
   setTimeout(function(){
-      gameV.setup();}, 2000);
-  // })
+      gameV.setup();}, 300);
 
  });
 
