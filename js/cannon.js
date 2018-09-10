@@ -49,7 +49,7 @@ class Cannon{
 
   rotate(move){
 
-    if(this.angle < 25 || move[1] === -1) this.angle += move[1];
+    if(this.angle < 30 || move[1] === -1) this.angle += move[1];
     this.vel[0] += move[0];
     this.vel[1] += move[1];
   }

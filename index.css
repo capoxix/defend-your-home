@@ -7,7 +7,7 @@ p {
 
 .instructions{
   margin: 0 auto;
-  width: 1000px;
+  width: 1500px;
   background-color: lightblue;
 
 }
@@ -21,7 +21,8 @@ button{
 }
 .canvas-container{
   margin: 0 auto;
-  width: 1000px;
+  width: 1500px;
+  background-color: lightblue;
 }
 
 i{
@@ -47,7 +48,7 @@ button:hover, i:hover{
 
 .buttons{
   margin: 0 auto;
-  width: 1000px;
+  width: 1500px;
   display: flex;
   justify-content: space-between;
 }
