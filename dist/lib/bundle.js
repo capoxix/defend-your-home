@@ -332,7 +332,8 @@ class Enemy extends MovingObject{
 
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.pos[0] < 180) {
-      this.game.endGame();
+      this.game.hp -= 1;
+      if(this.game.hp <= 0) this.game.endGame();
     }
     if (this.game.isOutOfBounds(this.pos)) {
       this.game.remove(this);
@@ -370,6 +371,7 @@ class Game {
     this.windVelocity = (Math.random() * 2).toFixed(2);
     this.windAngle = Math.round(Math.random() * 360);
     this.crashSound = soundFnc('sounds/explosion.mp3');
+    this.hp = 20;
     this.score = 0;
     this.cannonBallsCount = 0;
     this.enemiesVelocity = [-0.75 + (-this.score/80),0];
@@ -469,6 +471,7 @@ class Game {
     this.drawWind();
     this.drawCastle();
     this.drawScore();
+    this.drawHp();
     this.drawHighScore();
     this.drawEndGame();
     this.allObjects().forEach(function(object) {
@@ -502,6 +505,12 @@ class Game {
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
     this.ctx.fillText("Score: "+this.score, 20, 30);
+  }
+
+  drawHp(){
+    this.ctx.font = "16px Arial";
+    this.ctx.fillStyle = "black";
+    this.ctx.fillText("HP: "+this.hp, 650, 30);
   }
 
   endGame(){
