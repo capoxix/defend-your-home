@@ -3,48 +3,45 @@ const CannonBall = require('./cannon_ball');
 
 class Enemy extends MovingObject{
   constructor(options){
-    if(this.game.score < 30) options.radius = Enemy.RADIUS;
-    if (this.game.score >= 30) options.radius = 45;
+    if(options.game.score < 30) options.radius = Enemy.RADIUS;
+    if (options.game.score >= 30) options.radius = 43;
     options.color = 'brown';
     super(options);
-    this.enemyAnimation = [[8,510, 31, 74],[48,510, 47,74], [104,511,39,73],
-    [152,511, 29, 73], [192,510, 40, 74], [240,510,32,74]];
-    this.enemyAnimation2 = [[477,10,19,62], [439, 10, 25,62], [398,9,34,63], 
-    [360,9,24,63]]
     this.animationCount = 0;
     this.animationDelay = 0;
 
-    this.enemyAnimation3 = [[410,1,16,45], [407,50,21,44], [382,2,21,44]];
-    this.enemyAnimation4 = [[253,5,17,46], [250,53,22,46], [225,5,23,46]];
-    this.enemyAnimation5 = [[348,320,88,62], [253,319,87,63], [161,320,85,62], [66,319,87,63]];
+    this.enemyAnimation = [[410,1,16,45], [407,50,21,44], [382,2,21,44]];
+    this.enemyAnimation2 = [[253,5,17,46], [250,53,22,46], [225,5,23,46]];
+    this.enemyAnimation3 = [[348,320,88,62], [253,319,87,63], [161,320,85,62], [66,319,87,63]];
   }
 
   draw(ctx){
-    let enemyImg = document.getElementById('enemy');
-    let enemyImg2 = document.getElementById('enemy2');
-    let enemyImg3 = document.getElementById('medieval-enemy');
-    let enemyImg4 = document.getElementById('medieval-enemy2');
+    let enemyImg = document.getElementById('medieval-enemy');
+    let enemyImg2 = document.getElementById('medieval-enemy2');
     this.animationDelay += 1;
 
     let img;
     let animation;
+    let width;
+    let height;
+    this.resetSpawn();
+
     if (this.game.score < 16) {
-      img = enemyImg3;
-      animation = this.enemyAnimation3;
+      img = enemyImg;
+      animation = this.enemyAnimation;
+      width = 30;
+      height = 75;
     } else if (this.game.score >= 15 && this.game.score < 30){
-        if(this.game.score === 15){
-          this.game.enemies = [];
-          this.game.score += 1;
-        }
-        img = enemyImg3;
-        animation = this.enemyAnimation4;
+        img = enemyImg;
+        animation = this.enemyAnimation2;
+        width = 30;
+        height = 75;
     } else {
-      if(this.game.score === 29) {
-        this.game.enemies = [];
-        this.game.score += 1;
-      }
-      img = enemyImg4
-      animation = this.enemyAnimation5;
+ 
+      img = enemyImg2
+      animation = this.enemyAnimation3;
+      width = 88;
+      height = 75;
     }
 
     if (this.animationDelay++ >= 15){
@@ -58,30 +55,19 @@ class Enemy extends MovingObject{
 
       ctx.drawImage(img,  animation[this.animationCount][0],   animation[this.animationCount][1],
           animation[this.animationCount][2],
-          animation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
+          animation[this.animationCount][3], this.pos[0],this.pos[1], width,height);
     } else {
       ctx.drawImage(img,  animation[this.animationCount][0],   animation[this.animationCount][1],
           animation[this.animationCount][2],
-          animation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
+          animation[this.animationCount][3], this.pos[0],this.pos[1], width, height);
     }
-
-    // if (this.animationDelay++ >= 15){
-    //   this.animationDelay = 0;
-    //   this.animationCount++;
-
-    //   if (this.animationCount >= this.enemyAnimation.length){
-    //     this.animationCount = 0;
-    //     this.enemyAnimation[this.animationCount];
-    //   }
-
-    //   ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
-    //       this.enemyAnimation[this.animationCount][2],
-    //       this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
-    // } else {
-    //   ctx.drawImage(enemyImg,  this.enemyAnimation[this.animationCount][0],   this.enemyAnimation[this.animationCount][1],
-    //       this.enemyAnimation[this.animationCount][2],
-    //       this.enemyAnimation[this.animationCount][3], this.pos[0],this.pos[1], 30,75);
-    // }
+  }
+  
+  resetSpawn(){
+    if(this.game.score === 15 || this.game.score === 29) {
+      this.game.enemies = [];
+      this.game.score += 1;
+    }
   }
 
   move(timeDelta) {
