@@ -44,6 +44,7 @@ class Enemy extends MovingObject{
     this.pos = [this.pos[0] + offsetX, this.pos[1] + offsetY];
     if (this.pos[0] < 180) {
       this.game.hp -= 1;
+      this.game.remove(this);
       if(this.game.hp <= 0) this.game.endGame();
     }
     if (this.game.isOutOfBounds(this.pos)) {

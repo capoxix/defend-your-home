@@ -150,7 +150,7 @@ class Game {
   drawHp(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("HP: "+this.hp, 650, 30);
+    this.ctx.fillText("HP: "+this.hp, 700, 30);
   }
 
   endGame(){
