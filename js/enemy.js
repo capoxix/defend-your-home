@@ -8,12 +8,15 @@ class Enemy extends MovingObject{
     super(options);
     this.enemyAnimation = [[8,510, 31, 74],[48,510, 47,74], [104,511,39,73],
     [152,511, 29, 73], [192,510, 40, 74], [240,510,32,74]];
+    this.enemyAnimation2 = [[477,10,19,62], [439, 10, 25,62], [398,9,34,63], 
+    [360,9,24,63], [334,9,18,63], [291,9,29,63]]
     this.animationCount = 0;
     this.animationDelay = 0;
   }
 
   draw(ctx){
     let enemyImg = document.getElementById('enemy');
+    let enemyImg2 = document.getElementById('flipped-enemy');
       this.animationDelay += 1;
 
     if (this.animationDelay++ >= 15){
