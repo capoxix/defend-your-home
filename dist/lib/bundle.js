@@ -630,7 +630,7 @@ class GameView {
       if(!bgAudioNode.muted){
         that.bgSound.play();
       }
-    },55000);
+    },54000);
   }
 
   setup(){

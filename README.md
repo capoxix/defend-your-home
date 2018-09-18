@@ -6,7 +6,7 @@ Defend your home is a 2D game where the user utilizes a cannon to defend his/her
 
 [Live Demo](https://capoxix.github.io/canvas/)
 
-![link](readme-images/game-screen.png)
+![link](readme-images/game.png)
 
 ## Technologies
 
