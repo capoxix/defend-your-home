@@ -699,6 +699,8 @@ window.addEventListener("DOMContentLoaded", function(event) {
     sound.setAttribute("controls", "none");
     sound.style.display = "none";
     sound.volume = 0.01;
+    /* start muted */
+    sound.muted = true;
     function play(){
         sound.play();
     }
@@ -718,6 +720,8 @@ window.addEventListener("DOMContentLoaded", function(event) {
     bgsound.setAttribute("controls", "none");
     bgsound.style.display = "none";
     bgsound.volume = 0.03;
+    /* start muted */
+    bgsound.muted = true;
     function play(){
         bgsound.play();
     }
@@ -779,6 +783,23 @@ window.addEventListener("DOMContentLoaded", function(event) {
       bgAudioNode.muted = false;
       audioNode.muted = false;
   }
+  });
+
+
+  let volume = document.getElementById("volume");
+  
+  volume.addEventListener("click", ()=>{
+    if (!audioNode.muted) {
+      bgAudioNode.muted = true;
+      audioNode.muted = true;
+      volume.classList.remove('fa-volume-up');
+      volume.classList.add('fa-volume-off');
+    } else {
+      bgAudioNode.muted = false;
+      audioNode.muted = false;
+      volume.classList.remove('fa-volume-off');
+      volume.classList.add('fa-volume-up');
+    }
   });
 
   setTimeout(function(){
