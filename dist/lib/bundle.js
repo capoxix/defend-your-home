@@ -770,20 +770,20 @@ window.addEventListener("DOMContentLoaded", function(event) {
   let audioNode = document.getElementById("sound");
   let volumeMute = document.getElementById("volume-mute");
 
-  volumeMute.addEventListener("click", ()=>{
-    if (!audioNode.muted) {
-      bgAudioNode.muted = true;
-      audioNode.muted = true;
-    }
-  });
+  // volumeMute.addEventListener("click", ()=>{
+  //   if (!audioNode.muted) {
+  //     bgAudioNode.muted = true;
+  //     audioNode.muted = true;
+  //   }
+  // });
 
-  let volumeOpen = document.getElementById("volume-up");
-  volumeOpen.addEventListener("click",()=>{
-    if (audioNode.muted) {
-      bgAudioNode.muted = false;
-      audioNode.muted = false;
-  }
-  });
+  // let volumeOpen = document.getElementById("volume-up");
+  // volumeOpen.addEventListener("click",()=>{
+  //   if (audioNode.muted) {
+  //     bgAudioNode.muted = false;
+  //     audioNode.muted = false;
+  // }
+  // });
 
 
   let volume = document.getElementById("volume");

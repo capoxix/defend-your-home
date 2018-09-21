@@ -41,8 +41,8 @@ i{
 }
 
 i.fa.fa-volume-off{
-  padding-left: 8px;
-  padding-right: 8px;
+  /* padding-left: 8px;
+  padding-right: 8px; */
 }
 
 
@@ -68,3 +68,6 @@ button:hover, i:hover{
   justify-content: space-between;
 }
 
+#volume{
+  width: 32px;
+}
