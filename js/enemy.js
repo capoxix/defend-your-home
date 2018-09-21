@@ -4,7 +4,7 @@ const CannonBall = require('./cannon_ball');
 class Enemy extends MovingObject{
   constructor(options){
     if(options.game.score < 30) options.radius = Enemy.RADIUS;
-    if (options.game.score >= 30) options.radius = 43;
+    if (options.game.score >= 30) options.radius = 40;
     options.color = 'brown';
     super(options);
     this.animationCount = 0;
