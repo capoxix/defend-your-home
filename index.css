@@ -73,3 +73,7 @@ button:hover, i:hover{
 #volume{
   width: 32px;
 }
+
+.game-buttons{
+  margin-left: 95px;
+}

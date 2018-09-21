@@ -33,7 +33,7 @@ class Game {
   addEnemies(){
     let that = this;
     this.enemiesCreation = setInterval(function(){
-      that.add(new Enemy({pos: [1450,475], game: that, vel: that.enemiesVelocity}));
+      that.add(new Enemy({pos: [1150,475], game: that, vel: that.enemiesVelocity}));
     }, 3000);
   }
 
@@ -122,10 +122,10 @@ class Game {
   drawWind(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.windVelocity, 725, 90);
+    this.ctx.fillText(this.windVelocity, 580, 90);
 
     this.ctx.save();
-    this.ctx.translate(735,125);
+    this.ctx.translate(595,125);
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
@@ -133,7 +133,7 @@ class Game {
     this.ctx.restore();
 
     let wind = document.getElementById('wind');
-    this.ctx.drawImage(wind, 715,150, 50, 50);
+    this.ctx.drawImage(wind, 575,150, 50, 50);
   }
 
   drawCastle(){
@@ -150,7 +150,7 @@ class Game {
   drawHp(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("HP: "+this.hp, 710, 30);
+    this.ctx.fillText("HP: "+this.hp, 575, 30);
   }
 
   endGame(){
@@ -169,20 +169,20 @@ class Game {
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 650, 65);
+    this.ctx.fillText(this.endGameMsg, 500, 65);
   }
 
   drawHighScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("High Score: "+window.highScore, 1370, 30);
+    this.ctx.fillText("High Score: "+window.highScore, 1070, 30);
   }
 }
 
 
 
 
-Game.DIM_X = 1500;
+Game.DIM_X = 1200;
 Game.DIM_Y = 600;
 Game.BG_COLOR = 'lightblue';
 
