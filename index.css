@@ -11,19 +11,23 @@
 
 p {
   font-size: 13px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .instructions{
   margin: 0 auto;
-  width: 1500px;
+  width: 1200px;
   background-color: lightblue;
 
 }
 
 .instructions p{
   font-size: 20px;
+  font-family: sans-serif;
+
 }
 
 button{
@@ -31,7 +35,7 @@ button{
 }
 .canvas-container{
   margin: 0 auto;
-  width: 1500px;
+  width: 1200px;
   background-color: lightblue;
 }
 
@@ -39,12 +43,6 @@ i{
   cursor: pointer;
   padding: 5px;
 }
-
-i.fa.fa-volume-off{
-  /* padding-left: 8px;
-  padding-right: 8px; */
-}
-
 
 button,i{
   border-radius: 5px;
@@ -58,9 +56,13 @@ button:hover, i:hover{
 
 .buttons{
   margin: 0 auto;
-  width: 1500px;
+  width: 1200px;
   display: flex;
   justify-content: space-between;
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
 }
 
 .buttons-instructions{
