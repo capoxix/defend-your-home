@@ -4,7 +4,7 @@ const CannonBall = require('./cannon_ball');
 class Enemy extends MovingObject{
   constructor(options){
     if(options.game.score < 30) options.radius = Enemy.RADIUS;
-    if (options.game.score >= 30) options.radius = 40;
+    if (options.game.score >= 30) options.radius = 38;
     options.color = 'brown';
     super(options);
     this.animationCount = 0;
@@ -55,11 +55,11 @@ class Enemy extends MovingObject{
 
       ctx.drawImage(img,  animation[this.animationCount][0],   animation[this.animationCount][1],
           animation[this.animationCount][2],
-          animation[this.animationCount][3], this.pos[0],this.pos[1], width,height);
+          animation[this.animationCount][3], this.pos[0],this.pos[1] - 25, width,height);
     } else {
       ctx.drawImage(img,  animation[this.animationCount][0],   animation[this.animationCount][1],
           animation[this.animationCount][2],
-          animation[this.animationCount][3], this.pos[0],this.pos[1], width, height);
+          animation[this.animationCount][3], this.pos[0],this.pos[1] - 25, width, height);
     }
   }
   
