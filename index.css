@@ -74,6 +74,13 @@ button:hover, i:hover{
   width: 32px;
 }
 
+/* #volume{
+  width: 32px;
+  z-index: 50;
+  position:absolute;
+  top:110px;
+} */
+
 .game-buttons{
   margin-left: 95px;
 }
