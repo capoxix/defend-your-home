@@ -1,7 +1,11 @@
+body{
+  background-color: #282828;
+}
 .title{
   font-size: 30px;
   text-align: center;
   font-family: Apple Chancery, cursive;
+  color: white;
 }
 
 .title h1{
