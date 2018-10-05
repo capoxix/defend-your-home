@@ -63,10 +63,10 @@ button:hover, i:hover{
   width: 1200px;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
   padding-left: 15px;
   padding-right: 15px;
   box-sizing: border-box;
+  height: 0px;
 }
 
 .buttons-instructions{
@@ -82,5 +82,8 @@ button:hover, i:hover{
 }
 
 .game-buttons{
-  margin-left: 95px;
+  position: relative;
+  width: 130px;
+  z-index: 50;
+  top: -595px;
 }

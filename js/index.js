@@ -10,7 +10,6 @@ window.addEventListener("DOMContentLoaded", function(event) {
   window.highScores = [];
   window.highScore = 0;
 
-  let started = false;
   function soundFnc(src){
 
     let sound = document.getElementById("sound");
@@ -58,12 +57,20 @@ window.addEventListener("DOMContentLoaded", function(event) {
   let gameV = new GameView(game, ctx, bgSoundFnc);
 
 
+  let started = false;
+  let startPauseButton = document.getElementById("start-pause");
 
-  let startButton = document.getElementById("start");
-  startButton.addEventListener("click", () => {
+  startPauseButton.addEventListener("click", () => {
     if(!started){
       gameV.start();
       started = true;
+      startPauseButton.classList.remove('fa-play');
+      startPauseButton.classList.add('fa-pause');
+    } else {
+      gameV.stop();
+      started= false;
+      startPauseButton.classList.remove('fa-pause');
+      startPauseButton.classList.add('fa-play');
     }
   });
 
@@ -79,13 +86,7 @@ window.addEventListener("DOMContentLoaded", function(event) {
       gameV.setup();
   });
 
-  let stopButton = document.getElementById("stop");
-  stopButton.addEventListener("click", () => {
-    if(started) {
-      gameV.stop();
-      started= false;
-    }
-  });
+
 
   let bgAudioNode = document.getElementById("bgsound");
   let audioNode = document.getElementById("sound");
