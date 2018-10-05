@@ -170,7 +170,7 @@ class Game {
   drawEndGame(){
     this.ctx.font = "30px Arial";
     this.ctx.fillStyle = "red";
-    this.ctx.fillText(this.endGameMsg, 500, 65);
+    this.ctx.fillText(this.endGameMsg, 500, 45);
   }
 
   drawHighScore(){
