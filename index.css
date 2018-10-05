@@ -83,7 +83,7 @@ button:hover, i:hover{
 
 .game-buttons{
   position: relative;
-  width: 130px;
+  width: 100px;
   z-index: 50;
   top: -595px;
 }
