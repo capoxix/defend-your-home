@@ -14,9 +14,10 @@ body{
 
 
 p {
+  display: inline-block;
   font-size: 13px;
   margin-top: 5px;
-  margin-bottom: 5px;
+  margin-bottom: -5px;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -31,6 +32,8 @@ p {
 .instructions p{
   font-size: 20px;
   font-family: sans-serif;
+  padding-top: 5px;
+  padding-bottom: 5px;
 
 }
 
@@ -40,7 +43,7 @@ button{
 .canvas-container{
   margin: 0 auto;
   width: 1200px;
-  background-color: lightblue;
+  /* background-color: lightblue; */
 }
 
 i{
@@ -69,9 +72,14 @@ button:hover, i:hover{
   height: 0px;
 }
 
-.buttons-instructions{
+/* .instructions{
   display: flex;
   justify-content: space-between;
+} */
+
+.instructions-contact{
+  display: grid;
+  grid-template-columns: 600px 600px;
 }
 
 #volume{
@@ -86,4 +94,9 @@ button:hover, i:hover{
   width: 100px;
   z-index: 50;
   top: -595px;
+}
+
+.contact-buttons{
+  margin-left: 160px;
+  padding-bottom: 5px;
 }

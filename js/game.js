@@ -122,10 +122,10 @@ class Game {
   drawWind(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.windVelocity, 580, 100);
+    this.ctx.fillText(this.windVelocity, 580, 80);
 
     this.ctx.save();
-    this.ctx.translate(595,135);
+    this.ctx.translate(595,115);
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
@@ -133,7 +133,7 @@ class Game {
     this.ctx.restore();
 
     let wind = document.getElementById('wind');
-    this.ctx.drawImage(wind, 575,160, 50, 50);
+    this.ctx.drawImage(wind, 575, 130, 50, 50);
   }
 
   drawCastle(){
@@ -149,8 +149,9 @@ class Game {
 
   drawHp(){
     this.ctx.font = "16px Arial";
-    this.ctx.fillStyle = "black";
-    this.ctx.fillText("HP: "+this.hp, 575, 70);
+    this.hp > 5 ? this.ctx.fillStyle = "black" : this.ctx.fillStyle = "red";
+    // this.ctx.fillStyle = "black";
+    this.ctx.fillText("Health: "+this.hp, 50, 380);
   }
 
   endGame(){
