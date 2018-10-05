@@ -122,10 +122,10 @@ class Game {
   drawWind(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "white";
-    this.ctx.fillText(this.windVelocity, 580, 90);
+    this.ctx.fillText(this.windVelocity, 580, 100);
 
     this.ctx.save();
-    this.ctx.translate(595,125);
+    this.ctx.translate(595,135);
     this.ctx.rotate((this.windAngle-90-180) * Math.PI/180);
 
     let arrow = document.getElementById('arrow');
@@ -133,7 +133,7 @@ class Game {
     this.ctx.restore();
 
     let wind = document.getElementById('wind');
-    this.ctx.drawImage(wind, 575,150, 50, 50);
+    this.ctx.drawImage(wind, 575,160, 50, 50);
   }
 
   drawCastle(){
@@ -144,13 +144,13 @@ class Game {
   drawScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("Score: "+this.score, 20, 30);
+    this.ctx.fillText("Score: "+this.score, 20, 70);
   }
 
   drawHp(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("HP: "+this.hp, 575, 30);
+    this.ctx.fillText("HP: "+this.hp, 575, 70);
   }
 
   endGame(){
@@ -175,7 +175,7 @@ class Game {
   drawHighScore(){
     this.ctx.font = "16px Arial";
     this.ctx.fillStyle = "black";
-    this.ctx.fillText("High Score: "+window.highScore, 1070, 30);
+    this.ctx.fillText("High Score: "+window.highScore, 1070, 70);
   }
 }
 
